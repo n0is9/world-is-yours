@@ -10,8 +10,8 @@ const ProductPage = () => {
   return (
     <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
       <PreviousPage text='Каталог' link='/categories' />
-      <div className='flex justify-center items-center mt-28'>
-        <div className='flex flex-row gap-20'>
+      <div className='flex justify-center items-center mt-20'>
+        <div className='flex flex-row gap-20 basis-[1150px]'>
           <PhotoGallery />
           <FilterList />
         </div>

@@ -20,10 +20,10 @@ const PhotoGallery = () => {
   };
 
   return (
-    <div className='flex'>
+    <div className='flex grow'>
       <div className='flex flex-col'>
         {smallImages.map((image, id) => (
-          <img key={id} src={image} alt={`Image ${id + 1}`} className='w-32 h-32 mb-4 cursor-pointer rounded' onClick={() => handleImageClick(id)} />
+          <img key={id} src={image} alt={`Image ${id + 1}`} className='w-32 h-32 mb-4 cursor-pointer rounded object-cover' onClick={() => handleImageClick(id)} />
         ))}
       </div>
 
