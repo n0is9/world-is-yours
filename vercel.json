@@ -1,9 +1,0 @@
-{
-  "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "https://world-is-yours-d4407070ced1.herokuapp.com/api/:path*"
-    },
-    { "source": "/(.*)", "destination": "/" }
-  ]
-}

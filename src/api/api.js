@@ -1,7 +1,7 @@
 import axios from "axios";
 import config from "../config/config";
 
-const BASE_URL = "https://world-is-yours-d4407070ced1.herokuapp.com/api";
+const BASE_URL = "https://world-is-yours-d4407070ced1.herokuapp.com";
 
 
 const api2 = {
@@ -53,6 +53,7 @@ const api2 = {
 };
 
 const $api = axios.create({
+  baseURL: config.BASE_URL,
 });
 
 $api.interceptors.request.use(
