@@ -3,11 +3,12 @@ import config from "../config/config";
 
 const BASE_URL = "https://world-is-yours-d4407070ced1.herokuapp.com/api";
 
+
 const api2 = {
   // language switch
   getLanguage: async (code) => {
     try {
-      const response = await axios.get(`${BASE_URL}/language/${code}/`);
+      const response = await axios.get(`/api/language/${code}/`);
       return response.data;
     } catch (error) {
       // console.error('Error fetching posts:', error);
@@ -17,7 +18,7 @@ const api2 = {
 
   signUp: async (userData) => {
     try {
-      const response = await axios.post(`${BASE_URL}/users/`, userData);
+      const response = await axios.post(`/api/users/`, userData);
       // console.log('signUp success.  status:', response.status);
       return response;
     } catch (error) {
@@ -28,7 +29,7 @@ const api2 = {
 
   signIn: async (userData) => {
     try {
-      const response = await axios.post(`${BASE_URL}/auth/`, {
+      const response = await axios.post(`/api/auth/`, {
         username: userData.email,
         password: userData.password,
       });
@@ -42,7 +43,7 @@ const api2 = {
 
   resetPassword: async (userData) => {
     try {
-      const response = await axios.post(`${BASE_URL}/password_reset/`, userData);
+      const response = await axios.post(`/api/password_reset/`, userData);
       return response;
     } catch (error) {
       // console.error('Error registering user in api:', error);
@@ -52,7 +53,6 @@ const api2 = {
 };
 
 const $api = axios.create({
-  baseURL: config.BASE_URL,
 });
 
 $api.interceptors.request.use(
