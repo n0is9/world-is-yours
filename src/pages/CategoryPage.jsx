@@ -3,7 +3,6 @@ import CategoryList from '../components/category-page/CategoryList';
 import FilterPopup from '../components/category-page/FilterPopup';
 import Card from '../components/common/Card';
 import { $api } from '../api/api';
-import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { motion as m } from 'framer-motion';
@@ -14,7 +13,6 @@ import Button from '../components/common/Button';
 import arrowUp from '../assets/icons/arrow-up.svg';
 
 const CategoryPage = () => {
-  const location = useLocation();
   const [categoryId, setCategoryId] = useState(null);
   const filters = useSelector((state) => state.categryFilter);
 
@@ -51,6 +49,8 @@ const CategoryPage = () => {
       setNext(response.data.next);
       // setArrivals((currentArrivals) => [...currentArrivals, ...response.data.results]);
       setArrivals(response.data.results);
+      console.log(arrivals, 'arrivals');
+      console.log(response.data, 'data');
     } catch (error) {
       console.log(error);
     }

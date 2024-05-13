@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '../common/Button';
 import styles from '../registration-popup/signup.module.css';
 import ColorPicker from './ColorPicker';
@@ -6,15 +6,54 @@ import ClothingSizePicker from './ClothingSizePicker';
 import ShoeSizePicker from './ShoeSizePicker';
 import AccordionText from './AccordionText';
 
-const FilterList = () => {
+import { $api } from '../../api/api';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { addItemCart, removeItemCart } from '../../redux/cartSlice';
+
+const FilterList = ({ data }) => {
+  const dispatch = useDispatch();
+
   const [selectedColor, setSelectedColor] = useState(null);
+  const [isCart, setCart] = useState('');
+  const [btnText, setBtnText] = useState('');
+
+  const { name, price, description } = data;
+
+  const cart = useSelector((state) => state.cart.items);
+
+  useEffect(() => {
+    setCart(cart.find((item) => item.product && item.product === data.id));
+  }, [cart]);
+
+  const toggleCart = async () => {
+    try {
+      if (!isCart) {
+        const response = await $api.post(`/api/baskets/`, { product: data.id });
+        dispatch(addItemCart(response.data));
+        setBtnText('Товар успішно додано');
+      } else {
+        const response = await $api.delete(`/api/baskets/${isCart.id}/`);
+        dispatch(removeItemCart(data.id));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    if (isCart) {
+      setBtnText('Товар додано в корзину');
+    } else {
+      setBtnText('Додати товар до корзини');
+    }
+  });
 
   return (
     <div className='flex flex-col w-96 gap-5 grow'>
       <div className='flex flex-col w-96 gap-2'>
-        <h1 className='font-raleway font-semibold text-2xl text-left text-grayDark'> Трекінгове взуття Salomon</h1>
-        <p className='font-sans font-normal text-xl text-left text-grayDark mb-5'> 5400 грн </p>
-        <p className='font-raleway font-light text-l text-left text-grayDark'> Оптимальний комфорт і відмінна підтримка навіть на найвимогливіших маршрутах.</p>
+        <h1 className='font-raleway font-semibold text-2xl text-left text-grayDark'>{name}</h1>
+        <p className='font-sans font-normal text-xl text-left text-grayDark mb-5'>{price} грн </p>
+        <p className='font-raleway font-light text-l text-left text-grayDark'>{description}</p>
       </div>
       <div className=''>
         <p>Колір</p>
@@ -31,7 +70,9 @@ const FilterList = () => {
         <ShoeSizePicker />
       </div>
 
-      <Button classNameBtn={`bg-gray-dark my-12 p-4 border rounded-xl leading-none font-bold text-20px text-white duration-300 hover:bg-transparent hover:text-black focus:bg-transparent focus:text-black`}>Додати до корзини</Button>
+      <Button classNameBtn={`bg-gray-dark my-12 p-4 border rounded-xl leading-none font-bold text-20px text-white duration-300 hover:bg-transparent hover:text-black focus:bg-transparent focus:text-black`} onClickBtn={() => toggleCart()}>
+        {btnText}
+      </Button>
 
       <AccordionText />
     </div>

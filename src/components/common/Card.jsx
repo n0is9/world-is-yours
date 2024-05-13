@@ -9,16 +9,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addItem, removeItem } from '../../redux/wishlistSlice';
 import { addItemCart, removeItemCart } from '../../redux/cartSlice';
 
-import { useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import { motion as m } from 'framer-motion';
 
 const Card = ({ data }) => {
   const dispatch = useDispatch();
+
   const [isLiked, setLike] = useState(false);
   const [isCart, setCart] = useState('');
-  let navigate = useNavigate();
-  // console.log(data);
 
   const wishlist = useSelector((state) => state.wishlist.items);
 
@@ -68,26 +67,25 @@ const Card = ({ data }) => {
     }
   };
   return (
-    <m.div initial={{ opacity: 0.5 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
-      <div className='border border-[#888888] rounded-2xl overflow-hidden relative w-90 items-center'>
-        <div className='flex justify-center' onClick={() => navigate('/product')}>
-          <img src={data.image_1} alt='product img' className='w-full h-96 object-cover cursor-pointer' />
-        </div>
-
-        <div className='absolute top-3 right-3 m-2' onClick={() => toggleWishList()}>
-          <img src={isLiked ? HeartIconRed : HeartIcon} alt='heart icon' width='36' className='cursor-pointer' />
-        </div>
-
-        <div className='flex flex-row justify-between items-center'>
-          <div className='p-5 flex-col'>
-            <p className='text-custom-black font-semibold'>{data.name}</p>
-            <p className='text-custom-black'>{data.price}</p>
-          </div>
-          <Button classNameBtn={`flex border rounded-md py-3 px-3 mr-4 duration-300 hover:border-blue focus:border-blue ${isCart ? ' bg-black' : ''}`} onClickBtn={() => toggleCart()}>
-            <img src={isCart ? CartFull : Cart} alt='cart' />
-          </Button>
-        </div>
+    <m.div initial={{ opacity: 0.5 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }} className='relative'>
+      <div className='absolute top-3 right-3 m-2 z-10' onClick={() => toggleWishList()}>
+        <img src={isLiked ? HeartIconRed : HeartIcon} alt='heart icon' width='36' className='cursor-pointer' />
       </div>
+
+      <NavLink to={`/product/${data.id}`} className='block border border-[#888888] rounded-2xl overflow-hidden relative w-90 items-center z-0'>
+        <div className='flex justify-center'>
+          <img src={data.image_1} alt={data.name} className='w-full h-96 object-cover cursor-pointer' />
+        </div>
+
+        <div className='p-5 pr-[120px] flex-col'>
+          <p className='text-custom-black font-semibold'>{data.name}</p>
+          <p className='text-custom-black'>{data.price}</p>
+        </div>
+      </NavLink>
+
+      <Button classNameBtn={`absolute bottom-3 right-3 z-10 flex border rounded-md py-3 px-3 duration-300 hover:border-blue focus:border-blue ${isCart ? ' bg-black' : ''}`} onClickBtn={() => toggleCart()}>
+        <img src={isCart ? CartFull : Cart} alt='cart' />
+      </Button>
     </m.div>
   );
 };

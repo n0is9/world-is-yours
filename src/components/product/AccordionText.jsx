@@ -27,13 +27,13 @@ const Accordion = () => {
           <AnimatePresence>
             {openIndex === item.id && (
               <m.ul
-                className='flex flex-col gap-4'
+                className='flex flex-col gap-4 overflow-hidden'
                 initial='collapsed'
                 animate='open'
                 exit='collapsed'
                 variants={{
-                  open: { opacity: 1, height: 'auto' },
-                  collapsed: { opacity: 0, height: 0 },
+                  open: { height: 'auto' },
+                  collapsed: { height: 0 },
                 }}
                 transition={{ duration: 0.3 }}>
                 <li>
