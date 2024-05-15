@@ -9,7 +9,6 @@ import MoveUp from '../components/common/MoveUp';
 import { $api } from '../api/api';
 
 import { motion as m } from 'framer-motion';
-import Loader from '../components/common/Loader';
 
 const ProductPage = () => {
   const { id } = useParams();

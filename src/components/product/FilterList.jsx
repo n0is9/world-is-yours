@@ -19,7 +19,7 @@ const FilterList = ({ data }) => {
   const [btnText, setBtnText] = useState('');
 
   const { name, price, description } = data;
-
+  console.log(data);
   const cart = useSelector((state) => state.cart.items);
 
   useEffect(() => {
