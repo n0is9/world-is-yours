@@ -3,7 +3,6 @@ import config from "../config/config";
 
 const BASE_URL = "https://world-is-yours-d4407070ced1.herokuapp.com";
 
-
 const api2 = {
   // language switch
   getLanguage: async (code) => {
