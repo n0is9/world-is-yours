@@ -60,7 +60,7 @@ const PhotoGallery = ({ data }) => {
 
       <div className='w-100 h-100 ml-4 cursor-pointer relative'>
         <img src={largeImage} alt='Large Image' className='object-cover w-full h-full rounded-xl' />
-        <div className='absolute top-3 right-3 m-2'>
+        <div className='absolute top-3 right-3 m-2' onClick={() => toggleWishList()}>
           <img src={isLiked ? HeartIconRed : HeartIcon} alt='heart icon' width='36' className='cursor-pointer' />
         </div>
       </div>

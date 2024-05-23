@@ -72,12 +72,12 @@ const Card = ({ data }) => {
         <img src={isLiked ? HeartIconRed : HeartIcon} alt='heart icon' width='36' className='cursor-pointer' />
       </div>
 
-      <NavLink to={`/product/${data.id}`} className='block border border-[#888888] rounded-2xl overflow-hidden relative w-90 items-center z-0'>
-        <div className='flex justify-center'>
+      <NavLink to={`/product/${data.id}`} className='block border border-[#888888] rounded-2xl relative overflow-hidden h-full items-center z-0'>
+        <div className='flex justify-center overflow-hidden'>
           <img src={data.image_1} alt={data.name} className='w-full h-96 object-cover cursor-pointer' />
         </div>
 
-        <div className='p-5 pr-[120px] flex-col'>
+        <div className='p-5 pr-[120px]'>
           <p className='text-custom-black font-semibold'>{data.name}</p>
           <p className='text-custom-black'>{data.price}</p>
         </div>

@@ -9,13 +9,13 @@ import MoveUp from '../components/common/MoveUp';
 import { $api } from '../api/api';
 
 import { motion as m } from 'framer-motion';
+import Card from '../components/common/Card';
 
 const ProductPage = () => {
   const { id } = useParams();
   const idNum = parseInt(id, 10);
 
   const [product, setProduct] = useState(null);
-  console.log(idNum, 'id');
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -24,7 +24,6 @@ const ProductPage = () => {
         const data = response.data;
         console.log(data, 'response');
         setProduct(data);
-        console.log(product);
       } catch (error) {
         console.log(error);
       }
@@ -48,11 +47,23 @@ const ProductPage = () => {
           <FilterList data={product} />
         </div>
       </div>
-      <div className='flex flex-col justify-center items-center '>
-        <h1 className='font-raleway font-semibold text-4xl text-left text-grayDark mt-20 mb-10'>Доповни комплект</h1>
-        {/*  map of cards, + 4 товари на вибір до основного  */}
-        <h1 className='font-raleway font-semibold text-4xl text-left text-grayDark mt-20 mb-10'>Вже переглянуте</h1>
-        {/*  map of cards, + 4 товари, які юзер вже переглянув  */}
+      <div className='flex flex-col justify-center items-center'>
+        {product.related_products && (
+          <>
+            <h1 className='font-raleway font-semibold text-4xl text-left text-grayDark mt-20 mb-10'>Доповни комплект</h1>
+            {product.related_products.map((item) => (
+              <Card data={item} key={item.id} />
+            ))}
+          </>
+        )}
+        {product.seen_products && (
+          <>
+            <h1 className='font-raleway font-semibold text-4xl text-left text-grayDark mt-20 mb-10'>Вже переглянуте</h1>
+            {product.seen_products.map((item) => (
+              <Card data={item} key={item.id} />
+            ))}
+          </>
+        )}
       </div>
       <MoveUp />
     </m.div>

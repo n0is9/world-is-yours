@@ -90,7 +90,7 @@ const CategoryPage = () => {
               {pages.map((pageBtn) => {
                 return (
                   <li>
-                    <Button key={pageBtn.id} classNameBtn={`text-xl ${pageBtn === page ? 'text-black' : 'text-gray'}`} onClickBtn={() => setPage(pageBtn)}>
+                    <Button key={pageBtn.id} classNameBtn={`text-xl font-sans ${pageBtn === page ? 'text-black' : 'text-gray'}`} onClickBtn={() => setPage(pageBtn)}>
                       {pageBtn}
                     </Button>
                   </li>

@@ -58,7 +58,7 @@ const FilterList = ({ data }) => {
       <div className=''>
         <p>Колір</p>
         <span>{selectedColor}</span>
-        <div class='flex flex-row'>
+        <div className='flex flex-row'>
           <ColorPicker />
         </div>
       </div>
