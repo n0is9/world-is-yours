@@ -35,7 +35,7 @@ const Cart = () => {
 
       const products = await Promise.all(productRequests);
       setCart(products);
-      setTotal(newTotal); // Оновлення стану загальної суми
+      setTotal(newTotal.toFixed(2)); // Оновлення стану загальної суми
     } catch (error) {
       console.log(error);
     }
@@ -103,7 +103,7 @@ const Cart = () => {
           Кошик порожній. <br /> Додайте товари, які вас цікавлять!
         </p>
         <Link to='/'>
-          <Button classNameBtn='w-22 bg-gray-dark mt-6 p-4 border rounded-xl font-bold text-18px text-white' nameBtn='submitForm' valueBtn='submit' type='submit'>
+          <Button classNameBtn='w-22 bg-gray-dark my-12 p-4 border rounded-xl leading-none font-bold text-20px text-white duration-300 hover:bg-transparent hover:text-black focus:bg-transparent focus:text-black' nameBtn='submitForm' valueBtn='submit' type='submit'>
             На головну сторінку
           </Button>
         </Link>
