@@ -22,6 +22,7 @@ import { setWishlist } from './redux/wishlistSlice';
 import { addItemsCart } from './redux/cartSlice';
 import Favorites from './pages/Favorites';
 
+
 const PaymentPage = lazy(() => import('./pages/PaymentPage'));
 const InfoPayment = lazy(() => import('./pages/InfoHelp'));
 const NotFound404 = lazy(() => import('./pages/NotFound404'));
@@ -128,7 +129,9 @@ function App() {
         </Routes>
       </main>
       <Footer />
+      
     </Suspense>
+    
   );
 }
 

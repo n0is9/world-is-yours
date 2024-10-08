@@ -19,6 +19,7 @@ const api2 = {
     try {
       const response = await axios.post(`/api/users/`, userData);
       // console.log('signUp success.  status:', response.status);
+      
       return response;
     } catch (error) {
       console.log("Error registering user in api:", error);
