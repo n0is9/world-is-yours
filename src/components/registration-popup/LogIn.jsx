@@ -15,11 +15,9 @@ import attentionIcon from "../../assets/icons/icon-attention.svg";
 import openEye from "../../assets/icons/icon-openEye.svg";
 import closeEye from "../../assets/icons/icon-Eye-off.svg";
 
-import { $api, api2 } from "../../api/api";
+import { $api } from "../../api/api";
 import { useDispatch } from "react-redux";
 import { login, updateUser } from "../../redux/userSlice";
-// import {auth, facebookProvider, googleProvider} from './config'
-// import { signInWithPopup } from "firebase/auth";
 
 const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -28,14 +26,13 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
     setIsLoading(true);
     try {
       const user = await socialMediaAuth(provider);
-      console.log("User signed in:", user);
 
       if (!user) {
         throw new Error("Користувач не підписався ");
       }
 
       const idToken = await user.getIdToken();
-      console.log("ID Token отримано:", idToken);
+
       if (!idToken) {
         throw new Error("Не вдалося отримати ID Token від користувача");
       }
