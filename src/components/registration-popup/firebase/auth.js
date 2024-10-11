@@ -14,3 +14,8 @@ const socialMediaAuth = (provider) => {
 };
 
 export default socialMediaAuth;
+
+
+
+
+

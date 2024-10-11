@@ -14,7 +14,8 @@ import socialMediaAuth from "./firebase/auth";
 import attentionIcon from "../../assets/icons/icon-attention.svg";
 import openEye from "../../assets/icons/icon-openEye.svg";
 import closeEye from "../../assets/icons/icon-Eye-off.svg";
-// import {auth } from './firebase/config'
+
+// import { auth } from "./firebase/config";
 // import { FacebookAuthProvider, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import useTranslation from "../../locale/locales";
 import { $api } from "../../api/api";
@@ -29,6 +30,38 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
 
   const handleOnClick = async (provider) => {
     await socialMediaAuth(provider);
+  };
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleGoogleSignIn = async () => {
+    setIsLoading(true);
+    try {
+      const user = await socialMediaAuth(googleProvider);
+      console.log("User signed in:", user);
+
+      if (!user) {
+        throw new Error("Користувач не підписався через Google");
+      }
+
+      const idToken = await user.getIdToken();
+      console.log("ID Token отримано:", idToken);
+      if (!idToken) {
+        throw new Error("Не вдалося отримати ID Token від користувача");
+      }
+
+      console.log("ID Token отримано:", idToken);
+
+      const response = await $api.post("/api/auth/social-login", {
+        token: idToken,
+      });
+
+      handleSignInStatus(response.status, response.data);
+    } catch (error) {
+      console.error("Помилка під час входу через Google:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // inputs
@@ -279,7 +312,9 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
     } catch (error) {
       // api2 signUp error
       if (error.response && error.response.status) {
-        console.log(`Error during login in signIn. status: ${error.response.status}`);
+        console.log(
+          `Error during login in signIn. status: ${error.response.status}`
+        );
         handleSignInStatus(error.response.status);
       } else {
         console.error("No server response error in signIn", error);
@@ -311,7 +346,11 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
               </label>
               <div className={styles.inputContainer}>
                 {nameError && (
-                  <img className={styles.attention} src={attentionIcon} alt="attention" />
+                  <img
+                    className={styles.attention}
+                    src={attentionIcon}
+                    alt="attention"
+                  />
                 )}
                 {nameError && <div className={styles.error}>{nameError}</div>}
                 <Input
@@ -337,9 +376,15 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
               </label>
               <div className={styles.inputContainer}>
                 {surnameError && (
-                  <img className={styles.attention} src={attentionIcon} alt="attention" />
+                  <img
+                    className={styles.attention}
+                    src={attentionIcon}
+                    alt="attention"
+                  />
                 )}
-                {surnameError && <div className={styles.error}>{surnameError}</div>}
+                {surnameError && (
+                  <div className={styles.error}>{surnameError}</div>
+                )}
                 <Input
                   classNameInput={styles.input}
                   typeInput="text"
@@ -363,7 +408,11 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
               </label>
               <div className={styles.inputContainer}>
                 {emailError && (
-                  <img className={styles.attention} src={attentionIcon} alt="attention" />
+                  <img
+                    className={styles.attention}
+                    src={attentionIcon}
+                    alt="attention"
+                  />
                 )}
                 {emailError && <div className={styles.error}>{emailError}</div>}
                 <Input
@@ -396,7 +445,9 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
                       alt="attention"
                     />
                   )}
-                  {passwordError && <div className={styles.error}>{passwordError}</div>}
+                  {passwordError && (
+                    <div className={styles.error}>{passwordError}</div>
+                  )}
                   <Input
                     classNameInput={styles.input}
                     typeInput={isPasswordVisible ? "text" : "password"}
@@ -445,7 +496,8 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
                 src={Google}
                 className={styles.mediaIcons}
                 alt="icon google"
-                onClick={() => handleOnClick(googleProvider)}
+                // onClick={() => handleOnClick(googleProvider)}
+                onClick={handleGoogleSignIn}
               />
               <img src={Apple} className={styles.mediaIcons} alt="icon apple" />
             </div>
