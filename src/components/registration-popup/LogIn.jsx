@@ -22,20 +22,16 @@ import { login, updateUser } from "../../redux/userSlice";
 // import { signInWithPopup } from "firebase/auth";
 
 const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
-  const handleOnClick = async (provider) => {
-    await socialMediaAuth(provider);
-  };
-
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleGoogleSignIn = async () => {
+  const handleOnClick = async (provider) => {
     setIsLoading(true);
     try {
-      const user = await socialMediaAuth(googleProvider);
+      const user = await socialMediaAuth(provider);
       console.log("User signed in:", user);
 
       if (!user) {
-        throw new Error("Користувач не підписався через Google");
+        throw new Error("Користувач не підписався ");
       }
 
       const idToken = await user.getIdToken();
@@ -52,7 +48,7 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
 
       handleSignInStatus(response.status, response.data);
     } catch (error) {
-      console.error("Помилка під час входу через Google:", error);
+      console.error("Помилка під час входу ", error);
     } finally {
       setIsLoading(false);
     }
@@ -318,13 +314,14 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
                 className={styles.mediaIcons}
                 alt="icon facebook"
                 onClick={() => handleOnClick(facebookProvider)}
+                disabled={isLoading}
               />
               <img
                 src={Google}
                 className={styles.mediaIcons}
                 alt="icon google"
-                // onClick={() => handleOnClick(googleProvider)}
-                onClick={handleGoogleSignIn}
+                onClick={() => handleOnClick(googleProvider)}
+                disabled={isLoading}
               />
               <img src={Apple} className={styles.mediaIcons} alt="icon apple" />
             </div>

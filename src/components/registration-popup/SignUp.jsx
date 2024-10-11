@@ -15,8 +15,6 @@ import attentionIcon from "../../assets/icons/icon-attention.svg";
 import openEye from "../../assets/icons/icon-openEye.svg";
 import closeEye from "../../assets/icons/icon-Eye-off.svg";
 
-// import { auth } from "./firebase/config";
-// import { FacebookAuthProvider, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import useTranslation from "../../locale/locales";
 import { $api } from "../../api/api";
 
@@ -27,21 +25,16 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
   const dispatch = useDispatch();
 
   const t = useTranslation();
-
-  const handleOnClick = async (provider) => {
-    await socialMediaAuth(provider);
-  };
-
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleGoogleSignIn = async () => {
+  const handleOnClick = async (provider) => {
     setIsLoading(true);
     try {
-      const user = await socialMediaAuth(googleProvider);
+      const user = await socialMediaAuth(provider);
       console.log("User signed in:", user);
 
       if (!user) {
-        throw new Error("Користувач не підписався через Google");
+        throw new Error("Користувач не підписався ");
       }
 
       const idToken = await user.getIdToken();
@@ -58,7 +51,7 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
 
       handleSignInStatus(response.status, response.data);
     } catch (error) {
-      console.error("Помилка під час входу через Google:", error);
+      console.error("Помилка під час входу ", error);
     } finally {
       setIsLoading(false);
     }
@@ -491,13 +484,14 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
                 className={styles.mediaIcons}
                 alt="icon facebook"
                 onClick={() => handleOnClick(facebookProvider)}
+                disabled={isLoading}
               />
               <img
                 src={Google}
                 className={styles.mediaIcons}
                 alt="icon google"
-                // onClick={() => handleOnClick(googleProvider)}
-                onClick={handleGoogleSignIn}
+                onClick={() => handleOnClick(googleProvider)}
+                disabled={isLoading}
               />
               <img src={Apple} className={styles.mediaIcons} alt="icon apple" />
             </div>
