@@ -41,6 +41,18 @@ const api2 = {
     }
   },
 
+  socialLogin: async (idToken) => {
+    try {
+      const response = await axios.post(`/api/auth/social-login`, { idToken });
+      // console.log('socialLogin success:', response);
+      return response;
+    } catch (error) {
+      console.error("Error during social login in api:", error);
+      throw error;
+    }
+  },
+
+  
   resetPassword: async (userData) => {
     try {
       const response = await axios.post(`/api/password_reset/`, userData);
