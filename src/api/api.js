@@ -41,6 +41,28 @@ const api2 = {
     }
   },
 
+  updateUser:async (userData) => {
+    try {
+      const response = await axios.patch(`/api/users/${userData.user_id}/`, userData);
+      
+      return response;
+    } catch (error) {
+      console.log("Error updating user in api:", error);
+      throw error;
+    }
+  },
+
+  socialLogin: async (idToken) => {
+    try {
+      const response = await axios.post(`/api/auth/social-login`, { idToken });
+      // console.log('socialLogin success:', response);
+      return response;
+    } catch (error) {
+      console.error("Error during social login in api:", error);
+      throw error;
+    }
+  },
+
   resetPassword: async (userData) => {
     try {
       const response = await axios.post(`/api/password_reset/`, userData);
@@ -70,6 +92,8 @@ $api.interceptors.request.use(
       const token = user.token;
       if (token) {
         config.headers["Authorization"] = `Token ${token}`;
+        //  config.headers["Authorization"] = `Bearer ${token}`;
+         console.log("Token added to request:", token);
       }
     }
     return config;
