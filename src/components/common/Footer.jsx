@@ -47,7 +47,10 @@ const Footer = () => {
       <div className='container grid grid-cols-1 md:grid-cols-3 gap-10 justify-between pt-16 pb-5 mx-auto place-content-center place-items-center items-start'>
         <div className='social-media-block ml-10 '>
           <h1 className='text-white mb-5 font-inter text-20px'>Ваша пригода починається тут</h1>
-          <img src={LogoWorldIsYours} alt='logo' />
+          <NavLink to='/' onClick={() => window.scrollTo(0, 0)}>
+            <img src={LogoWorldIsYours} alt='logo' />
+          </NavLink>
+
           <div className='social-media-icons mt-6 mb-10 flex flex-row gap-4'>
             <a href='https://web.telegram.org/' className='text-gray flex items-center text-lg duration-500 p-1 hover:text-blue focus:text-blue'>
               <FontAwesomeIcon icon={faTelegram} size='2x' />
@@ -104,7 +107,14 @@ const Footer = () => {
           <h2 className='text-white mb-4 font-raleway mb-0 text-20px'>Підпишиться на розсилку</h2>
           <p className='text-white text-opacity-30 font-raleway mt-1 mb-10 text-16px'>Щоб першим дізнаватися про новинки та знижки</p>
           <form className='relative' onSubmit={handleFormSubmit}>
-            <input type='text' className={`bg-gray-dark p-3 text-white-500 border-2 border-${isValidEmail ? 'white' : 'red'}-500 rounded-lg w-full text-16px text-white `} placeholder='Введіть ел.пошту' value={email} onChange={handleEmailChange} onKeyDown={handleEnterKeyPress} />
+            <input
+              type='text'
+              className={`bg-gray-dark p-3 text-white-500 border-2 border-${isValidEmail ? 'white' : 'red'}-500 rounded-lg w-full text-16px text-white `}
+              placeholder='Введіть електронну пошту'
+              value={email}
+              onChange={handleEmailChange}
+              onKeyDown={handleEnterKeyPress}
+            />
             {!isValidEmail && <div className='text-red-500 absolute inset-x-0 top-14 mb-2 ml-3 text-sm'>Неправильний формат email</div>}
             {isEmailSubmitted && isValidEmail && <NewsLetter />}
             <div className='absolute inset-y-auto right-0 flex items-center pr-3 pointer-events-none'>
