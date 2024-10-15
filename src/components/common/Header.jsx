@@ -276,11 +276,6 @@ const Search = () => {
     }
   };
 
-  //selected text on click
-  const handleClick = (e) => {
-    e.target.select();
-  };
-
   const documentClickCheck = (e) => {
     if (!e.target.closest(".StateClicked")) {
       console.log("state clicked");
@@ -295,6 +290,10 @@ const Search = () => {
       document.removeEventListener("click", documentClickCheck);
     };
   }, []);
+  //selected text on click
+  const handleClick = (e) => {
+    e.target.select();
+  };
 
   return (
     <div className="max-h-[32px]">
