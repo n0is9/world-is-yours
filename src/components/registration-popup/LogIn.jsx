@@ -15,15 +15,40 @@ import attentionIcon from "../../assets/icons/icon-attention.svg";
 import openEye from "../../assets/icons/icon-openEye.svg";
 import closeEye from "../../assets/icons/icon-Eye-off.svg";
 
-import { $api, api2 } from "../../api/api";
+import { $api } from "../../api/api";
 import { useDispatch } from "react-redux";
 import { login, updateUser } from "../../redux/userSlice";
-// import {auth, facebookProvider, googleProvider} from './config'
-// import { signInWithPopup } from "firebase/auth";
 
 const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleOnClick = async (provider) => {
-    await socialMediaAuth(provider);
+    setIsLoading(true);
+    try {
+      const user = await socialMediaAuth(provider);
+
+      if (!user) {
+        throw new Error("Користувач не підписався ");
+      }
+
+      const idToken = await user.getIdToken();
+
+      if (!idToken) {
+        throw new Error("Не вдалося отримати ID Token від користувача");
+      }
+
+      console.log("ID Token отримано:", idToken);
+
+      const response = await $api.post("/api/auth/social-login", {
+        token: idToken,
+      });
+
+      handleSignInStatus(response.status, response.data);
+    } catch (error) {
+      console.error("Помилка під час входу ", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const dispatch = useDispatch();
@@ -166,7 +191,9 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
     } catch (error) {
       // api signUp error
       if (error.response && error.response.status) {
-        console.log(`Error during login in signIn. status: ${error.response.status}`);
+        console.log(
+          `Error during login in signIn. status: ${error.response.status}`
+        );
         handleSignInStatus(error.response.status);
       } else {
         console.error("No server response error in signIn", error);
@@ -199,7 +226,11 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
               </label>
               <div className={styles.inputContainer}>
                 {emailError && (
-                  <img className={styles.attention} src={attentionIcon} alt="attention" />
+                  <img
+                    className={styles.attention}
+                    src={attentionIcon}
+                    alt="attention"
+                  />
                 )}
                 {emailError && <div className={styles.error}>{emailError}</div>}
                 <Input
@@ -232,7 +263,9 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
                       alt="attention"
                     />
                   )}
-                  {passwordError && <div className={styles.error}>{passwordError}</div>}
+                  {passwordError && (
+                    <div className={styles.error}>{passwordError}</div>
+                  )}
                   <Input
                     classNameInput={styles.input}
                     typeInput={isPasswordVisible ? "text" : "password"}
@@ -278,12 +311,14 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
                 className={styles.mediaIcons}
                 alt="icon facebook"
                 onClick={() => handleOnClick(facebookProvider)}
+                disabled={isLoading}
               />
               <img
                 src={Google}
                 className={styles.mediaIcons}
                 alt="icon google"
                 onClick={() => handleOnClick(googleProvider)}
+                disabled={isLoading}
               />
               <img src={Apple} className={styles.mediaIcons} alt="icon apple" />
             </div>
