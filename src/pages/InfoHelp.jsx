@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+
 import SideLinks from '../components/info-help/SideLinks';
 import Payment from '../components/info-help/Payment';
 import Return from '../components/info-help/Return';
 import Delivery from '../components/info-help/Delivery';
-
-import { motion as m } from 'framer-motion';
+import Container from './Container';
 
 const InfoHelp = () => {
   const location = useLocation();
@@ -30,20 +30,24 @@ const InfoHelp = () => {
   }, [paramComponent]);
 
   return (
-    <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
+    <Container maxW='1480px'>
       <div className='flex flex-col'>
-        <div className='text-custom-black text-35px font-semibold mx-32 mt-12' id='dovidka'>
+        <div className='text-custom-black text-35px font-semibold mt-12' id='dovidka'>
           Довідка
         </div>
-        <div className='flex flex-row mx-32 mb-20 mt-12'>
+        <div className='flex flex-row mb-20 mt-12'>
           <SideLinks onLinkClick={handleComponentClick} />
 
-          {selectedComponent === 'payment' && <Payment />}
-          {selectedComponent === 'delivery' && <Delivery />}
-          {selectedComponent === 'return' && <Return />}
+          <div className='flex flex-col gap-8'>
+            {selectedComponent === 'payment' && <Payment />}
+            {selectedComponent === 'delivery' && <Delivery />}
+            {selectedComponent === 'return' && <Return />}
+            <p className='text-18px font-semibold'>Якщо у вас виникнуть питання або потреба у додатковій допомозі, будь ласка, не соромтеся звертатися до нашої служби підтримки. Ми готові вам допомогти та зробити ваше перебування в нашому автодомі щасливим та комфортним.</p>
+            <p className='text-18px font-semibold'>З повагою, WORLD IS YOURS!</p>
+          </div>
         </div>
       </div>
-    </m.div>
+    </Container>
   );
 };
 
