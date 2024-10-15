@@ -27,6 +27,7 @@ export const userSlice = createSlice({
     },
     updateUser: (state, action) => {
       state.user = { ...state.user, ...action.payload };
+      state.isAuthenticated = true;
     },
   },
 });

@@ -89,11 +89,12 @@ $api.interceptors.request.use(
     }
     const user = getCookie("user");
     if (user) {
+      // console.log("cookie", document.cookie);
       const token = user.token;
       if (token) {
         config.headers["Authorization"] = `Token ${token}`;
-        //  config.headers["Authorization"] = `Bearer ${token}`;
-         console.log("Token added to request:", token);
+      
+        //  console.log("Token added to request:", token);
       }
     }
     return config;
@@ -102,6 +103,10 @@ $api.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
+
+
+
 
 $api.interceptors.response.use(
   (response) => {

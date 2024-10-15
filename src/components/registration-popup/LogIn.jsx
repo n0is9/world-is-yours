@@ -185,6 +185,7 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
         username: userData.email,
         password: userData.password,
       });
+      console.log("Response body:", signInResult);
 
       handleSignInStatus(signInResult.status, signInResult);
       // console.log('signIn successful:', signInResult);

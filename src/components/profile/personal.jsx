@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "../../redux/userSlice";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { $api } from "../../api/api.js";
 
 import { motion as m } from "framer-motion";
@@ -42,23 +44,40 @@ const Personal = () => {
             password: "",
             confirmPassword: "",
           }}
-          validationSchema={validationSchema} // Add validation schema
+          validationSchema={validationSchema}
+          enableReinitialize={true}
           onSubmit={async (values) => {
-            const updatedValues = {
-              ...user, // включає всі поля користувача
+            const userData = {
+              ...user,
               ...values, // включає поля з форм
             };
+
             try {
-              console.log("Sending values:", updatedValues);
+              console.log("Sending values:", userData);
               const response = await $api.patch(
-                `/api/users/${updatedValues.user_id}/`,
-                updatedValues
+                `/api/users/${userData.user_id}/`,
+
+                {
+                  first_name: userData.first_name,
+                  last_name: userData.last_name,
+                  phone: userData.phone,
+                  email: userData.email,
+                }
               );
               console.log("Response from server:", response.data);
-              // Dispatch the updated user data to Redux
-              dispatch(updateUser(response.data.user));
+
+              dispatch(updateUser(response.data));
+
+              toast.info("Your data has been updated successfully", {
+                position: "top-center",
+                autoClose: 3000,
+              });
             } catch (error) {
               console.error("Error updating user:", error);
+              toast.info("Sorry, your data could not be updated", {
+                position: "top-center",
+                autoClose: 3000,
+              });
             }
           }}
         >
@@ -140,9 +159,10 @@ const Personal = () => {
                 </label>
               </div>
 
+              <ToastContainer />
               <Button
                 type="submit"
-                classNameBtn="w-full mt-7 bg-gray-dark p-4 border rounded-xl font-bold text-18px text-white duration-300 hover:bg-transparent hover:text-black focus:bg-transparent focus:text-black"
+                classNameBtn="w-full mt-7 bg-gray-dark p-4 border rounded-xl font-bold text-18px text-white duration-300 hover:bg-transparent hover:text-black"
               >
                 Зберегти
               </Button>
