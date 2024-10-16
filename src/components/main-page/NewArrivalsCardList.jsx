@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Card from '../common/Card';
 // import ArrowRight from "../../assets/icons/arrow-up.svg";
 import { $api } from '../../api/api';
-import Container from '../common/container';
+import Container from '../common/Container';
 import useTranslation from '../../locale/locales';
 
 const NewArrivalsCardList = () => {

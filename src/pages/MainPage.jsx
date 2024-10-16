@@ -1,7 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import ArrowIcon from '../assets/icons/icon-arrow.svg';
-import ChatIcon from '../assets/icons/button_chat.svg';
 
 // components
 import WhyUs from '../components/main-page/WhyUs';
@@ -13,6 +11,8 @@ import ChatPopup from '../components/main-page/ChatPopup';
 import Slider from '../components/main-page/Slider';
 import useTranslation from '../locale/locales';
 import MoveUp from '../components/common/MoveUp';
+import ArrowIcon from '../assets/icons/icon-arrow.svg';
+import ChatIcon from '../assets/icons/button_chat.svg';
 
 import { motion as m } from 'framer-motion';
 

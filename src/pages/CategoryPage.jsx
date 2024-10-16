@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import CategoryList from '../components/category-page/CategoryList';
-import FilterPopup from '../components/category-page/FilterPopup';
-import Card from '../components/common/Card';
 import { $api } from '../api/api';
 import { useSelector } from 'react-redux';
 
-import { motion as m } from 'framer-motion';
-
+import Container from '../components/common/Container';
+import CategoryList from '../components/category-page/CategoryList';
+import FilterPopup from '../components/category-page/FilterPopup';
+import Card from '../components/common/Card';
 import MoveUp from '../components/common/MoveUp';
 import Button from '../components/common/Button';
-
 import arrowUp from '../assets/icons/arrow-up.svg';
 
 const CategoryPage = () => {
@@ -72,7 +70,7 @@ const CategoryPage = () => {
   };
 
   return (
-    <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
+    <Container>
       <CategoryList />
       {isPopupOpen && <FilterPopup onClose={handleTogglePopup} />}
       <div className='grid grid-flow-row-dense gap-4 mx-10 mb-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center'>
@@ -109,7 +107,7 @@ const CategoryPage = () => {
       ) : (
         <p>No DATA</p>
       )}
-    </m.div>
+    </Container>
   );
 };
 
