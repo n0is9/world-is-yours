@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { $api } from '../api/api';
 
-import Container from '../components/common/Container';
+import Container from '../components/common/container';
 import PhotoGallery from '../components/product/PhotoGallery';
 import FilterList from '../components/product/FilterList';
 import PreviousPage from '../components/common/PreviousPage';

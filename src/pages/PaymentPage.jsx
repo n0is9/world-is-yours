@@ -4,7 +4,7 @@ import UserOrder from '../components/payment-page/UserOrder';
 import PlacingAnOrder from '../components/payment-page/PlacingAnOrder';
 import PreviousPage from '../components/common/PreviousPage';
 
-import Container from '../components/common/Container';
+import Container from '../components/common/container';
 
 const PaymentPage = () => {
   return (

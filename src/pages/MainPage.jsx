@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
 
+import { motion as m } from 'framer-motion';
+
 // components
 import WhyUs from '../components/main-page/WhyUs';
 // import SeasonSelect from "../components/main-page/SeasonSelect";
@@ -13,8 +15,6 @@ import useTranslation from '../locale/locales';
 import MoveUp from '../components/common/MoveUp';
 import ArrowIcon from '../assets/icons/icon-arrow.svg';
 import ChatIcon from '../assets/icons/button_chat.svg';
-
-import { motion as m } from 'framer-motion';
 
 const MainPage = () => {
   const t = useTranslation();

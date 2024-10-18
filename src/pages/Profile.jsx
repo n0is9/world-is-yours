@@ -3,7 +3,7 @@ import { logout } from '../redux/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import Container from '../components/common/Container';
+import Container from '../components/common/container';
 import Personal from '../components/profile/personal';
 import NotFound404 from './NotFound404';
 import Adress from '../components/profile/adress';

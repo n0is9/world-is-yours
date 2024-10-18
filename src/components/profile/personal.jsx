@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Button from '../common/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../../redux/userSlice';
 import { Formik, Form, Field } from 'formik';
@@ -7,7 +6,8 @@ import * as Yup from 'yup';
 import { $api } from '../../api/api.js';
 
 import { motion as m } from 'framer-motion';
-import { motion as m } from 'framer-motion';
+
+import Button from '../common/Button';
 
 const Personal = () => {
   const user = useSelector((state) => state.user.user);

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { $api } from '../api/api';
 import { useSelector } from 'react-redux';
 
-import Container from '../components/common/Container';
+import Container from '../components/common/container';
 import CategoryList from '../components/category-page/CategoryList';
 import FilterPopup from '../components/category-page/FilterPopup';
 import Card from '../components/common/Card';
