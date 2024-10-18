@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import HeartIcon from '../../assets/icons/icon-heart.svg';
-import HeartIconRed from '../../assets/icons/icon-heart-red.svg';
+import HeartIcon from "../../assets/icons/icon-heart.svg";
+import HeartIconRed from "../../assets/icons/icon-heart-red.svg";
 
-import { addItem, removeItem } from '../../redux/wishlistSlice';
-import { $api } from '../../api/api';
-import { useDispatch, useSelector } from 'react-redux';
+import { addItem, removeItem } from "../../redux/wishlistSlice";
+import { $api } from "../../api/api";
+import { useDispatch, useSelector } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const PhotoGallery = ({ data }) => {
   const dispatch = useDispatch();
@@ -17,6 +19,7 @@ const PhotoGallery = ({ data }) => {
   const [smallImages, setSmallImages] = useState([image_2, image_3, image_4]);
 
   const wishlist = useSelector((state) => state.wishlist.items);
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 
   useEffect(() => {
     if (wishlist.includes(data.id)) {
@@ -27,6 +30,13 @@ const PhotoGallery = ({ data }) => {
   }, [data, wishlist]);
 
   const toggleWishList = async () => {
+    if (!isAuthenticated) {
+      toast.info("This action is available to registered users only", {
+        position: "top-center",
+        autoClose: 3000,
+      });
+      return;
+    }
     try {
       if (!isLiked) {
         await $api.post(`/api/wishlist/`, { product: data.id });
@@ -51,17 +61,35 @@ const PhotoGallery = ({ data }) => {
   };
 
   return (
-    <div className='flex grow'>
-      <div className='flex flex-col'>
+    <div className="flex grow">
+      <div className="flex flex-col">
         {smallImages.map((image, id) => (
-          <img key={id} src={image} alt={`Image ${id + 1}`} className='w-32 h-32 mb-4 cursor-pointer rounded object-cover' onClick={() => handleImageClick(id)} />
+          <img
+            key={id}
+            src={image}
+            alt={`Image ${id + 1}`}
+            className="w-32 h-32 mb-4 cursor-pointer rounded object-cover"
+            onClick={() => handleImageClick(id)}
+          />
         ))}
       </div>
-
-      <div className='w-100 h-100 ml-4 cursor-pointer relative'>
-        <img src={largeImage} alt='Large Image' className='object-cover w-full h-full rounded-xl' />
-        <div className='absolute top-3 right-3 m-2' onClick={() => toggleWishList()}>
-          <img src={isLiked ? HeartIconRed : HeartIcon} alt='heart icon' width='36' className='cursor-pointer' />
+      <ToastContainer />
+      <div className="w-100 h-100 ml-4 cursor-pointer relative">
+        <img
+          src={largeImage}
+          alt="Large Image"
+          className="object-cover w-full h-full rounded-xl"
+        />
+        <div
+          className="absolute top-3 right-3 m-2"
+          onClick={() => toggleWishList()}
+        >
+          <img
+            src={isLiked ? HeartIconRed : HeartIcon}
+            alt="heart icon"
+            width="36"
+            className="cursor-pointer"
+          />
         </div>
       </div>
     </div>

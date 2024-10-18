@@ -1,4 +1,4 @@
-import { FacebookAuthProvider, GoogleAuthProvider, OAuthProvider } from 'firebase/auth';
+import { FacebookAuthProvider, GoogleAuthProvider } from 'firebase/auth';
 
 // Создание объектов провайдеров
 export const facebookProvider = new FacebookAuthProvider();

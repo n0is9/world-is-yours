@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import CartItem from '../components/cart/CartItem';
-import Button from '../components/common/Button';
 import { Link } from 'react-router-dom';
 
-import { motion as m } from 'framer-motion';
+import CartItem from '../components/cart/CartItem';
+import Button from '../components/common/Button';
+import Container from '../components/common/container';
+
 import { $api } from '../api/api';
 
 const Cart = () => {
@@ -112,9 +113,9 @@ const Cart = () => {
   }
 
   return (
-    <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
-      <div className='w-8/12 mx-auto mt-16 mb-10'>
-        <div className='flex justify-between items-center relative'>
+    <Container>
+      <div className='w-8/12 mt-12 mb-14'>
+        <div className='flex justify-between items-center relative mb-12'>
           <p className='font-raleway font-semibold text-40px mx-auto'>Кошик</p> <span className='hidden'>{upd}</span>
           <p className='absolute end-0 font-raleway font-normal text-lg cursor-pointer hover:underline focus:underline' onClick={handleRemoveAllItems} tabIndex='0'>
             Видалити все
@@ -127,22 +128,22 @@ const Cart = () => {
           ))}
         </div>
       </div>
-      <div className='w-10/12 mx-auto'>
+      <div className='w-10/12'>
         <hr className='text-gray' />
 
-        <div className='flex flex-row text-center items-center my-10'>
-          <Button classNameBtn='w-9/12 bg-transparent border-blue border-dashed text-blue duration-300 p-4 border rounded-xl font-normal text-18px hover:text-white hover:bg-blue focus:text-white focus:bg-blue' nameBtn='submitForm' valueBtn='submit' type='submit'>
+        <div className='flex flex-row text-center items-center justify-end my-10'>
+          {/* <Button classNameBtn='w-9/12 bg-transparent border-blue border-dashed text-blue duration-300 p-4 border rounded-xl font-normal text-18px hover:text-white hover:bg-blue focus:text-white focus:bg-blue' nameBtn='submitForm' valueBtn='submit' type='submit'>
             Промокод для знижки
-          </Button>
+          </Button> */}
           <p className='w-full items-center font-semibold text-xl font-sans'>Всього: {total} грн</p>
-          <Button classNameBtn='w-9/12 bg-gray-dark p-4 border rounded-xl font-bold text-18px text-white duration-300 hover:bg-transparent hover:text-black focus:bg-transparent focus:text-black' nameBtn='submitForm' valueBtn='submit' type='submit'>
-            Оплатити
+          <Button classNameBtn='w-6/12 bg-gray-dark p-4 border rounded-xl font-bold text-18px text-white duration-300 hover:bg-transparent hover:text-black focus:bg-transparent focus:text-black' nameBtn='submitForm' valueBtn='submit' type='submit'>
+            Оформити замовлення
           </Button>
         </div>
 
         <hr className='mb-10 text-gray' />
       </div>
-    </m.div>
+    </Container>
   );
 };
 

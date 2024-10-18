@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { $api } from '../api/api';
 
+import Container from '../components/common/container';
 import PhotoGallery from '../components/product/PhotoGallery';
 import FilterList from '../components/product/FilterList';
 import PreviousPage from '../components/common/PreviousPage';
 import MoveUp from '../components/common/MoveUp';
-
-import { $api } from '../api/api';
-
-import { motion as m } from 'framer-motion';
 import Card from '../components/common/Card';
 
 const ProductPage = () => {
@@ -39,7 +37,7 @@ const ProductPage = () => {
   }
 
   return (
-    <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
+    <Container>
       <PreviousPage text='Каталог' link='/categories' />
       <div className='flex justify-center items-center mt-20'>
         <div className='flex flex-row gap-20 basis-[1150px]'>
@@ -66,7 +64,7 @@ const ProductPage = () => {
         )}
       </div>
       <MoveUp />
-    </m.div>
+    </Container>
   );
 };
 
