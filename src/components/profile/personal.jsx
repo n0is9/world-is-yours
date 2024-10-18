@@ -7,6 +7,7 @@ import * as Yup from "yup";
 import { $api } from "../../api/api.js";
 
 import { motion as m } from "framer-motion";
+import { motion as m } from "framer-motion";
 
 const Personal = () => {
   const user = useSelector((state) => state.user.user);
@@ -21,6 +22,15 @@ const Personal = () => {
   });
 
   return (
+    <m.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+    >
+      <h3 className="text-blue font-raleway lining-nums proportional-nums  font-semibold mb-10 text-2xl">
+        Контактна інформація
+      </h3>
+      <div className="flex justify-start gap-x-32   flex-col xxl:flex-row">
     <m.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}

@@ -44,9 +44,7 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
 
       console.log("ID Token отримано:", idToken);
 
-      const response = await $api.post("/api/auth/social-login", {
-        token: idToken,
-      });
+      const response = await $api.post(idToken);
 
       handleSignInStatus(response.status, response.data);
     } catch (error) {
