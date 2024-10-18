@@ -63,7 +63,7 @@ const CategoryList = () => {
     navigate(`?category=${category}`);
   };
   return (
-    <div className='flex flex-col m-10'>
+    <div className='flex flex-col m-10 w-full'>
       <h1 className='text-blue text-2xl mb-4 font-semibold'>Категорії</h1>
       <div className='flex flex-row justify-between items-end'>
         <div className='flex flex-row gap-6 font-medium items-center'>

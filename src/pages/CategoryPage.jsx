@@ -1,35 +1,31 @@
 import React, { useEffect, useState } from 'react';
+import { $api } from '../api/api';
+import { useSelector } from 'react-redux';
+
+import Container from '../components/common/container';
 import CategoryList from '../components/category-page/CategoryList';
 import FilterPopup from '../components/category-page/FilterPopup';
 import Card from '../components/common/Card';
-import { $api } from '../api/api';
-import { useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-
-import { motion as m } from 'framer-motion';
-
 import MoveUp from '../components/common/MoveUp';
 import Button from '../components/common/Button';
-
 import arrowUp from '../assets/icons/arrow-up.svg';
+import Pagination from '../components/category-page/Pagination.jsx';
 
 const CategoryPage = () => {
-  const location = useLocation();
   const [categoryId, setCategoryId] = useState(null);
   const filters = useSelector((state) => state.categryFilter);
-
-  let query = {};
-
+  const [arrivals, setArrivals] = useState([]);
+  const [page, setPage] = useState(1);
+  const [next, setNext] = useState('true');
+  const [totalItems, setTotalItems] = useState(0);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const perPage = 8;
+  let query = {};
 
   const handleTogglePopup = () => {
     setIsPopupOpen(!isPopupOpen);
   };
-
-  const [arrivals, setArrivals] = useState([]);
-
-  const [page, setPage] = useState(1);
-  const [next, setNext] = useState('true');
 
   // fetch product
   const fetchData = async (page_size, page) => {
@@ -48,20 +44,25 @@ const CategoryPage = () => {
       let queryString = Object.values(query).join('');
       console.log(queryString);
       const response = await $api.get(`/api/products/?page_size=${page_size}&page=${page}${queryString}`);
+      setTotalItems(response.data.count);
+
       setNext(response.data.next);
       // setArrivals((currentArrivals) => [...currentArrivals, ...response.data.results]);
       setArrivals(response.data.results);
+      console.log(arrivals, 'arrivals');
+      console.log(response.data, 'data');
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    fetchData(8, page);
+    fetchData(perPage, page);
   }, [page, filters]);
 
   // Pagination
-  const pages = [1, 2, 3, 4, 5];
+  const pages = [];
+  const totalPages = Math.ceil(totalItems / perPage);
 
   const setNewPage = (direction) => {
     if (page !== 1 && direction === -1) {
@@ -72,7 +73,7 @@ const CategoryPage = () => {
   };
 
   return (
-    <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
+    <Container>
       <CategoryList />
       {isPopupOpen && <FilterPopup onClose={handleTogglePopup} />}
       <div className='grid grid-flow-row-dense gap-4 mx-10 mb-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center'>
@@ -83,22 +84,14 @@ const CategoryPage = () => {
       {arrivals.length > 0 ? (
         <>
           <div className='pagination flex justify-center items-center py-10 my-12'>
-            <Button onClickBtn={() => setNewPage(-1)}>
+            <Button onClickBtn={() => setNewPage(-1)} disabled={page === 1 ? true : false}>
               <img src={arrowUp} alt='previous page button' className={`rotate-[270deg] ${page === 1 ? 'invert cursor-default' : ''}`} />
             </Button>
-            <ul className='flex gap-5 mx-[100px]'>
-              {pages.map((pageBtn) => {
-                return (
-                  <li>
-                    <Button key={pageBtn.id} classNameBtn={`text-xl ${pageBtn === page ? 'text-black' : 'text-gray'}`} onClickBtn={() => setPage(pageBtn)}>
-                      {pageBtn}
-                    </Button>
-                  </li>
-                );
-              })}
-            </ul>
-            <Button onClickBtn={() => setNewPage(+1)}>
-              <img src={arrowUp} alt='next page button' className={`rotate-90 ${page === pages.length ? 'invert cursor-default' : ''}`} />
+
+            <Pagination totalPages={totalPages} page={page} setPage={setPage} />
+
+            <Button onClickBtn={() => setNewPage(+1)} className='bg-black ' disabled={page === totalPages ? true : false}>
+              <img src={arrowUp} alt='next page button' className={`rotate-90 ${page === totalPages ? 'invert cursor-default' : ''}`} />
             </Button>
           </div>
 
@@ -109,7 +102,7 @@ const CategoryPage = () => {
       ) : (
         <p>No DATA</p>
       )}
-    </m.div>
+    </Container>
   );
 };
 

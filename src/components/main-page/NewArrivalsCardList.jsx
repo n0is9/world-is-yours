@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Card from '../common/Card';
+
 // import ArrowRight from "../../assets/icons/arrow-up.svg";
 import { $api } from '../../api/api';
+
+import Card from '../common/Card';
 import Container from '../common/container';
 import useTranslation from '../../locale/locales';
 

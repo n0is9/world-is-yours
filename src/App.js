@@ -22,6 +22,7 @@ import { setWishlist } from './redux/wishlistSlice';
 import { addItemsCart } from './redux/cartSlice';
 import Favorites from './pages/Favorites';
 
+
 const PaymentPage = lazy(() => import('./pages/PaymentPage'));
 const InfoPayment = lazy(() => import('./pages/InfoHelp'));
 const NotFound404 = lazy(() => import('./pages/NotFound404'));
@@ -72,6 +73,7 @@ function App() {
         return JSON.parse(decodeURIComponent(parts.pop().split(';').shift()));
       }
     }
+
     // init user cart and wishlist
     const user = getCookie('user');
     if (user) {
@@ -121,13 +123,15 @@ function App() {
           <Route path='/categories' element={<CategoryPage />} />
           <Route path='/cart' element={<Cart />} />
           <Route path='/contacts' element={<Contacts />} />
-          <Route path='/product' element={<ProductPage />} />
+          <Route path='/product/:id' element={<ProductPage />} />
           <Route path='/favorites' element={<Favorites />} />
           <Route path='*' element={<NotFound404 />} />
         </Routes>
       </main>
       <Footer />
+      
     </Suspense>
+    
   );
 }
 
