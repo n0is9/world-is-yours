@@ -1,56 +1,41 @@
-import React, { useEffect, useState } from "react";
-import Button from "../common/Button";
-import { useDispatch, useSelector } from "react-redux";
-import { updateUser } from "../../redux/userSlice";
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
-import { $api } from "../../api/api.js";
+import React, { useEffect, useState } from 'react';
+import Button from '../common/Button';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUser } from '../../redux/userSlice';
+import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
+import { $api } from '../../api/api.js';
 
-import { motion as m } from "framer-motion";
-import { motion as m } from "framer-motion";
+import { motion as m } from 'framer-motion';
+import { motion as m } from 'framer-motion';
 
 const Personal = () => {
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
 
   const validationSchema = Yup.object({
-    first_name: Yup.string().required("Required"),
-    last_name: Yup.string().required("Required"),
+    first_name: Yup.string().required('Required'),
+    last_name: Yup.string().required('Required'),
     phone: Yup.string(),
-    email: Yup.string().email("Invalid email format").required("Required"),
+    email: Yup.string().email('Invalid email format').required('Required'),
     B_day: Yup.string(),
   });
 
   return (
-    <m.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
-    >
-      <h3 className="text-blue font-raleway lining-nums proportional-nums  font-semibold mb-10 text-2xl">
-        Контактна інформація
-      </h3>
-      <div className="flex justify-start gap-x-32   flex-col xxl:flex-row">
-    <m.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
-    >
-      <h3 className="text-blue font-raleway lining-nums proportional-nums  font-semibold mb-10 text-2xl">
-        Контактна інформація
-      </h3>
-      <div className="flex justify-start gap-x-32   flex-col xxl:flex-row">
+    <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
+      <h3 className='text-blue font-raleway lining-nums proportional-nums  font-semibold mb-10 text-2xl'>Контактна інформація</h3>
+      <div className='flex justify-start gap-x-32 flex-col xxl:flex-row'>
         {/* profile setting */}
         <Formik
           initialValues={{
-            first_name: user?.first_name || "",
-            last_name: user?.last_name || "",
-            phone: user?.phone || "",
-            email: user?.email || "",
-            B_day: user?.B_day || "",
-            user_id: user?.user_id || "",
-            password: "",
-            confirmPassword: "",
+            first_name: user?.first_name || '',
+            last_name: user?.last_name || '',
+            phone: user?.phone || '',
+            email: user?.email || '',
+            B_day: user?.B_day || '',
+            user_id: user?.user_id || '',
+            password: '',
+            confirmPassword: '',
           }}
           validationSchema={validationSchema} // Add validation schema
           onSubmit={async (values) => {
@@ -59,101 +44,52 @@ const Personal = () => {
               ...values, // включає поля з форм
             };
             try {
-              console.log("Sending values:", updatedValues);
-              const response = await $api.patch(
-                `/api/users/${updatedValues.user_id}/`,
-                updatedValues
-              );
-              console.log("Response from server:", response.data);
+              console.log('Sending values:', updatedValues);
+              const response = await $api.patch(`/api/users/${updatedValues.user_id}/`, updatedValues);
+              console.log('Response from server:', response.data);
               // Dispatch the updated user data to Redux
               dispatch(updateUser(response.data.user));
             } catch (error) {
-              console.error("Error updating user:", error);
+              console.error('Error updating user:', error);
             }
-          }}
-        >
+          }}>
           {({ setFieldValue }) => (
-            <Form className="left-side w-full max-w-md mb-10">
-              <div className="flex gap-5 justify-between">
-                <label
-                  htmlFor="first_name"
-                  className="w-1/2 text-darkGrey font-raleway text-4 font-medium"
-                >
+            <Form className='left-side w-full max-w-md mb-10'>
+              <div className='flex gap-5 justify-between'>
+                <label htmlFor='first_name' className='w-1/2 text-darkGrey font-raleway text-4 font-medium'>
                   Ім’я
-                  <Field
-                    id="first_name"
-                    name="first_name"
-                    type="text"
-                    className="flex mt-2 w-5/5 p-3 items-center self-stretch rounded-xl border border-black focus:border-blue-500 outline-none"
-                  />
+                  <Field id='first_name' name='first_name' type='text' className='flex mt-2 w-5/5 p-3 items-center self-stretch rounded-xl border border-black focus:border-blue-500 outline-none' />
                 </label>
-                <label
-                  htmlFor="last_name"
-                  className="w-1/2 text-darkGrey font-raleway text-4 font-medium"
-                >
+                <label htmlFor='last_name' className='w-1/2 text-darkGrey font-raleway text-4 font-medium'>
                   Прізвище
-                  <Field
-                    id="last_name"
-                    name="last_name"
-                    type="text"
-                    className="flex mt-2 w-5/5 p-3 items-center self-stretch rounded-xl border border-black focus:border-blue-500 outline-none"
-                  />
+                  <Field id='last_name' name='last_name' type='text' className='flex mt-2 w-5/5 p-3 items-center self-stretch rounded-xl border border-black focus:border-blue-500 outline-none' />
                 </label>
               </div>
 
-              <div className="flex flex-col mt-5 w-5/7">
-                <label
-                  htmlFor="phone"
-                  className="w-1/2 text-darkGrey font-raleway text-4 font-medium"
-                >
+              <div className='flex flex-col mt-5 w-5/7'>
+                <label htmlFor='phone' className='w-1/2 text-darkGrey font-raleway text-4 font-medium'>
                   Номер телефону
                 </label>
-                <div className="flex w-5/5 gap-5 mt-2">
-                  <Field
-                    id="phone"
-                    name="phone"
-                    type="text"
-                    className="w-[360px] px-4 py-3 bg-white rounded-[10px] border border-black text-zinc-500 text-base font-light placeholder-zinc-500"
-                    placeholder="(+380) XX XXX XX XX"
-                  />
+                <div className='flex w-5/5 gap-5 mt-2'>
+                  <Field id='phone' name='phone' type='text' className='w-[360px] px-4 py-3 bg-white rounded-[10px] border border-black text-zinc-500 text-base font-light placeholder-zinc-500' placeholder='(+380) XX XXX XX XX' />
                 </div>
               </div>
 
-              <div className="flex gap-5 justify-between mt-5">
-                <label
-                  htmlFor="email"
-                  className="w-5/7 text-darkGrey font-raleway text-4 font-medium"
-                >
+              <div className='flex gap-5 justify-between mt-5'>
+                <label htmlFor='email' className='w-5/7 text-darkGrey font-raleway text-4 font-medium'>
                   Електронна пошта
-                  <Field
-                    id="email"
-                    name="email"
-                    type="text"
-                    className="flex mt-2 w-5/5 p-3 items-center self-stretch rounded-xl border border-black focus:border-blue-500 outline-none"
-                  />
+                  <Field id='email' name='email' type='text' className='flex mt-2 w-5/5 p-3 items-center self-stretch rounded-xl border border-black focus:border-blue-500 outline-none' />
                 </label>
               </div>
 
-              <div className="flex gap-5 justify-between mt-5">
-                <label
-                  htmlFor="B_day"
-                  className="w-3/7 text-darkGrey font-raleway text-4 font-medium"
-                >
+              <div className='flex gap-5 justify-between mt-5'>
+                <label htmlFor='B_day' className='w-3/7 text-darkGrey font-raleway text-4 font-medium'>
                   Дата Народження
-                  <Field
-                    id="B_day"
-                    name="B_day"
-                    type="text"
-                    placeholder="dd/mm/yy"
-                    className="flex mt-2 w-5/5 p-3 items-center self-stretch rounded-xl border border-black focus:border-blue-500 outline-none"
-                  />
+                  <Field id='B_day' name='B_day' type='text' placeholder='dd/mm/yy' className='flex mt-2 w-5/5 p-3 items-center self-stretch rounded-xl border border-black focus:border-blue-500 outline-none' />
                 </label>
               </div>
 
-              <Button
-                type="submit"
-                classNameBtn="w-full mt-7 bg-gray-dark p-4 border rounded-xl font-bold text-18px text-white duration-300 hover:bg-transparent hover:text-black focus:bg-transparent focus:text-black"
-              >
+              <Button type='submit' classNameBtn='w-full mt-7 bg-gray-dark p-4 border rounded-xl font-bold text-18px text-white duration-300 hover:bg-transparent hover:text-black focus:bg-transparent focus:text-black'>
                 Зберегти
               </Button>
             </Form>
