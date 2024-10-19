@@ -9,6 +9,7 @@ const initialState = {
     last_name: null,
     email: null,
     phone: null,
+    date_of_birth: null,
     is_verified_email: false,
     image: null,
     is_superuser: false,

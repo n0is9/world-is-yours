@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import Button from "../common/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUser } from "../../redux/userSlice";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import { updateUser } from "../../redux/userSlice";
+import { $api } from "../../api/api.js";
+
+import Button from "../common/Button";
 import eyeOff from "../../assets/icons/icon-Eye-off.svg";
 import eyeOn from "../../assets/icons/icon-openEye.svg";
-import { $api } from "../../api/api.js";
 
 import { motion as m } from "framer-motion";
 
@@ -18,20 +20,26 @@ const Personal = () => {
 
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
-
+  console.log("user", user);
   const validationSchema = Yup.object({
-    first_name: Yup.string().required("Required"),
-    last_name: Yup.string().required("Required"),
-    phone: Yup.string(),
-    email: Yup.string().email("Invalid email format").required("Required"),
-    B_day: Yup.string(),
-    password: Yup.string(),
-    confirmPassword: Yup.string().oneOf(
-      [Yup.ref("password"), null],
-      "Passwords must match"
-    ),
+    first_name: Yup.string()
+      .matches(/^\S.*$/, "First name cannot start with a space")
+      .nullable(),
+    last_name: Yup.string()
+      .matches(/^\S.*$/, "Last name cannot start with a space")
+      .nullable(),
+    phone: Yup.string().nullable(),
+    email: Yup.string().email("Invalid email format").nullable(),
+    date_of_birth: Yup.string()
+      .matches(/^\d{4}-\d{2}-\d{2}$/, "Date must be in the format YYYY-MM-DD")
+      .nullable(),
+    password: Yup.string()
+      .min(6, "Password should be at least 6 characters")
+      .nullable(),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), null], "Passwords must match")
+      .nullable(),
   });
-
   return (
     <m.div
       initial={{ opacity: 0 }}
@@ -49,7 +57,7 @@ const Personal = () => {
             last_name: user?.last_name || "",
             phone: user?.phone || "",
             email: user?.email || "",
-            B_day: user?.B_day || "",
+            date_of_birth: user?.date_of_birth || "",
             user_id: user?.user_id || "",
             password: "",
             confirmPassword: "",
@@ -59,19 +67,10 @@ const Personal = () => {
           onSubmit={async (values) => {
             const userData = {
               ...user,
-              ...values, // включає поля з форм
+              ...values,
             };
 
             try {
-              console.log("Sending values:", userData);
-
-              if (values.password !== values.confirmPassword) {
-                toast.error("Passwords must match", {
-                  position: "top-center",
-                  autoClose: 3000,
-                });
-                return;
-              }
               const response = await $api.patch(
                 `/api/users/${userData.user_id}/`,
 
@@ -80,12 +79,22 @@ const Personal = () => {
                   last_name: userData.last_name,
                   phone: userData.phone,
                   email: userData.email,
+
+                  ...(userData.date_of_birth
+                    ? { date_of_birth: userData.date_of_birth }
+                    : {}),
                   ...(userData.password && { password: userData.password }),
                 }
               );
-              console.log("Response from server:", response.data);
 
-              dispatch(updateUser(response.data));
+              //відповідь  приходить з date_of_birth в форматі "YYYY-MM-DDTHH:MM"
+
+              dispatch(
+                updateUser({
+                  ...response.data,
+                  date_of_birth: response.data.date_of_birth.split("T")[0], // зберігаємо тільки YYYY-MM-DD
+                })
+              );
 
               toast.info("Your data has been updated successfully", {
                 position: "top-center",
@@ -105,37 +114,53 @@ const Personal = () => {
               <div className="flex gap-20 ">
                 {/* Секція контактні дані  */}
                 <div className="flex-1">
-                  <div className="w-full max-w-md mb-10">
-                    <label
-                      htmlFor="first_name"
-                      className="w-1/2 text-darkGrey font-raleway text-4 font-medium"
-                    >
-                      Ім’я
-                      <Field
-                        id="first_name"
+                  <div className="flex gap-5">
+                    <div className="w-1/2">
+                      <label
+                        htmlFor="first_name"
+                        className="text-darkGrey font-raleway text-4 font-medium"
+                      >
+                        Ім’я
+                        <Field
+                          id="first_name"
+                          name="first_name"
+                          type="text"
+                          placeholder="введіть своє ім'я"
+                          className="flex mt-2 w-full p-3 items-center rounded-xl border border-black focus:border-blue-500 outline-none"
+                        />
+                      </label>
+                      <ErrorMessage
                         name="first_name"
-                        type="text"
-                        className="flex mt-2 w-5/5 p-3 items-center self-stretch rounded-xl border border-black focus:border-blue-500 outline-none"
+                        component="div"
+                        className="text-red-500"
                       />
-                    </label>
-                    <label
-                      htmlFor="last_name"
-                      className="w-1/2 text-darkGrey font-raleway text-4 font-medium"
-                    >
-                      Прізвище
-                      <Field
-                        id="last_name"
+                    </div>
+                    <div className="w-1/2">
+                      <label
+                        htmlFor="last_name"
+                        className="text-darkGrey font-raleway text-4 font-medium"
+                      >
+                        Прізвище
+                        <Field
+                          id="last_name"
+                          name="last_name"
+                          type="text"
+                          placeholder="Введіть своє прізвище"
+                          className="flex mt-2 w-full p-3 items-center rounded-xl border border-black focus:border-blue-500 outline-none"
+                        />
+                      </label>
+                      <ErrorMessage
                         name="last_name"
-                        type="text"
-                        className="flex mt-2 w-5/5 p-3 items-center self-stretch rounded-xl border border-black focus:border-blue-500 outline-none"
+                        component="div"
+                        className="text-red-500"
                       />
-                    </label>
+                    </div>
                   </div>
 
                   <div className="flex flex-col mt-5 w-5/7">
                     <label
                       htmlFor="phone"
-                      className="w-1/2 text-darkGrey font-raleway text-4 font-medium"
+                      className="w-5/7 text-darkGrey font-raleway text-4 font-medium"
                     >
                       Номер телефону
                     </label>
@@ -148,6 +173,11 @@ const Personal = () => {
                         placeholder="(+380) XX XXX XX XX"
                       />
                     </div>
+                    <ErrorMessage
+                      name="phone"
+                      component="div"
+                      className="text-red-500"
+                    />
                   </div>
 
                   <div className="flex gap-5 justify-between mt-5">
@@ -160,25 +190,36 @@ const Personal = () => {
                         id="email"
                         name="email"
                         type="text"
+                        placeholder="Введіть адресу електронної пошти"
                         className="flex mt-2 w-5/5 p-3 items-center self-stretch rounded-xl border border-black focus:border-blue-500 outline-none"
                       />
                     </label>
+                    <ErrorMessage
+                      name="email"
+                      component="div"
+                      className="text-red-500"
+                    />
                   </div>
 
                   <div className="flex gap-5 justify-between mt-5">
                     <label
-                      htmlFor="B_day"
+                      htmlFor="date_of_birth"
                       className="w-3/7 text-darkGrey font-raleway text-4 font-medium"
                     >
                       Дата Народження
                       <Field
-                        id="B_day"
-                        name="B_day"
+                        id="date_of_birth"
+                        name="date_of_birth"
                         type="text"
-                        placeholder="dd/mm/yy"
+                        placeholder="yyyy-mm-dd"
                         className="flex mt-2 w-5/5 p-3 items-center self-stretch rounded-xl border border-black focus:border-blue-500 outline-none"
                       />
                     </label>
+                    <ErrorMessage
+                      name="date_of_birth"
+                      component="div"
+                      className="text-red-500"
+                    />
                   </div>
 
                   <Button
@@ -196,7 +237,6 @@ const Personal = () => {
                       Зміна паролю
                     </h4>
 
-                    {/* Новий пароль */}
                     <div className="flex flex-col gap-2 w-full">
                       <label
                         htmlFor="userPassword"
@@ -218,13 +258,22 @@ const Personal = () => {
                         >
                           <img
                             src={isPasswordVisible ? eyeOn : eyeOff}
-                            alt="toggle visibility"
+                            alt={
+                              isPasswordVisible
+                                ? "Сховати пароль"
+                                : "Показати пароль"
+                            }
+                            tabIndex="0"
                           />
                         </div>
                       </div>
+                      <ErrorMessage
+                        name="password"
+                        component="div"
+                        className="text-red-500"
+                      />
                     </div>
 
-                    {/* Підтвердження паролю */}
                     <div className="flex flex-col gap-2 w-full mt-4">
                       <label
                         htmlFor="userPasswordConfirm"
@@ -247,11 +296,21 @@ const Personal = () => {
                           className="cursor-pointer p-3 border border-black rounded-xl"
                         >
                           <img
-                            src={isPasswordConfirmVisible ? eyeOn : eyeOff}
-                            alt="toggle visibility"
+                            src={isPasswordVisible ? eyeOn : eyeOff}
+                            alt={
+                              isPasswordVisible
+                                ? "Сховати пароль"
+                                : "Показати пароль"
+                            }
+                            tabIndex="0"
                           />
                         </div>
                       </div>
+                      <ErrorMessage
+                        name="confirmPassword"
+                        component="div"
+                        className="text-red-500"
+                      />
                     </div>
                   </div>
                 </div>
