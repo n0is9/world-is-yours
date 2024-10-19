@@ -185,6 +185,7 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
         username: userData.email,
         password: userData.password,
       });
+      console.log("Response body:", signInResult);
 
       handleSignInStatus(signInResult.status, signInResult);
       // console.log('signIn successful:', signInResult);
@@ -288,7 +289,10 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
                   <img
                     className="w-24px h-24px"
                     src={isPasswordVisible ? openEye : closeEye}
-                    alt="openEyes"
+                    alt={
+                      isPasswordVisible ? "Показати пароль" : "Сховати пароль"
+                    }
+                    tabIndex="0"
                   />
                 </div>
               </div>
