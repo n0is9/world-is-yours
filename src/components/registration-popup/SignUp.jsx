@@ -26,20 +26,23 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
     setIsLoading(true);
     try {
       const user = await socialMediaAuth(provider);
+      console.log('User signed in:', user);
 
       if (!user) {
         throw new Error('Користувач не підписався ');
       }
 
       const idToken = await user.getIdToken();
-
+      console.log('ID Token отримано:', idToken);
       if (!idToken) {
         throw new Error('Не вдалося отримати ID Token від користувача');
       }
 
       console.log('ID Token отримано:', idToken);
 
-      const response = await $api.post(idToken);
+      const response = await $api.post('/api/auth/social-login', {
+        token: idToken,
+      });
 
       handleSignInStatus(response.status, response.data);
     } catch (error) {
