@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from "react";
-import HeartIcon from "../../assets/icons/icon-heart.svg";
-import HeartIconRed from "../../assets/icons/icon-heart-red.svg";
-import Button from "./Button";
-import Cart from "../../assets/icons/dark/icon-cart-dark.svg";
-import CartFull from "../../assets/icons/dark/icon-cart-dark-full.svg";
-import { $api } from "../../api/api";
-import { useDispatch, useSelector } from "react-redux";
-import { addItem, removeItem } from "../../redux/wishlistSlice";
-import { addItemCart, removeItemCart } from "../../redux/cartSlice";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useEffect, useState } from 'react';
+import HeartIcon from '../../assets/icons/icon-heart.svg';
+import HeartIconRed from '../../assets/icons/icon-heart-red.svg';
+import Button from './Button';
+import Cart from '../../assets/icons/dark/icon-cart-dark.svg';
+import CartFull from '../../assets/icons/dark/icon-cart-dark-full.svg';
+import { $api } from '../../api/api';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItem, removeItem } from '../../redux/wishlistSlice';
+import { addItemCart, removeItemCart } from '../../redux/cartSlice';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-import { NavLink } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 
-import { motion as m } from "framer-motion";
+import { motion as m } from 'framer-motion';
 
 const Card = ({ data }) => {
   const dispatch = useDispatch();
 
   const [isLiked, setLike] = useState(false);
-  const [isCart, setCart] = useState("");
+  const [isCart, setCart] = useState('');
 
   const wishlist = useSelector((state) => state.wishlist.items);
 
@@ -40,8 +40,8 @@ const Card = ({ data }) => {
 
   const toggleWishList = async () => {
     if (!isAuthenticated) {
-      toast.info("This action is available to registered users only", {
-        position: "top-center",
+      toast.info('This action is available to registered users only', {
+        position: 'top-center',
         autoClose: 3000,
       });
       return;
@@ -62,8 +62,8 @@ const Card = ({ data }) => {
 
   const toggleCart = async () => {
     if (!isAuthenticated) {
-      toast.info("This action is available to registered users only", {
-        position: "top-center",
+      toast.info('This action is available to registered users only', {
+        position: 'top-center',
         autoClose: 3000,
       });
       return;
@@ -90,44 +90,44 @@ const Card = ({ data }) => {
       initial={{ opacity: 0.5 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className="relative"
+      className='relative'
     >
       <ToastContainer />
       <div
-        className="absolute top-3 right-3 m-2 z-10"
+        className='absolute top-3 right-3 m-2 z-[9]'
         onClick={() => toggleWishList()}
       >
         <img
           src={isLiked ? HeartIconRed : HeartIcon}
-          alt="heart icon"
-          width="36"
-          className="cursor-pointer"
+          alt='heart icon'
+          width='36'
+          className='cursor-pointer'
         />
       </div>
 
       <NavLink
         to={`/product/${data.id}`}
-        className="block border border-[#888888] rounded-2xl relative overflow-hidden h-full items-center z-0"
+        className='block border border-[#888888] rounded-2xl relative overflow-hidden h-full items-center z-0'
       >
-        <div className="flex justify-center overflow-hidden">
+        <div className='flex justify-center overflow-hidden'>
           <img
             src={data.image_1}
             alt={data.name}
-            className="w-full h-96 object-cover cursor-pointer"
+            className='w-full h-96 object-cover cursor-pointer'
           />
         </div>
 
-        <div className="p-5 pr-[120px]">
-          <p className="text-custom-black font-semibold">{data.name}</p>
-          <p className="text-custom-black">{data.price}</p>
+        <div className='p-5 pr-[120px]'>
+          <p className='text-custom-black font-semibold'>{data.name}</p>
+          <p className='text-custom-black'>{data.price}</p>
         </div>
       </NavLink>
 
       <Button
-        classNameBtn={`absolute bottom-3 right-3 z-10 flex border rounded-md py-3 px-3 duration-300 hover:border-blue focus:border-blue ${isCart ? " bg-black" : ""}`}
+        classNameBtn={`absolute bottom-3 right-3 z-10 flex border rounded-md py-3 px-3 duration-300 hover:border-blue focus:border-blue ${isCart ? ' bg-black' : ''}`}
         onClickBtn={() => toggleCart()}
       >
-        <img src={isCart ? CartFull : Cart} alt="cart" />
+        <img src={isCart ? CartFull : Cart} alt='cart' />
       </Button>
     </m.div>
   );

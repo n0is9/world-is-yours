@@ -63,7 +63,10 @@ const Cart = () => {
       // Створюємо масив промісів для кожного запиту на видалення
       const deleteRequests = basket.map((item) => {
         console.log(item);
-        $api.delete(`/api/baskets/${item.id}/`);
+        if (basket.length != 0) {
+          console.log(basket.length);
+          $api.delete(`/api/baskets/${item.id}/`);
+        }
       });
 
       // Чекаємо на завершення всіх запитів
@@ -98,13 +101,18 @@ const Cart = () => {
 
   if (cart.length === 0) {
     return (
-      <div className='w-full flex justify-center items-center flex-col mt-20 mb-60'>
-        <p className='font-raleway font-semibold text-4xl mb-20'>Кошик</p>
+      <div className='w-full flex justify-center items-center flex-col mt-12 mb-60'>
+        <p className='font-raleway font-semibold text-40px mb-20'>Кошик</p>
         <p className='font-raleway text-18px font-semibold text-center text-gray mt-10'>
           Кошик порожній. <br /> Додайте товари, які вас цікавлять!
         </p>
         <Link to='/'>
-          <Button classNameBtn='w-22 bg-gray-dark my-12 p-4 border rounded-xl leading-none font-bold text-20px text-white duration-300 hover:bg-transparent hover:text-black focus:bg-transparent focus:text-black' nameBtn='submitForm' valueBtn='submit' type='submit'>
+          <Button
+            classNameBtn='w-22 bg-gray-dark my-12 p-4 border rounded-xl leading-none font-bold text-20px text-white duration-300 hover:bg-transparent hover:text-black focus:bg-transparent focus:text-black'
+            nameBtn='submitForm'
+            valueBtn='submit'
+            type='submit'
+          >
             На головну сторінку
           </Button>
         </Link>
@@ -116,15 +124,25 @@ const Cart = () => {
     <Container>
       <div className='w-8/12 mt-12 mb-14'>
         <div className='flex justify-between items-center relative mb-12'>
-          <p className='font-raleway font-semibold text-40px mx-auto'>Кошик</p> <span className='hidden'>{upd}</span>
-          <p className='absolute end-0 font-raleway font-normal text-lg cursor-pointer hover:underline focus:underline' onClick={handleRemoveAllItems} tabIndex='0'>
+          <p className='font-raleway font-semibold text-40px mx-auto'>Кошик</p>{' '}
+          <span className='hidden'>{upd}</span>
+          <p
+            className='absolute end-0 font-raleway font-normal text-lg cursor-pointer hover:underline focus:underline'
+            onClick={handleRemoveAllItems}
+            tabIndex='0'
+          >
             Видалити все
           </p>
         </div>
 
         <div className='cart-container max-h-52 overflow-y-auto'>
           {cart.map((product) => (
-            <CartItem key={product.id} product={product} handleQuantityChange={handleQuantityChange} handleRemoveItem={handleRemoveItem} />
+            <CartItem
+              key={product.id}
+              product={product}
+              handleQuantityChange={handleQuantityChange}
+              handleRemoveItem={handleRemoveItem}
+            />
           ))}
         </div>
       </div>
@@ -135,8 +153,15 @@ const Cart = () => {
           {/* <Button classNameBtn='w-9/12 bg-transparent border-blue border-dashed text-blue duration-300 p-4 border rounded-xl font-normal text-18px hover:text-white hover:bg-blue focus:text-white focus:bg-blue' nameBtn='submitForm' valueBtn='submit' type='submit'>
             Промокод для знижки
           </Button> */}
-          <p className='w-full items-center font-semibold text-xl font-sans'>Всього: {total} грн</p>
-          <Button classNameBtn='w-6/12 bg-gray-dark p-4 border rounded-xl font-bold text-18px text-white duration-300 hover:bg-transparent hover:text-black focus:bg-transparent focus:text-black' nameBtn='submitForm' valueBtn='submit' type='submit'>
+          <p className='w-full items-center font-semibold text-xl font-sans'>
+            Всього: {total} грн
+          </p>
+          <Button
+            classNameBtn='w-6/12 bg-gray-dark p-4 border rounded-xl font-bold text-18px text-white duration-300 hover:bg-transparent hover:text-black focus:bg-transparent focus:text-black'
+            nameBtn='submitForm'
+            valueBtn='submit'
+            type='submit'
+          >
             Оформити замовлення
           </Button>
         </div>

@@ -31,7 +31,8 @@ main {
   flex-direction: column;
 }
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
 
 ::-webkit-scrollbar {
@@ -45,7 +46,7 @@ code {
 /* Необходимо применять к контейнеру, в котором вы хотите убрать скроллбар */
 .scrolnan {
   overflow: auto;
-  scrollbar-width: none; /* Убирает ширину скроллбара */
+  scrollbar-width: thin; /* Убирает ширину скроллбара */
   scrollbar-color: transparent transparent; /* Убирает цвет скроллбара */
 }
 
