@@ -22,7 +22,6 @@ import { setWishlist } from './redux/wishlistSlice';
 import { addItemsCart } from './redux/cartSlice';
 import Favorites from './pages/Favorites';
 
-
 const PaymentPage = lazy(() => import('./pages/PaymentPage'));
 const InfoPayment = lazy(() => import('./pages/InfoHelp'));
 const NotFound404 = lazy(() => import('./pages/NotFound404'));
@@ -35,8 +34,12 @@ function App() {
   const availableLanguages = useMemo(() => ['en', 'uk'], []);
 
   useEffect(() => {
-    const userLanguages = navigator.languages || [navigator.language || navigator.userLanguage];
-    const preferredLanguage = userLanguages.find((language) => availableLanguages.includes(language));
+    const userLanguages = navigator.languages || [
+      navigator.language || navigator.userLanguage,
+    ];
+    const preferredLanguage = userLanguages.find((language) =>
+      availableLanguages.includes(language),
+    );
 
     const selectedLanguage = preferredLanguage || 'en'; //default
 
@@ -129,9 +132,7 @@ function App() {
         </Routes>
       </main>
       <Footer />
-      
     </Suspense>
-    
   );
 }
 
