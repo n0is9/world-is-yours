@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import Button from '../components/common/Button';
+import { logout } from '../redux/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
+
+import Container from '../components/common/container';
 import Personal from '../components/profile/personal';
 import NotFound404 from './NotFound404';
-import { useDispatch, useSelector } from 'react-redux';
 import Adress from '../components/profile/adress';
 import History from '../components/profile/history';
-import { logout } from '../redux/userSlice';
+import Button from '../components/common/Button';
 import Cookies from 'js-cookie';
-
-import { motion as m } from 'framer-motion';
 
 const Profile = () => {
   const location = useLocation();
@@ -42,7 +42,7 @@ const Profile = () => {
     return <NotFound404 />;
   }
   return (
-    <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
+    <Container>
       <div className='w-screen pt-20 px-170 pb-150'>
         <h1 className='text-40px flex font-raleway text-2xl font-semibold'>Профіль</h1>
         <div className='flex  mt-50  flex-col xl:flex-row'>
@@ -80,7 +80,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-    </m.div>
+    </Container>
   );
 };
 

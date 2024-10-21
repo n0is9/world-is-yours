@@ -34,7 +34,7 @@ const CartItem = ({ product, handleQuantityChange, handleRemoveItem }) => {
   useEffect(() => console.log(product), []);
 
   return (
-    <div className='flex flex-row justify-between items-end border-b border-gray p-4'>
+    <div className='flex flex-row justify-between items-end [&:not(:last-child)]:border-b border-gray p-4'>
       <div className='flex flex-row items-center'>
         <img src={product.image_1} alt={product.name} className='w-36 h-36 rounded-lg mr-4 object-cover' />
         <div className='flex flex-col gap-2'>
