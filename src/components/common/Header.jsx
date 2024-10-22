@@ -198,11 +198,13 @@ function Header() {
                   strokeLinejoin='round'
                 />
               </svg>
-              <div className='absolute top-[-7px] right-[-7px] flex justify-center items-center w-6 h-6 bg-blue rounded-full'>
-                <span className='text-sm font-normal font-mono text-white leading-[0.1]'>
-                  {wishlist.length}
-                </span>
-              </div>
+              {wishlist.length > 0 ? (
+                <div className='absolute top-[-7px] right-[-7px] flex justify-center items-center w-6 h-6 bg-blue rounded-full'>
+                  <span className='text-sm font-normal font-mono text-white leading-[0.1]'>
+                    {wishlist.length}
+                  </span>
+                </div>
+              ) : null}
             </NavLink>
             <LoginStatus setLoginOpen={() => setLoginOpen(true)} />
           </div>
