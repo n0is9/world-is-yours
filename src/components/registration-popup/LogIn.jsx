@@ -1,25 +1,27 @@
-import React, { useRef, useState } from "react";
-// import { useEffect } from "react";
-import styles from "./signup.module.css";
-import Input from "../common/Input";
-import Button from "../common/Button";
-import closeIcon from "../../assets/icons/icon-close.svg";
-import Facebook from "../../assets/icons/media-icons/facebook-color.svg";
-import Google from "../../assets/icons/media-icons/google-color.svg";
-import Apple from "../../assets/icons/media-icons/apple-color.svg";
-import { facebookProvider, googleProvider } from "./firebase/provider";
-import socialMediaAuth from "./firebase/auth";
-import useTranslation from "../../locale/locales";
+import React, { useRef, useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-import attentionIcon from "../../assets/icons/icon-attention.svg";
-import openEye from "../../assets/icons/icon-openEye.svg";
-import closeEye from "../../assets/icons/icon-Eye-off.svg";
+import styles from './signup.module.css';
+import Input from '../common/Input';
+import Button from '../common/Button';
+import closeIcon from '../../assets/icons/icon-close.svg';
+import Facebook from '../../assets/icons/media-icons/facebook-color.svg';
+import Google from '../../assets/icons/media-icons/google-color.svg';
+import Apple from '../../assets/icons/media-icons/apple-color.svg';
+import { facebookProvider, googleProvider } from './firebase/provider';
+import socialMediaAuth from './firebase/auth';
+import useTranslation from '../../locale/locales';
 
-import { $api } from "../../api/api";
-import { useDispatch } from "react-redux";
-import { login, updateUser } from "../../redux/userSlice";
+import attentionIcon from '../../assets/icons/icon-attention.svg';
+import openEye from '../../assets/icons/icon-openEye.svg';
+import closeEye from '../../assets/icons/icon-Eye-off.svg';
 
-const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
+import { $api } from '../../api/api';
+import { useDispatch } from 'react-redux';
+import { login, updateUser } from '../../redux/userSlice';
+
+const LogIn = ({ onClose, openSignUp, openSuccess }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleOnClick = async (provider) => {
@@ -28,24 +30,27 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
       const user = await socialMediaAuth(provider);
 
       if (!user) {
-        throw new Error("Користувач не підписався ");
+        throw new Error('Користувач не підписався ');
       }
 
       const idToken = await user.getIdToken();
 
       if (!idToken) {
-        throw new Error("Не вдалося отримати ID Token від користувача");
+        throw new Error('Не вдалося отримати ID Token від користувача');
       }
 
-      console.log("ID Token отримано:", idToken);
+      console.log('ID Token отримано:', idToken);
 
-      const response = await $api.post("/api/auth/social-login", {
+      const response = await $api.post('/api/auth/social-login/', {
         token: idToken,
       });
 
+      console.log('response.status', response.status);
+      console.log('response.data', response.data);
+
       handleSignInStatus(response.status, response.data);
     } catch (error) {
-      console.error("Помилка під час входу ", error);
+      console.error('Помилка під час входу ', error);
     } finally {
       setIsLoading(false);
     }
@@ -53,42 +58,37 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
 
   const dispatch = useDispatch();
   const t = useTranslation();
-  // inputs
-  const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
 
-  // errors
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const [userEmail, setUserEmail] = useState('');
+  const [userPassword, setUserPassword] = useState('');
 
-  const [userError, setUserError] = useState("");
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
-  // states
+  const [userError, setUserError] = useState('');
 
-  // password visible
   const [isPasswordVisible, setPasswordVisible] = useState(false);
-  // is validation on
+
   const isValidationOnRef = useRef(false);
 
-  // Email validation
   const emailValidation = (email) => {
     if (isValidationOnRef.current) {
       if (!email.trim()) {
         setEmailError("Емейл обов'язковий");
         // empty
       } else if (/^\s/.test(email)) {
-        setEmailError("Емейл не може починатися з пробілу");
+        setEmailError('Емейл не може починатися з пробілу');
       } else if (email.length < 5 || email.length > 32) {
-        setEmailError("Не вірно введений емейл");
+        setEmailError('Не вірно введений емейл');
         // leght
       } else if (!/@/.test(email) || !/\./.test(email)) {
-        setEmailError("Не вірно введений емейл");
+        setEmailError('Не вірно введений емейл');
         // have @ and .
       } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+$/.test(email)) {
-        setEmailError("Не вірно введений емейл");
+        setEmailError('Не вірно введений емейл');
         // incorrect characters
-      } else if (!/[a-zA-Z]{2,}$/.test(email.split("@")[1])) {
-        setEmailError("Мінімум дві літери після крапки");
+      } else if (!/[a-zA-Z]{2,}$/.test(email.split('@')[1])) {
+        setEmailError('Мінімум дві літери після крапки');
         // At least two letters after the period
       } else if (/@\./.test(email)) {
         setEmailError('Символ "." не може йти одразу після символу "@"');
@@ -100,17 +100,16 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
     }
   };
 
-  // password validation
   const passwordValidation = (password) => {
     if (isValidationOnRef.current) {
       if (!password.trim()) {
         setPasswordError("Пароль обов'язковий");
       } else if (/^\s/.test(password)) {
-        setPasswordError("Пароль не може починатися з пробілу");
+        setPasswordError('Пароль не може починатися з пробілу');
       } else if (password.length < 6 || password.length > 32) {
-        setPasswordError("Пароль повиннен бути від 2 до 32 символів");
+        setPasswordError('Пароль повиннен бути від 2 до 32 символів');
       } else if (!/^[a-zA-Z0-9@#$%^&_+]+$/.test(password)) {
-        setPasswordError("Пароль містить не припустимі символи");
+        setPasswordError('Пароль містить не припустимі символи');
       } else {
         setPasswordError(null);
         return true;
@@ -118,12 +117,10 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
     }
   };
 
-  // valid all
   const validateSignInForm = () => {
     return emailValidation(userEmail) && passwordValidation(userPassword);
   };
 
-  // submit
   const submit = (e) => {
     e.preventDefault();
     isValidationOnRef.current = true;
@@ -138,38 +135,73 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
     document.cookie = `${name}=${encodeURIComponent(JSON.stringify(object))};expires=${expires.toUTCString()};path=/`;
   };
 
-  // SIgnIn status answear
+  const handleForgotPassword = async () => {
+    if (!userEmail || emailError) {
+      setEmailError('Введіть коректний емейл');
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      console.log('userEmail', userEmail);
+      const response = await $api.post('/api/password_reset/', {
+        email: userEmail,
+      });
+      console.log('response.status', response.status);
+      console.log('response.data', response.data);
+      if (response.status === 200) {
+        toast.info(
+          'An email to change your password has been sent to your email',
+          {
+            position: 'top-center',
+            autoClose: 6000,
+          },
+        );
+      } else {
+        toast.info('Something went wrong, please try again later', {
+          position: 'top-center',
+          autoClose: 6000,
+        });
+      }
+    } catch (error) {
+      console.error('Помилка при відновленні пароля', error);
+
+      toast.info('Password recovery email could not be sent', {
+        position: 'top-center',
+        autoClose: 6000,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleSignInStatus = (status, signInResult = null) => {
-    // status message
     const statusMessages = {
-      200: "SignIn successful",
-      400: "status 400",
+      200: 'SignIn successful',
+      400: 'status 400',
     };
 
     if (statusMessages.hasOwnProperty(status)) {
-      // log status
       console.log(statusMessages[status]);
 
-      // status
       switch (status) {
         case 200:
           openSuccess();
           dispatch(updateUser(signInResult.data));
-          setCookie("user", signInResult.data, 7);
+          setCookie('user', signInResult.data, 7);
 
           dispatch(login());
 
           break;
         case 400:
-          console.log("incorect");
-          setUserError("Невірна адреса пошти або пароль");
+          console.log('incorect');
+          setUserError('Невірна адреса пошти або пароль');
           break;
 
         default:
           break;
       }
     } else {
-      // undefinded status error
       console.log(`Unexpected response status: ${status}`);
     }
   };
@@ -185,19 +217,18 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
         username: userData.email,
         password: userData.password,
       });
-      console.log("Response body:", signInResult);
+      console.log('Response body:', signInResult);
 
       handleSignInStatus(signInResult.status, signInResult);
       // console.log('signIn successful:', signInResult);
     } catch (error) {
-      // api signUp error
       if (error.response && error.response.status) {
         console.log(
-          `Error during login in signIn. status: ${error.response.status}`
+          `Error during login in signIn. status: ${error.response.status}`,
         );
         handleSignInStatus(error.response.status);
       } else {
-        console.error("No server response error in signIn", error);
+        console.error('No server response error in signIn', error);
       }
     }
   };
@@ -214,33 +245,32 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
             <img
               className={styles.closeIcon}
               src={closeIcon}
-              alt="close icon"
+              alt='close icon'
               onClick={onClose}
             />
           </div>
           {userError && <div className={styles.errorUser}>{userError}</div>}
           <form noValidate className={styles.form} onSubmit={(e) => submit(e)}>
-            {/* email */}
             <div className={styles.container}>
-              <label className={styles.label} htmlFor="email">
-                {t("Email")}
+              <label className={styles.label} htmlFor='email'>
+                {t('Email')}
               </label>
               <div className={styles.inputContainer}>
                 {emailError && (
                   <img
                     className={styles.attention}
                     src={attentionIcon}
-                    alt="attention"
+                    alt='attention'
                   />
                 )}
                 {emailError && <div className={styles.error}>{emailError}</div>}
                 <Input
                   classNameInput={styles.input}
-                  typeInput="email"
-                  id="email"
-                  nameInput="email"
+                  typeInput='email'
+                  id='email'
+                  nameInput='email'
                   value={userEmail}
-                  placeholderInput={t("Enter your email address")}
+                  placeholderInput={t('Enter your email address')}
                   onChangeInput={(e) => {
                     setUserEmail(e.target.value);
                     emailValidation(e.target.value);
@@ -250,10 +280,9 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
               </div>
             </div>
 
-            {/* password */}
             <div className={styles.container}>
-              <label className={styles.label} htmlFor="password">
-                {t("Password")}
+              <label className={styles.label} htmlFor='password'>
+                {t('Password')}
               </label>
               <div className={styles.passwordContainer}>
                 <div className={styles.inputContainer}>
@@ -261,7 +290,7 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
                     <img
                       className={styles.attention}
                       src={attentionIcon}
-                      alt="attention"
+                      alt='attention'
                     />
                   )}
                   {passwordError && (
@@ -269,11 +298,11 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
                   )}
                   <Input
                     classNameInput={styles.input}
-                    typeInput={isPasswordVisible ? "text" : "password"}
-                    id="password"
-                    nameInput="password"
+                    typeInput={isPasswordVisible ? 'text' : 'password'}
+                    id='password'
+                    nameInput='password'
                     value={userPassword}
-                    placeholderInput={t("Create a password")}
+                    placeholderInput={t('Create a password')}
                     onChangeInput={(e) => {
                       setUserPassword(e.target.value);
                       passwordValidation(e.target.value);
@@ -281,64 +310,65 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
                     required
                   />
                 </div>
-                {/* icon eyes */}
+
                 <div
                   className={styles.eyesIcon}
                   onClick={() => setPasswordVisible(!isPasswordVisible)}
                 >
                   <img
-                    className="w-24px h-24px"
+                    className='w-24px h-24px'
                     src={isPasswordVisible ? openEye : closeEye}
                     alt={
-                      isPasswordVisible ? "Показати пароль" : "Сховати пароль"
+                      isPasswordVisible ? 'Показати пароль' : 'Сховати пароль'
                     }
-                    tabIndex="0"
+                    tabIndex='0'
                   />
                 </div>
               </div>
             </div>
 
-            <p className={styles.remindPas} onClick={openRemindPass}>
+            <p className={styles.remindPas} onClick={handleForgotPassword}>
               Забули пароль?
             </p>
-            <Button classNameBtn={styles.btn} type="submit">
+            <Button classNameBtn={styles.btn} type='submit'>
               Увійти
             </Button>
             <div className={styles.alternative}>
               <hr className={styles.line} />
-              <p className="text-center text-gray">або за допомогою</p>
+              <p className='text-center text-gray'>або за допомогою</p>
               <hr className={styles.line} />
             </div>
-            <div className="flex flex-row gap-8 mt-5 mb-16 justify-center">
+            <div className='flex flex-row gap-8 mt-5 mb-16 justify-center'>
               <img
                 src={Facebook}
                 className={styles.mediaIcons}
-                alt="icon facebook"
+                alt='icon facebook'
                 onClick={() => handleOnClick(facebookProvider)}
                 disabled={isLoading}
               />
               <img
                 src={Google}
                 className={styles.mediaIcons}
-                alt="icon google"
+                alt='icon google'
                 onClick={() => handleOnClick(googleProvider)}
                 disabled={isLoading}
               />
-              <img src={Apple} className={styles.mediaIcons} alt="icon apple" />
+              <img src={Apple} className={styles.mediaIcons} alt='icon apple' />
             </div>
-            <p style={{ color: "#202020" }} className="text-center">
-              Ще немає акаунту?{" "}
+            <p style={{ color: '#202020' }} className='text-center'>
+              Ще немає акаунту?{' '}
               <span
                 style={{
-                  textDecoration: "underline",
-                  color: "#888888",
-                  cursor: "pointer",
+                  textDecoration: 'underline',
+                  color: '#888888',
+                  cursor: 'pointer',
                 }}
                 onClick={openSignUp}
               >
                 Зареєструйтесь
               </span>
             </p>
+            <ToastContainer />
           </form>
         </div>
       </div>
