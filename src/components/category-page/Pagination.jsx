@@ -1,4 +1,14 @@
-export default function Pagination({ totalPages, page, setPage }) {
+import { useSearchParams } from 'react-router-dom';
+
+export default function Pagination({ totalPages, page }) {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // navigate(`?category=${category}&page=1`);
+
+  const handleSetPage = (value) => {
+    searchParams.set('page', value);
+    setSearchParams(searchParams);
+  };
   const renderPages = () => {
     const pages = [];
     const visiblePageCount = 1;
@@ -6,24 +16,24 @@ export default function Pagination({ totalPages, page, setPage }) {
     if (page >= 1) {
       pages.push(
         <button
-          type="button"
-          onClick={() => setPage(1)}
+          type='button'
+          onClick={() => handleSetPage(1)}
           key={1}
-          className={`text-xl font-sans mr-[20px] ${page === 1 ? "text-black" : "text-gray"}`}
+          className={`text-xl font-sans mr-[20px] ${page === 1 ? 'text-black' : 'text-gray'}`}
         >
           1
-        </button>
+        </button>,
       );
     }
 
     if (page > visiblePageCount + 2) {
       pages.push(
         <span
-          key="ellipsis1"
-          className="text-xl font-sans text-gray mr-[20px] max-w-[11px] "
+          key='ellipsis1'
+          className='text-xl font-sans text-gray mr-[20px] max-w-[11px] '
         >
           ...
-        </span>
+        </span>,
       );
     }
 
@@ -34,37 +44,37 @@ export default function Pagination({ totalPages, page, setPage }) {
     ) {
       pages.push(
         <button
-          type="button"
-          onClick={() => setPage(i)}
+          type='button'
+          onClick={() => handleSetPage(i)}
           key={i}
-          className={`text-xl font-sans mr-[20px] ${page === i ? "text-black" : "text-gray"}`}
+          className={`text-xl font-sans mr-[20px] ${page === i ? 'text-black' : 'text-gray'}`}
         >
           {i}
-        </button>
+        </button>,
       );
     }
 
     if (page < totalPages - 2) {
       pages.push(
         <span
-          key="ellipsis2"
-          className="text-xl font-sans text-gray mr-[20px] max-w-[11px]"
+          key='ellipsis2'
+          className='text-xl font-sans text-gray mr-[20px] max-w-[11px]'
         >
           ...
-        </span>
+        </span>,
       );
     }
 
     if (totalPages > 1) {
       pages.push(
         <button
-          type="button"
-          onClick={() => setPage(totalPages)}
+          type='button'
+          onClick={() => handleSetPage(totalPages)}
           key={totalPages}
-          className={`text-xl font-sans ${totalPages === page ? "text-black" : "text-gray"}`}
+          className={`text-xl font-sans ${totalPages === page ? 'text-black' : 'text-gray'}`}
         >
           {totalPages}
-        </button>
+        </button>,
       );
     }
     console.log(pages);
@@ -73,6 +83,6 @@ export default function Pagination({ totalPages, page, setPage }) {
   };
 
   return (
-    <div className="mx-[100px] flex justify-between ">{renderPages()}</div>
+    <div className='mx-[100px] flex justify-between '>{renderPages()}</div>
   );
 }
