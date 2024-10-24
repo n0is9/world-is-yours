@@ -69,12 +69,27 @@ function App() {
 
   useEffect(() => {
     function getCookie(name) {
+    //   const value = `; ${document.cookie}`;
+    //   const parts = value.split(`; ${name}=`);
+    //   if (parts.length === 2) {
+    //     return JSON.parse(decodeURIComponent(parts.pop().split(';').shift()));
+    //   }
+    // }
       const value = `; ${document.cookie}`;
-      const parts = value.split(`; ${name}=`);
-      if (parts.length === 2) {
-        return JSON.parse(decodeURIComponent(parts.pop().split(';').shift()));
-      }
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) {
+            try {
+                // Попередньо перевіряємо, чи це дійсно JSON
+                const cookieValue = parts.pop().split(';').shift();
+                return cookieValue ? JSON.parse(decodeURIComponent(cookieValue)) : null;
+            } catch (e) {
+                console.error('Error parsing cookie:', e);
+                return null;
+            }
+        }
+        return null; // Якщо cookie не знайдено
     }
+  
 
     // init user cart and wishlist
     const user = getCookie('user');
