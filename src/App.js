@@ -34,8 +34,12 @@ function App() {
   const availableLanguages = useMemo(() => ['en', 'uk'], []);
 
   useEffect(() => {
-    const userLanguages = navigator.languages || [navigator.language || navigator.userLanguage];
-    const preferredLanguage = userLanguages.find((language) => availableLanguages.includes(language));
+    const userLanguages = navigator.languages || [
+      navigator.language || navigator.userLanguage,
+    ];
+    const preferredLanguage = userLanguages.find((language) =>
+      availableLanguages.includes(language),
+    );
 
     const selectedLanguage = preferredLanguage || 'en'; //default
 
@@ -72,6 +76,7 @@ function App() {
         return JSON.parse(decodeURIComponent(parts.pop().split(';').shift()));
       }
     }
+
     // init user cart and wishlist
     const user = getCookie('user');
     if (user) {
@@ -121,7 +126,7 @@ function App() {
           <Route path='/categories' element={<CategoryPage />} />
           <Route path='/cart' element={<Cart />} />
           <Route path='/contacts' element={<Contacts />} />
-          <Route path='/product' element={<ProductPage />} />
+          <Route path='/product/:id' element={<ProductPage />} />
           <Route path='/favorites' element={<Favorites />} />
           <Route path='*' element={<NotFound404 />} />
         </Routes>

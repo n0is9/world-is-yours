@@ -31,7 +31,8 @@ main {
   flex-direction: column;
 }
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
 
 ::-webkit-scrollbar {
@@ -108,4 +109,58 @@ button:focus {
   font-weight: 300;
   font-size: 1rem;
   color: #515151;
+}
+
+.custom-container {
+  margin-inline: auto;
+  width: min(100%, 1920px - 6rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.slick-next {
+  width: 10% !important;
+}
+.slick-prev {
+  width: 10% !important;
+  z-index: 2;
+}
+.slick-dots {
+  position: absolute;
+  bottom: 2% !important;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background-color: #eaeded62;
+  display: inline-block;
+  border-radius: 16px;
+  /* max-width: 90px; */
+  max-width: fit-content;
+
+  max-height: 16px;
+}
+.slick-dots li {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+@media (max-width: 1280px) {
+  .slick-dots {
+    bottom: -10% !important;
+    max-width: fit-content;
+  }
+  .slick-next,
+  .slick-prev {
+    top: 108% !important;
+  }
+  .slick-prev {
+    left: 0 !important;
+  }
+  .slick-next {
+    right: 0 !important;
+  }
+  .slick-arrow::before {
+    border-radius: 50%;
+    color: #c2c1c1 !important;
+  }
 }

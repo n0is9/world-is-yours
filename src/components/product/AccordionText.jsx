@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import CloseIcon from '../../assets/icons/icon-close.svg';
+
+import { AnimatePresence, motion as m } from 'framer-motion';
 
 const Accordion = () => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -14,22 +17,32 @@ const Accordion = () => {
   };
 
   return (
-    <div className="flex flex-col space-y-2">
+    <div className='flex flex-col space-y-2'>
       {data.map((item) => (
-        <div key={item.id} className="border-b-2 border-gray-300">
-          <div
-            className="flex justify-between items-center p-4 cursor-pointer transition-colors duration-300 ease-in-out"
-            onClick={() => toggleAccordion(item.id)}
-          >
-            <p className="text-base">{item.title}</p>
-            <span className="text-2xl">{openIndex === item.id ? '−' : '+'}</span>
+        <div key={item.id} className='border-b border-1 py-4'>
+          <div className='flex justify-between items-center my-2 cursor-pointer transition-colors duration-300 ease-in-out' onClick={() => toggleAccordion(item.id)}>
+            <p className='text-lg font-medium'>{item.title}</p>
+            <img src={CloseIcon} alt='close icon' className={`cursor-pointer rotate-45 scale-[0.6] duration-300 ${openIndex === item.id ? 'rotate-[0]' : ''}`} />
           </div>
-          {openIndex === item.id && (
-            <div>
-              <p className="px-4 py-1 font-medium font-Raleway text-base text-grayDark">{item.subtitle}</p>
-              <p className="px-4 font-light">{item.content}</p>
-            </div>
-          )}
+          <AnimatePresence>
+            {openIndex === item.id && (
+              <m.ul
+                className='flex flex-col gap-4 overflow-hidden'
+                initial='collapsed'
+                animate='open'
+                exit='collapsed'
+                variants={{
+                  open: { height: 'auto' },
+                  collapsed: { height: 0 },
+                }}
+                transition={{ duration: 0.3 }}>
+                <li>
+                  <p className='mb-1 font-semibold font-Raleway text-base text-grayDark'>{item.subtitle}</p>
+                  <p className='font-light'>{item.content}</p>
+                </li>
+              </m.ul>
+            )}
+          </AnimatePresence>
         </div>
       ))}
     </div>
@@ -37,5 +50,3 @@ const Accordion = () => {
 };
 
 export default Accordion;
-
-

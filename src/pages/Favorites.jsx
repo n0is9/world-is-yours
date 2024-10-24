@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import Card from '../components/common/Card';
 import { $api } from '../api/api';
 import { useSelector } from 'react-redux';
-import Container from '../components/common/container';
-import NotFound404 from './NotFound404';
 
 import { motion as m } from 'framer-motion';
+
+import Card from '../components/common/Card';
+import Container from '../components/common/container';
+import NotFound404 from './NotFound404';
 
 const Favorites = () => {
   const wishlist = useSelector((state) => state.wishlist.items);

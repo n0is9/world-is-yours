@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Button from '../components/common/Button';
 
 import { motion as m } from 'framer-motion';
+
+import Button from '../components/common/Button';
 
 const NotFound404 = () => {
   return (
