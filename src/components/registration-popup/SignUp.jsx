@@ -1,19 +1,24 @@
 import React, { useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+
+// import { useEffect } from "react";
 import styles from './signup.module.css';
 import Input from '../common/Input';
 import Button from '../common/Button';
+import closeIcon from '../../assets/icons/icon-close.svg';
 import Facebook from '../../assets/icons/media-icons/facebook-color.svg';
 import Google from '../../assets/icons/media-icons/google-color.svg';
 import Apple from '../../assets/icons/media-icons/apple-color.svg';
 import { facebookProvider, googleProvider } from './firebase/provider';
 import socialMediaAuth from './firebase/auth';
-import closeIcon from '../../assets/icons/icon-close.svg';
+
 import attentionIcon from '../../assets/icons/icon-attention.svg';
 import openEye from '../../assets/icons/icon-openEye.svg';
 import closeEye from '../../assets/icons/icon-Eye-off.svg';
+
 import useTranslation from '../../locale/locales';
 import { $api } from '../../api/api';
+
+import { useDispatch, useSelector } from 'react-redux';
 import { login, updateUser } from '../../redux/userSlice';
 
 const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
@@ -52,15 +57,19 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
     }
   };
 
+  // inputs
   const [username, setUsername] = useState('');
   const [userSurname, setUserSurname] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
 
+  // errors
   const [nameError, setNameError] = useState('');
   const [surnameError, setSurnameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+
+  // states
 
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
   console.log(isAuthenticated);
@@ -127,6 +136,7 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
       } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+$/.test(email)) {
         setEmailError('Не вірно введений емейл');
         return false;
+        // incorrect characters
       } else if (!/[a-zA-Z]{2,}$/.test(email.split('@')[1])) {
         setEmailError('Мінімум дві літери після крапки');
         return false;
@@ -278,7 +288,7 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
 
   return (
     <>
-      <div className={styles.overlay} onClick={onClose}>
+      <div className={styles.overlay} onClick={(e) => e.stopPropagation()}>
         <div
           className={`${styles.popup} ${styles.open}`}
           onClick={(e) => e.stopPropagation()}

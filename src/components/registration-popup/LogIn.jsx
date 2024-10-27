@@ -204,7 +204,9 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
 
   return (
     <>
-      <div className={styles.overlay} onClick={onClose}>
+      {/* <div className={styles.overlay} onClick={onClose}> */}
+
+      <div className={styles.overlay} onClick={(e) => e.stopPropagation()}>
         <div
           className={`${styles.popup} ${styles.open}`}
           onClick={(e) => e.stopPropagation()}
