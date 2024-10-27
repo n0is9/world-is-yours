@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { $api } from '../api/api';
 
 import Container from '../components/common/container';
@@ -8,6 +7,7 @@ import FilterList from '../components/product/FilterList';
 import PreviousPage from '../components/common/PreviousPage';
 import MoveUp from '../components/common/MoveUp';
 import Card from '../components/common/Card';
+import { useParams } from 'react-router-dom';
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -48,7 +48,9 @@ const ProductPage = () => {
       <div className='flex flex-col justify-center items-center'>
         {product.related_products && (
           <>
-            <h1 className='font-raleway font-semibold text-4xl text-left text-grayDark mt-20 mb-10'>Доповни комплект</h1>
+            <h1 className='font-raleway font-semibold text-4xl text-left text-grayDark mt-20 mb-10'>
+              Доповни комплект
+            </h1>
             {product.related_products.map((item) => (
               <Card data={item} key={item.id} />
             ))}
@@ -56,7 +58,9 @@ const ProductPage = () => {
         )}
         {product.seen_products && (
           <>
-            <h1 className='font-raleway font-semibold text-4xl text-left text-grayDark mt-20 mb-10'>Вже переглянуте</h1>
+            <h1 className='font-raleway font-semibold text-4xl text-left text-grayDark mt-20 mb-10'>
+              Вже переглянуте
+            </h1>
             {product.seen_products.map((item) => (
               <Card data={item} key={item.id} />
             ))}
