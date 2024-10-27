@@ -1,5 +1,7 @@
 import React, { useRef, useState } from 'react';
-// import { useEffect } from "react";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import styles from './signup.module.css';
 import Input from '../common/Input';
 import Button from '../common/Button';
@@ -14,13 +16,26 @@ import useTranslation from '../../locale/locales';
 import attentionIcon from '../../assets/icons/icon-attention.svg';
 import openEye from '../../assets/icons/icon-openEye.svg';
 import closeEye from '../../assets/icons/icon-Eye-off.svg';
+import RemindPas from '../registration-popup/RemindPas.jsx';
 
 import { $api } from '../../api/api';
 import { useDispatch } from 'react-redux';
 import { login, updateUser } from '../../redux/userSlice';
 
-const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
+const LogIn = ({ onClose, openSignUp, openSuccess }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isRemindVisible, setIsRemindVisible] = useState(false);
+
+  const dispatch = useDispatch();
+  const t = useTranslation();
+
+  const openRemindPas = () => {
+    setIsRemindVisible(true);
+  };
+
+  const closeRemindPas = () => {
+    setIsRemindVisible(false);
+  };
 
   const handleOnClick = async (provider) => {
     setIsLoading(true);
@@ -39,11 +54,17 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
 
       console.log('ID Token отримано:', idToken);
 
-      const response = await $api.post('/api/auth/social-login', {
+      const signInResult = await $api.post('/api/auth/social-login/', {
         token: idToken,
       });
 
-      handleSignInStatus(response.status, response.data);
+      console.log('response.status', signInResult.status);
+      console.log('response', signInResult);
+      openSuccess();
+      dispatch(updateUser(signInResult.data));
+      setCookie('user', signInResult.data, 7);
+
+      dispatch(login());
     } catch (error) {
       console.error('Помилка під час входу ', error);
     } finally {
@@ -51,48 +72,34 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
     }
   };
 
-  const dispatch = useDispatch();
-  const t = useTranslation();
-  // inputs
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
 
-  // errors
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
   const [userError, setUserError] = useState('');
 
-  // states
-
-  // password visible
   const [isPasswordVisible, setPasswordVisible] = useState(false);
-  // is validation on
+
   const isValidationOnRef = useRef(false);
 
-  // Email validation
   const emailValidation = (email) => {
     if (isValidationOnRef.current) {
       if (!email.trim()) {
         setEmailError("Емейл обов'язковий");
-        // empty
       } else if (/^\s/.test(email)) {
         setEmailError('Емейл не може починатися з пробілу');
       } else if (email.length < 5 || email.length > 32) {
         setEmailError('Не вірно введений емейл');
-        // leght
       } else if (!/@/.test(email) || !/\./.test(email)) {
         setEmailError('Не вірно введений емейл');
-        // have @ and .
       } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+$/.test(email)) {
         setEmailError('Не вірно введений емейл');
-        // incorrect characters
       } else if (!/[a-zA-Z]{2,}$/.test(email.split('@')[1])) {
         setEmailError('Мінімум дві літери після крапки');
-        // At least two letters after the period
       } else if (/@\./.test(email)) {
         setEmailError('Символ "." не може йти одразу після символу "@"');
-        // The "." character cannot follow the "@" character.
       } else {
         setEmailError(null);
         return true;
@@ -100,7 +107,6 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
     }
   };
 
-  // password validation
   const passwordValidation = (password) => {
     if (isValidationOnRef.current) {
       if (!password.trim()) {
@@ -118,12 +124,10 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
     }
   };
 
-  // valid all
   const validateSignInForm = () => {
     return emailValidation(userEmail) && passwordValidation(userPassword);
   };
 
-  // submit
   const submit = (e) => {
     e.preventDefault();
     isValidationOnRef.current = true;
@@ -138,19 +142,15 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
     document.cookie = `${name}=${encodeURIComponent(JSON.stringify(object))};expires=${expires.toUTCString()};path=/`;
   };
 
-  // SIgnIn status answear
   const handleSignInStatus = (status, signInResult = null) => {
-    // status message
     const statusMessages = {
       200: 'SignIn successful',
       400: 'status 400',
     };
 
     if (statusMessages.hasOwnProperty(status)) {
-      // log status
       console.log(statusMessages[status]);
 
-      // status
       switch (status) {
         case 200:
           openSuccess();
@@ -169,7 +169,6 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
           break;
       }
     } else {
-      // undefinded status error
       console.log(`Unexpected response status: ${status}`);
     }
   };
@@ -188,9 +187,7 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
       console.log('Response body:', signInResult);
 
       handleSignInStatus(signInResult.status, signInResult);
-      // console.log('signIn successful:', signInResult);
     } catch (error) {
-      // api signUp error
       if (error.response && error.response.status) {
         console.log(
           `Error during login in signIn. status: ${error.response.status}`,
@@ -222,7 +219,6 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
           </div>
           {userError && <div className={styles.errorUser}>{userError}</div>}
           <form noValidate className={styles.form} onSubmit={(e) => submit(e)}>
-            {/* email */}
             <div className={styles.container}>
               <label className={styles.label} htmlFor='email'>
                 {t('Email')}
@@ -252,7 +248,6 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
               </div>
             </div>
 
-            {/* password */}
             <div className={styles.container}>
               <label className={styles.label} htmlFor='password'>
                 {t('Password')}
@@ -275,7 +270,7 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
                     id='password'
                     nameInput='password'
                     value={userPassword}
-                    placeholderInput={t('Create a password')}
+                    placeholderInput={t('Enter a password')}
                     onChangeInput={(e) => {
                       setUserPassword(e.target.value);
                       passwordValidation(e.target.value);
@@ -283,7 +278,7 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
                     required
                   />
                 </div>
-                {/* icon eyes */}
+
                 <div
                   className={styles.eyesIcon}
                   onClick={() => setPasswordVisible(!isPasswordVisible)}
@@ -300,7 +295,7 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
               </div>
             </div>
 
-            <p className={styles.remindPas} onClick={openRemindPass}>
+            <p className={styles.remindPas} onClick={openRemindPas}>
               Забули пароль?
             </p>
             <Button classNameBtn={styles.btn} type='submit'>
@@ -341,9 +336,11 @@ const LogIn = ({ onClose, openSignUp, openRemindPass, openSuccess }) => {
                 Зареєструйтесь
               </span>
             </p>
+            <ToastContainer />
           </form>
         </div>
       </div>
+      {isRemindVisible && <RemindPas onClose={closeRemindPas} />}
     </>
   );
 };

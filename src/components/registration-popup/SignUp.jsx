@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 
-// import { useEffect } from "react";
 import styles from './signup.module.css';
 import Input from '../common/Input';
 import Button from '../common/Button';
@@ -48,7 +47,8 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
       const response = await $api.post('/api/auth/social-login', {
         token: idToken,
       });
-
+      console.log('response.status', response.status);
+      console.log('response.data', response.data);
       handleSignInStatus(response.status, response.data);
     } catch (error) {
       console.error('Помилка під час входу ', error);
