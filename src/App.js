@@ -1,9 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import React, { Suspense, lazy, useEffect, useMemo, useState } from 'react';
 import MainPage from './pages/MainPage';
-// import PaymentPage from "./pages/PaymentPage";
-// import NotFound404 from "./pages/NotFound404";
-// import InfoPayment from "./pages/InfoHelp";
+
 import { useDispatch, useSelector } from 'react-redux';
 import { setLocale, setLanguage } from './redux/localeSlice';
 import { $api, api2 } from './api/api';
@@ -13,7 +11,7 @@ import Header from './components/common/Header';
 import Loader from './components/common/Loader';
 import Profile from './pages/Profile';
 import Cart from './pages/Cart';
-// import PasswordRecovery from './pages/PasswordRecovery';
+
 import ProductPage from './pages/ProductPage';
 import Contacts from './pages/Contacts';
 import CategoryPage from './pages/CategoryPage';
@@ -69,12 +67,7 @@ function App() {
 
   useEffect(() => {
     function getCookie(name) {
-    //   const value = `; ${document.cookie}`;
-    //   const parts = value.split(`; ${name}=`);
-    //   if (parts.length === 2) {
-    //     return JSON.parse(decodeURIComponent(parts.pop().split(';').shift()));
-    //   }
-    // }
+    
       const value = `; ${document.cookie}`;
         const parts = value.split(`; ${name}=`);
         if (parts.length === 2) {
@@ -140,7 +133,7 @@ function App() {
           <Route path='/categories' element={<CategoryPage />} />
           <Route path='/cart' element={<Cart />} />
           <Route path='/contacts' element={<Contacts />} />
-          <Route path="/reset-password/:email/:token" element={<PasswordRecovery />} />
+          <Route path="/password_reset/:email/:code" element={<PasswordRecovery />} />
           <Route path='/product/:id' element={<ProductPage />} />
           <Route path='/favorites' element={<Favorites />} />
           <Route path='*' element={<NotFound404 />} />

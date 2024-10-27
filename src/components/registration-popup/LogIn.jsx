@@ -16,6 +16,7 @@ import useTranslation from '../../locale/locales';
 import attentionIcon from '../../assets/icons/icon-attention.svg';
 import openEye from '../../assets/icons/icon-openEye.svg';
 import closeEye from '../../assets/icons/icon-Eye-off.svg';
+import RemindPas from '../registration-popup/RemindPas.jsx';
 
 import { $api } from '../../api/api';
 import { useDispatch } from 'react-redux';
@@ -23,6 +24,18 @@ import { login, updateUser } from '../../redux/userSlice';
 
 const LogIn = ({ onClose, openSignUp, openSuccess }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isRemindVisible, setIsRemindVisible] = useState(false);
+
+  const dispatch = useDispatch();
+  const t = useTranslation();
+
+  const openRemindPas = () => {
+    setIsRemindVisible(true);
+  };
+
+  const closeRemindPas = () => {
+    setIsRemindVisible(false);
+  };
 
   const handleOnClick = async (provider) => {
     setIsLoading(true);
@@ -41,23 +54,23 @@ const LogIn = ({ onClose, openSignUp, openSuccess }) => {
 
       console.log('ID Token отримано:', idToken);
 
-      const response = await $api.post('/api/auth/social-login/', {
+      const signInResult = await $api.post('/api/auth/social-login/', {
         token: idToken,
       });
 
-      console.log('response.status', response.status);
-      console.log('response.data', response.data);
+      console.log('response.status', signInResult.status);
+      console.log('response', signInResult);
+      openSuccess();
+      dispatch(updateUser(signInResult.data));
+      setCookie('user', signInResult.data, 7);
 
-      handleSignInStatus(response.status, response.data);
+      dispatch(login());
     } catch (error) {
       console.error('Помилка під час входу ', error);
     } finally {
       setIsLoading(false);
     }
   };
-
-  const dispatch = useDispatch();
-  const t = useTranslation();
 
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
@@ -75,24 +88,18 @@ const LogIn = ({ onClose, openSignUp, openSuccess }) => {
     if (isValidationOnRef.current) {
       if (!email.trim()) {
         setEmailError("Емейл обов'язковий");
-        // empty
       } else if (/^\s/.test(email)) {
         setEmailError('Емейл не може починатися з пробілу');
       } else if (email.length < 5 || email.length > 32) {
         setEmailError('Не вірно введений емейл');
-        // leght
       } else if (!/@/.test(email) || !/\./.test(email)) {
         setEmailError('Не вірно введений емейл');
-        // have @ and .
       } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+$/.test(email)) {
         setEmailError('Не вірно введений емейл');
-        // incorrect characters
       } else if (!/[a-zA-Z]{2,}$/.test(email.split('@')[1])) {
         setEmailError('Мінімум дві літери після крапки');
-        // At least two letters after the period
       } else if (/@\./.test(email)) {
         setEmailError('Символ "." не може йти одразу після символу "@"');
-        // The "." character cannot follow the "@" character.
       } else {
         setEmailError(null);
         return true;
@@ -133,46 +140,6 @@ const LogIn = ({ onClose, openSignUp, openSuccess }) => {
     const expires = new Date();
     expires.setTime(expires.getTime() + daysToExpire * 24 * 60 * 60 * 1000);
     document.cookie = `${name}=${encodeURIComponent(JSON.stringify(object))};expires=${expires.toUTCString()};path=/`;
-  };
-
-  const handleForgotPassword = async () => {
-    if (!userEmail || emailError) {
-      setEmailError('Введіть коректний емейл');
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-      console.log('userEmail', userEmail);
-      const response = await $api.post('/api/password_reset/', {
-        email: userEmail,
-      });
-      console.log('response.status', response.status);
-      console.log('response.data', response.data);
-      if (response.status === 200) {
-        toast.info(
-          'An email to change your password has been sent to your email',
-          {
-            position: 'top-center',
-            autoClose: 6000,
-          },
-        );
-      } else {
-        toast.info('Something went wrong, please try again later', {
-          position: 'top-center',
-          autoClose: 6000,
-        });
-      }
-    } catch (error) {
-      console.error('Помилка при відновленні пароля', error);
-
-      toast.info('Password recovery email could not be sent', {
-        position: 'top-center',
-        autoClose: 6000,
-      });
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   const handleSignInStatus = (status, signInResult = null) => {
@@ -220,7 +187,6 @@ const LogIn = ({ onClose, openSignUp, openSuccess }) => {
       console.log('Response body:', signInResult);
 
       handleSignInStatus(signInResult.status, signInResult);
-      // console.log('signIn successful:', signInResult);
     } catch (error) {
       if (error.response && error.response.status) {
         console.log(
@@ -302,7 +268,7 @@ const LogIn = ({ onClose, openSignUp, openSuccess }) => {
                     id='password'
                     nameInput='password'
                     value={userPassword}
-                    placeholderInput={t('Create a password')}
+                    placeholderInput={t('Enter a password')}
                     onChangeInput={(e) => {
                       setUserPassword(e.target.value);
                       passwordValidation(e.target.value);
@@ -327,7 +293,7 @@ const LogIn = ({ onClose, openSignUp, openSuccess }) => {
               </div>
             </div>
 
-            <p className={styles.remindPas} onClick={handleForgotPassword}>
+            <p className={styles.remindPas} onClick={openRemindPas}>
               Забули пароль?
             </p>
             <Button classNameBtn={styles.btn} type='submit'>
@@ -372,6 +338,7 @@ const LogIn = ({ onClose, openSignUp, openSuccess }) => {
           </form>
         </div>
       </div>
+      {isRemindVisible && <RemindPas onClose={closeRemindPas} />}
     </>
   );
 };

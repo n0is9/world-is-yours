@@ -17,7 +17,7 @@ const PasswordRecovery = () => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
-  const { email, token } = useParams();
+  const { email, code } = useParams();
   const navigate = useNavigate();
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
@@ -60,10 +60,10 @@ const PasswordRecovery = () => {
     }
 
     try {
-      const response = await $api.post('/api/reset-password/', {
+      const response = await $api.post('/api/set-password/', {
         email,
-        token,
         userPassword,
+        code,
       });
       console.log(response.data);
 
