@@ -1,6 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
 import React, { Suspense, lazy, useEffect, useMemo, useState } from 'react';
-import MainPage from './pages/MainPage';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setLocale, setLanguage } from './redux/localeSlice';
