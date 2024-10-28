@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   items: [], // Масив товарів у корзині
@@ -33,7 +33,7 @@ export const cartSlice = createSlice({
     },
     // Remove an item from the basket
     removeItemCart: (state, action) => {
-      state.items = state.items.filter((item) => item.product !== action.payload);
+      state.items = state.items.filter((item) => item.id !== action.payload);
     },
     // Update the quantity of goods in the basket
     updateQuantityCart: (state, action) => {

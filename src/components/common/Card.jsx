@@ -19,14 +19,20 @@ const Card = ({ data }) => {
   const dispatch = useDispatch();
 
   const [isLiked, setLike] = useState(false);
+  const [isCart, setIsCart] = useState(false);
 
   const wishlist = useSelector((state) => state.wishlist.items);
 
   const cart = useSelector((state) => state.cart.items);
-
+  console.log('cart', cart);
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 
-  const isCart = cart.find((item) => item.product === data.id);
+  // const isCart = cart.find((item) => item.product === data.id);
+
+  useEffect(() => {
+    // Оновлення isInCart при зміні cart
+    setIsCart(cart.find((item) => item.product === data.id));
+  }, [cart, data.id]);
 
   useEffect(() => {
     if (wishlist.includes(data.id)) {
@@ -77,7 +83,7 @@ const Card = ({ data }) => {
         const response = await $api.delete(`/api/baskets/${isCart.id}/`);
         dispatch(removeItemCart(data.id));
 
-        console.log(response);
+        console.log('після видалення', response);
       }
     } catch (error) {
       console.log(error);
