@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { removeItemCart, clearCart } from '../redux/cartSlice';
 import CartItem from '../components/cart/CartItem';
 import Button from '../components/common/Button';
 import Container from '../components/common/container';
@@ -8,6 +9,9 @@ import Container from '../components/common/container';
 import { $api } from '../api/api';
 
 const Cart = () => {
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
+
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState(0);
   const [upd, setUpd] = useState(0);
@@ -35,6 +39,7 @@ const Cart = () => {
       );
 
       const products = await Promise.all(productRequests);
+
       setCart(products);
       setTotal(newTotal.toFixed(2)); // Оновлення стану загальної суми
     } catch (error) {
@@ -65,13 +70,13 @@ const Cart = () => {
         console.log(item);
         if (basket.length != 0) {
           console.log(basket.length);
-          $api.delete(`/api/baskets/${item.id}/`);
+          $api.delete(`/api/baskets/${item.id}/`).then(() => {});
         }
       });
 
       // Чекаємо на завершення всіх запитів
       await Promise.all(deleteRequests);
-
+      dispatch(clearCart());
       console.log('All items removed');
       setUpd(Math.floor(Math.random() * 100) + 1);
     } catch (error) {
@@ -81,9 +86,11 @@ const Cart = () => {
 
   const handleRemoveItem = async (id) => {
     try {
-      await $api.delete(`/api/baskets/${id}/`).then((response) => {
-        setUpd(Math.floor(Math.random() * 100) + 1);
-      });
+      await $api.delete(`/api/baskets/${id}/`);
+      dispatch(removeItemCart(id)); // Видаляємо елемент із Redux
+      setUpd((prev) => prev + 1); // Оновлюємо стан для перерендеру
+      console.log('cartItems', cartItems);
+      setUpd(Math.floor(Math.random() * 100) + 1);
     } catch (error) {
       console.log(error);
       setUpd(Math.floor(Math.random() * 100) + 1);
