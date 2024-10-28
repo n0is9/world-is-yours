@@ -18,4 +18,4 @@ const app = initializeApp(firebaseConfig);
 // export { app, analytics };
 export { app };
 
-export { app, analytics };
+

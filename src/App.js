@@ -12,7 +12,7 @@ import { $api, api2 } from './api/api';
 import Footer from './components/common/Footer';
 import Header from './components/common/Header';
 import Loader from './components/common/Loader';
-import MainPage from './pages/MainPage';
+// import MainPage from './pages/MainPage.jsx';
 import Profile from './pages/Profile';
 import Cart from './pages/Cart';
 
