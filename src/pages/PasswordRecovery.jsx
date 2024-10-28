@@ -24,8 +24,8 @@ const PasswordRecovery = () => {
     setUserPassword(newPassword);
 
     // Валідація пароля
-    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$/.test(newPassword)) {
-      setPasswordError('8-16  символів ');
+    if (!/^.{8,}$/.test(newPassword)) {
+      setPasswordError('Мінімум 8 символів');
     } else {
       setPasswordError('');
     }
@@ -53,12 +53,15 @@ const PasswordRecovery = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('email', email);
+    console.log('code', code);
+    console.log('userPassword', userPassword);
     // Перевірка наявності помилок перед відправкою
     if (passwordError || confirmPasswordError) {
       console.log('Будь ласка, виправте помилки в формі.');
       return;
     }
-
+    console.log(email, userPassword, code);
     try {
       const response = await $api.post('/api/set-password/', {
         email,
@@ -83,7 +86,7 @@ const PasswordRecovery = () => {
   };
 
   return (
-    <div className={styles.wrap}>
+    <form onSubmit={handleSubmit} className={styles.wrap}>
       <h1 className={styles.title}>Відновлення пароля</h1>
       <div className={styles.container}>
         <label className={styles.label} htmlFor='password'>
@@ -151,12 +154,12 @@ const PasswordRecovery = () => {
         </div>
       </div>
       <div className={styles.container}>
-        <Button classNameBtn={styles.btn} type='button' onClick={handleSubmit}>
+        <Button classNameBtn={styles.btn} type='submit' onClick={handleSubmit}>
           Змінити пароль
         </Button>
       </div>
       <ToastContainer />
-    </div>
+    </form>
   );
 };
 

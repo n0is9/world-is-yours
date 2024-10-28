@@ -133,7 +133,7 @@ function App() {
           <Route path='/categories' element={<CategoryPage />} />
           <Route path='/cart' element={<Cart />} />
           <Route path='/contacts' element={<Contacts />} />
-          <Route path="/password_reset/:email/:code" element={<PasswordRecovery />} />
+          <Route path='/password_reset/:email/:code' element={<PasswordRecovery />} />
           <Route path='/product/:id' element={<ProductPage />} />
           <Route path='/favorites' element={<Favorites />} />
           <Route path='*' element={<NotFound404 />} />
