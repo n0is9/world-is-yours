@@ -1,6 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
 import React, { Suspense, lazy, useEffect, useMemo, useState } from 'react';
-import MainPage from './pages/MainPage';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setLocale, setLanguage } from './redux/localeSlice';
@@ -8,11 +7,11 @@ import { updateUser } from './redux/userSlice';
 import { setWishlist } from './redux/wishlistSlice';
 import { addItemsCart } from './redux/cartSlice';
 import { $api, api2 } from './api/api';
-
+import MainPage from './pages/MainPage.jsx';
 import Footer from './components/common/Footer';
 import Header from './components/common/Header';
 import Loader from './components/common/Loader';
-// import MainPage from './pages/MainPage.jsx';
+
 import Profile from './pages/Profile';
 import Cart from './pages/Cart';
 

@@ -11,12 +11,9 @@ import NotFound404 from './NotFound404';
 const Favorites = () => {
   const wishlist = useSelector((state) => state.wishlist.items);
   const [products, setProducts] = useState([]);
-  const [count, setCount] = useState(0);
   const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
-    setCount(wishlist.length);
-
     const fetchProducts = async () => {
       const newProducts = [];
 
