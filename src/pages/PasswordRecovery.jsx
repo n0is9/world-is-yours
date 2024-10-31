@@ -64,9 +64,9 @@ const PasswordRecovery = () => {
     console.log(email, userPassword, code);
     try {
       const response = await $api.post('/api/set-password/', {
-        email,
-        userPassword,
-        code,
+        password: userPassword,
+        email: email,
+        code: code,
       });
       console.log(response.data);
 
@@ -76,6 +76,7 @@ const PasswordRecovery = () => {
       });
       navigate('/');
     } catch (error) {
+      console.log(error, 'error');
       const message =
         error.response?.data?.message || 'Error resetting password';
       toast.info(message, {

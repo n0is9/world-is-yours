@@ -34,7 +34,9 @@ const ChatPopupContact = () => {
     if (!value.trim()) {
       setNameError('Name and surname cannot be empty');
     } else if (!nameSurnameRegex.test(value)) {
-      setNameError('Name and surname should be 3-16 characters long and should not contain numbers');
+      setNameError(
+        'Name and surname should be 3-16 characters long and should not contain numbers',
+      );
     } else {
       setNameError('');
     }
@@ -44,7 +46,9 @@ const ChatPopupContact = () => {
     if (!value.trim()) {
       setThemeError('Theme cannot be empty');
     } else if (!themeRegex.test(value)) {
-      setThemeError('Theme should be 6-20 characters long and should not contain numbers');
+      setThemeError(
+        'Theme should be 6-20 characters long and should not contain numbers',
+      );
     } else {
       setThemeError('');
     }
@@ -75,7 +79,9 @@ const ChatPopupContact = () => {
     resetErrors();
 
     if (!nameSurnameRegex.test(name)) {
-      setNameError('Name and surname should be 3-16 characters long and should not contain numbers');
+      setNameError(
+        'Name and surname should be 3-16 characters long and should not contain numbers',
+      );
       return false;
     }
 
@@ -85,7 +91,9 @@ const ChatPopupContact = () => {
     }
 
     if (!themeRegex.test(theme)) {
-      setThemeError('Theme should be 6-20 characters long and should not contain numbers');
+      setThemeError(
+        'Theme should be 6-20 characters long and should not contain numbers',
+      );
       return false;
     }
 
@@ -96,16 +104,25 @@ const ChatPopupContact = () => {
   };
 
   return (
-    <div className={styles.contactUsWrap}>
+    <div className='flex-[0_1_30rem]'>
       <div className={styles.titleWrap}>
         <h2 className={styles.title}>Зв’яжіться з нами!</h2>
       </div>
       <form className={styles.form} onSubmit={validateSignUpForm}>
-        <label htmlFor='name' className='mb-2 ml-1 text-textLight font-medium font-raleway text-sm'>
+        <label
+          htmlFor='name'
+          className='mb-2 ml-1 text-textLight font-medium font-raleway text-sm'
+        >
           Ім'я та прізвище
         </label>
         <div className={styles.inputContainer}>
-          {nameError && <img className={styles.attention} src={attentionIcon} alt='attention' />}
+          {nameError && (
+            <img
+              className={styles.attention}
+              src={attentionIcon}
+              alt='attention'
+            />
+          )}
           {nameError && <div className={styles.error}>{nameError}</div>}
           <Input
             classNameInput={styles.input}
@@ -121,11 +138,20 @@ const ChatPopupContact = () => {
             required
           />
         </div>
-        <label htmlFor='email' className='mb-2 ml-1 text-textLight font-medium font-raleway text-sm'>
+        <label
+          htmlFor='email'
+          className='mb-2 ml-1 text-textLight font-medium font-raleway text-sm'
+        >
           Електронна пошта
         </label>
         <div className={styles.inputContainer}>
-          {emailError && <img className={styles.attention} src={attentionIcon} alt='attention' />}
+          {emailError && (
+            <img
+              className={styles.attention}
+              src={attentionIcon}
+              alt='attention'
+            />
+          )}
           {emailError && <div className={styles.error}>{emailError}</div>}
           <Input
             classNameInput={styles.input}
@@ -141,11 +167,20 @@ const ChatPopupContact = () => {
             required
           />
         </div>
-        <label htmlFor='theme' className='mb-2 ml-1 text-textLight font-medium font-raleway text-sm'>
+        <label
+          htmlFor='theme'
+          className='mb-2 ml-1 text-textLight font-medium font-raleway text-sm'
+        >
           Тема повідомлення
         </label>
         <div className={styles.inputContainer}>
-          {themeError && <img className={styles.attention} src={attentionIcon} alt='attention' />}
+          {themeError && (
+            <img
+              className={styles.attention}
+              src={attentionIcon}
+              alt='attention'
+            />
+          )}
           {themeError && <div className={styles.error}>{themeError}</div>}
           <Input
             classNameInput={styles.input}
@@ -161,11 +196,20 @@ const ChatPopupContact = () => {
             required
           />
         </div>
-        <label htmlFor='textArea' className='mb-2 ml-1 text-textLight font-medium font-raleway text-sm'>
+        <label
+          htmlFor='textArea'
+          className='mb-2 ml-1 text-textLight font-medium font-raleway text-sm'
+        >
           Текст повідомлення
         </label>
         <div className={styles.inputContainer}>
-          {textAreaError && <img className={styles.attention} src={attentionIcon} alt='attention' />}
+          {textAreaError && (
+            <img
+              className={styles.attention}
+              src={attentionIcon}
+              alt='attention'
+            />
+          )}
           {textAreaError && <div className={styles.error}>{textAreaError}</div>}
           <textarea
             className={styles.textarea}
@@ -176,7 +220,8 @@ const ChatPopupContact = () => {
               setTextArea(e.target.value);
               validateTextArea(e.target.value);
             }}
-            required></textarea>
+            required
+          ></textarea>
         </div>
         <Button classNameBtn={styles.btn} type='submit'>
           Відправити
