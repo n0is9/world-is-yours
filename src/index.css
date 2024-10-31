@@ -114,9 +114,6 @@ button:focus {
 .custom-container {
   margin-inline: auto;
   width: min(100%, 1920px - 6rem);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .slick-next {
