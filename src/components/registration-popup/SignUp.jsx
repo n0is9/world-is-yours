@@ -88,7 +88,7 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
       } else if (name.length < 2 || name.length > 32) {
         setNameError("Ім'я повинно бути від 2 до 32 символів");
         return false;
-      } else if (!/^[a-zA-Z' -]+$/.test(name)) {
+      } else if (!/^[a-zA-Zа-яА-ЯіІїЇєЄ'-]+$/.test(name)) {
         setNameError("Ім'я містить не припустимі символи");
         return false;
       } else {
@@ -109,7 +109,7 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
       } else if (surname.length < 2 || surname.length > 32) {
         setSurnameError('Прізвище повинно бути від 2 до 32 символів');
         return false;
-      } else if (!/^[a-zA-Z' -]+$/.test(surname)) {
+      } else if (!/^[a-zA-Zа-яА-ЯіІїЇєЄ'-]+$/.test(surname)) {
         setSurnameError('Прізвище містить не припустимі символи');
         return false;
       } else {
