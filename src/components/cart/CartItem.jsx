@@ -91,7 +91,7 @@ const CartItem = ({ product, handleQuantityChange, handleRemoveItem }) => {
             </span>
           </p>
           <p className='text-gray mt-3 font-semibold text-grayDark text-xl font-sans'>
-            Всього: {product.price} грн
+            Всього: {product.price * product.quantity} грн
           </p>
         </div>
       </div>
