@@ -7,11 +7,11 @@ import { updateUser } from './redux/userSlice';
 import { setWishlist } from './redux/wishlistSlice';
 import { addItemsCart } from './redux/cartSlice';
 import { $api, api2 } from './api/api';
-
+import MainPage from './pages/MainPage.jsx';
 import Footer from './components/common/Footer';
 import Header from './components/common/Header';
 import Loader from './components/common/Loader';
-import MainPage from './pages/MainPage';
+
 import Profile from './pages/Profile';
 import Cart from './pages/Cart';
 

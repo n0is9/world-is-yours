@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeItemCart, clearCart } from '../redux/cartSlice';
+import {
+  removeItemCart,
+  clearCart,
+  updateQuantityCart,
+} from '../redux/cartSlice';
 import CartItem from '../components/cart/CartItem';
 import Button from '../components/common/Button';
 import Container from '../components/common/container';
@@ -10,8 +14,13 @@ import { $api } from '../api/api';
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart.items);
 
+  const cartItems = useSelector((state) => state.cart.items);
+  useEffect(() => {
+    console.log('cartItems', cartItems);
+  }, [cartItems]);
+
+  console.log('cartItems', cartItems);
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState(0);
   const [upd, setUpd] = useState(0);
@@ -22,9 +31,8 @@ const Cart = () => {
       const basketResponse = await $api.get(`/api/baskets/`);
       const basketItems = basketResponse.data;
       setBasket(basketItems);
-      console.log(basketResponse.data);
 
-      let newTotal = 0; // Змінна для зберігання загальної вартості корзини
+      let newTotal = 0;
 
       const productRequests = basketItems.map((item) =>
         $api.get(`/api/products/${item.product}/`).then((response) => {
@@ -33,7 +41,7 @@ const Cart = () => {
             quantity: item.quantity,
             basketId: item.id,
           };
-          newTotal += productData.price * item.quantity; // Додавання вартості цього продукту в загальну суму
+          newTotal += productData.price * item.quantity;
           return productData;
         }),
       );
@@ -41,7 +49,7 @@ const Cart = () => {
       const products = await Promise.all(productRequests);
 
       setCart(products);
-      setTotal(newTotal.toFixed(2)); // Оновлення стану загальної суми
+      setTotal(newTotal.toFixed(2));
     } catch (error) {
       console.log(error);
     }
@@ -51,17 +59,29 @@ const Cart = () => {
     fetchBasket();
   }, [upd]);
 
-  const updBasket = async (id) => {
-    const quantity = 2;
+  const updBasket = async (productId, newQuantity) => {
     try {
-      const basketUpdReq = await $api.put(`/api/products/${id}/`, quantity);
-      basketUpdReq.then((response) => {
-        console.log(response.data);
-      });
+      await $api.put(`/api/baskets/${productId}/`, { quantity: newQuantity });
+      setUpd((prev) => prev + 1); // Trigger re-fetch
     } catch (error) {
       console.log(error);
     }
   };
+
+  const handleQuantityChange = (productId, action) => {
+    const product = cart.find((item) => item.basketId === productId);
+    if (!product) return;
+
+    const newQuantity =
+      action === 'increment' ? product.quantity + 1 : product.quantity - 1;
+
+    if (newQuantity > 0) {
+      updBasket(productId, newQuantity);
+    }
+    console.log('product', product);
+    dispatch(updateQuantityCart({ product: productId, quantity: newQuantity }));
+  };
+
   const handleRemoveAllItems = async () => {
     try {
       console.log(basket);
@@ -70,7 +90,8 @@ const Cart = () => {
         console.log(item);
         if (basket.length != 0) {
           console.log(basket.length);
-          $api.delete(`/api/baskets/${item.id}/`).then(() => {});
+          $api.delete(`/api/baskets/${item.id}/`);
+          // .then(() => { });
         }
       });
 
@@ -94,15 +115,6 @@ const Cart = () => {
     } catch (error) {
       console.log(error);
       setUpd(Math.floor(Math.random() * 100) + 1);
-    }
-  };
-
-  const handleQuantityChange = (productId, action) => {
-    if (action === 'increment') {
-      console.log('increment', productId);
-      updBasket(productId);
-    } else if (action === 'decrement') {
-      console.log('decrement', productId);
     }
   };
 
@@ -163,14 +175,11 @@ const Cart = () => {
           <p className='w-full items-center font-semibold text-xl font-sans'>
             Всього: {total} грн
           </p>
-          <Button
-            classNameBtn='w-6/12 bg-gray-dark p-4 border rounded-xl font-bold text-18px text-white duration-300 hover:bg-transparent hover:text-black focus:bg-transparent focus:text-black'
-            nameBtn='submitForm'
-            valueBtn='submit'
-            type='submit'
-          >
-            Оформити замовлення
-          </Button>
+          <Link to='/payment'>
+            <Button classNameBtn='w-22 bg-gray-dark p-4 border rounded-xl font-bold text-18px text-white duration-300 hover:bg-transparent hover:text-black focus:bg-transparent focus:text-black'>
+              Оформити замовлення
+            </Button>
+          </Link>
         </div>
 
         <hr className='mb-10 text-gray' />
