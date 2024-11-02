@@ -123,7 +123,7 @@ const Cart = () => {
       <div className='w-full flex justify-center items-center flex-col mt-12 mb-60'>
         <p className='font-raleway font-semibold text-40px mb-20'>Кошик</p>
         <p className='font-raleway text-18px font-semibold text-center text-gray mt-10'>
-          Кошик порожній. <br /> Додайте товари, які вас цікавлять!
+          Список порожній. <br /> Додайте товари, які вас цікавлять!
         </p>
         <Link to='/'>
           <Button

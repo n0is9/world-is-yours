@@ -20,7 +20,7 @@ const Personal = () => {
 
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
-  console.log('user', user);
+  console.log('userState', user);
   const validationSchema = Yup.object({
     first_name: Yup.string()
       .matches(/^\S.*$/, 'First name cannot start with a space')
@@ -91,6 +91,7 @@ const Personal = () => {
               dispatch(
                 updateUser({
                   ...response.data,
+
                   date_of_birth: response.data.date_of_birth.split('T')[0], // зберігаємо тільки YYYY-MM-DD
                 }),
               );
