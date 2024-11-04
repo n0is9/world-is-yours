@@ -87,7 +87,7 @@ const Personal = () => {
               );
 
               //відповідь  приходить з date_of_birth в форматі "YYYY-MM-DDTHH:MM"
-
+              console.log('response.data', response.data);
               dispatch(
                 updateUser({
                   ...response.data,

@@ -4,66 +4,66 @@ import { $api } from '../../api/api.js';
 import { motion as m } from 'framer-motion';
 
 const History = () => {
-  const [orders, setOrders] = useState([]);
+  // const [orders, setOrders] = useState([]);
 
-  // const [orders, setOrders] = useState([
-  //   {
-  //     id: 1,
-  //     first_name: 'John',
-  //     last_name: 'Doe',
-  //     address: '123 Main St, City',
-  //     basket_history: {
-  //       purchased_items: [
-  //         {
-  //           quantity: 1,
-  //           price: 10.0,
-  //           sum: 10.0,
-  //         },
-  //       ],
-  //       total_sum: 10.0,
-  //     },
-  //     created: '2023-01-01T12:00:00Z',
-  //     status: 1,
-  //     initiator: 1,
-  //   },
-  //   {
-  //     id: 2,
-  //     first_name: 'John',
-  //     last_name: 'Doe',
-  //     address: '456 Oak St, Town',
-  //     basket_history: {
-  //       purchased_items: [
-  //         {
-  //           quantity: 2,
-  //           price: 15.0,
-  //           sum: 30.0,
-  //         },
-  //         {
-  //           quantity: 1,
-  //           price: 270.0,
-  //           sum: 270.0,
-  //         },
-  //       ],
-  //       total_sum: 300.0,
-  //     },
-  //     created: '2023-02-01T12:00:00Z',
-  //     status: 3,
-  //     initiator: 1,
-  //   },
-  // ]);
-  const getOrder = async () => {
-    try {
-      const response = await $api.get('/api/orders/');
-      setOrders(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [orders, setOrders] = useState([
+    {
+      id: 1,
+      first_name: 'John',
+      last_name: 'Doe',
+      address: '123 Main St, City',
+      basket_history: {
+        purchased_items: [
+          {
+            quantity: 1,
+            price: 10.0,
+            sum: 10.0,
+          },
+        ],
+        total_sum: 10.0,
+      },
+      created: '2023-01-01T12:00:00Z',
+      status: 1,
+      initiator: 1,
+    },
+    {
+      id: 2,
+      first_name: 'John',
+      last_name: 'Doe',
+      address: '456 Oak St, Town',
+      basket_history: {
+        purchased_items: [
+          {
+            quantity: 2,
+            price: 15.0,
+            sum: 30.0,
+          },
+          {
+            quantity: 1,
+            price: 270.0,
+            sum: 270.0,
+          },
+        ],
+        total_sum: 300.0,
+      },
+      created: '2023-02-01T12:00:00Z',
+      status: 3,
+      initiator: 1,
+    },
+  ]);
+  // const getOrder = async () => {
+  //   try {
+  //     const response = await $api.get('/api/orders/');
+  //     setOrders(response.data);
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  useEffect(() => {
-    getOrder();
-  }, [orders]);
+  // useEffect(() => {
+  //   getOrder();
+  // }, [orders]);
 
   return (
     <m.div
