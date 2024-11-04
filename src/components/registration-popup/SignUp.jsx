@@ -1,23 +1,19 @@
 import React, { useRef, useState } from 'react';
-
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './signup.module.css';
 import Input from '../common/Input';
 import Button from '../common/Button';
-import closeIcon from '../../assets/icons/icon-close.svg';
 import Facebook from '../../assets/icons/media-icons/facebook-color.svg';
 import Google from '../../assets/icons/media-icons/google-color.svg';
 import Apple from '../../assets/icons/media-icons/apple-color.svg';
 import { facebookProvider, googleProvider } from './firebase/provider';
 import socialMediaAuth from './firebase/auth';
-
+import closeIcon from '../../assets/icons/icon-close.svg';
 import attentionIcon from '../../assets/icons/icon-attention.svg';
 import openEye from '../../assets/icons/icon-openEye.svg';
 import closeEye from '../../assets/icons/icon-Eye-off.svg';
-
 import useTranslation from '../../locale/locales';
 import { $api } from '../../api/api';
-
-import { useDispatch, useSelector } from 'react-redux';
 import { login, updateUser } from '../../redux/userSlice';
 
 const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
@@ -30,26 +26,30 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
     setIsLoading(true);
     try {
       const user = await socialMediaAuth(provider);
-      console.log('User signed in:', user);
 
       if (!user) {
         throw new Error('Користувач не підписався ');
       }
 
       const idToken = await user.getIdToken();
-      console.log('ID Token отримано:', idToken);
+
       if (!idToken) {
         throw new Error('Не вдалося отримати ID Token від користувача');
       }
 
       console.log('ID Token отримано:', idToken);
 
-      const response = await $api.post('/api/auth/social-login', {
+      const signInResult = await $api.post('/api/auth/social-login/', {
         token: idToken,
       });
-      console.log('response.status', response.status);
-      console.log('response.data', response.data);
-      handleSignInStatus(response.status, response.data);
+
+      console.log('response.status', signInResult.status);
+      console.log('response', signInResult);
+      openSuccess();
+      dispatch(updateUser(signInResult.data));
+      setCookie('user', signInResult.data, 7);
+
+      dispatch(login());
     } catch (error) {
       console.error('Помилка під час входу ', error);
     } finally {
@@ -57,19 +57,21 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
     }
   };
 
-  // inputs
+  const setCookie = (name, object, daysToExpire) => {
+    const expires = new Date();
+    expires.setTime(expires.getTime() + daysToExpire * 24 * 60 * 60 * 1000);
+    document.cookie = `${name}=${encodeURIComponent(JSON.stringify(object))};expires=${expires.toUTCString()};path=/`;
+  };
+
   const [username, setUsername] = useState('');
   const [userSurname, setUserSurname] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
 
-  // errors
   const [nameError, setNameError] = useState('');
   const [surnameError, setSurnameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-
-  // states
 
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
   console.log(isAuthenticated);
@@ -88,7 +90,7 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
       } else if (name.length < 2 || name.length > 32) {
         setNameError("Ім'я повинно бути від 2 до 32 символів");
         return false;
-      } else if (!/^[a-zA-Zа-яА-ЯіІїЇєЄ'-]+$/.test(name)) {
+      } else if (!/^[a-zA-Z' -]+$/.test(name)) {
         setNameError("Ім'я містить не припустимі символи");
         return false;
       } else {
@@ -109,7 +111,7 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
       } else if (surname.length < 2 || surname.length > 32) {
         setSurnameError('Прізвище повинно бути від 2 до 32 символів');
         return false;
-      } else if (!/^[a-zA-Zа-яА-ЯіІїЇєЄ'-]+$/.test(surname)) {
+      } else if (!/^[a-zA-Z' -]+$/.test(surname)) {
         setSurnameError('Прізвище містить не припустимі символи');
         return false;
       } else {
@@ -136,7 +138,6 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
       } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+$/.test(email)) {
         setEmailError('Не вірно введений емейл');
         return false;
-        // incorrect characters
       } else if (!/[a-zA-Z]{2,}$/.test(email.split('@')[1])) {
         setEmailError('Мінімум дві літери після крапки');
         return false;
@@ -288,7 +289,7 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
 
   return (
     <>
-      <div className={styles.overlay} onClick={(e) => e.stopPropagation()}>
+      <div className={styles.overlay} onClick={onClose}>
         <div
           className={`${styles.popup} ${styles.open}`}
           onClick={(e) => e.stopPropagation()}
