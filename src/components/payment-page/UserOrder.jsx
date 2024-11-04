@@ -25,7 +25,7 @@ const UserOrder = () => {
       let newTotal = 0;
 
       const productRequests = basketItems.map((item) =>
-        $api.get(`/api/products/${item.product}/`).then((response) => {
+        $api.get(`/api/products/${item.product.id}/`).then((response) => {
           const productData = {
             ...response.data,
             quantity: item.quantity,
