@@ -215,6 +215,7 @@ const Personal = () => {
                         className='flex mt-2 w-5/5 p-3 items-center self-stretch rounded-xl border border-black focus:border-blue-500 outline-none'
                       />
                     </label>
+
                     <ErrorMessage
                       name='date_of_birth'
                       component='div'

@@ -12,6 +12,7 @@ const PaymentPage = () => {
       <PreviousPage link='/cart' text='Повернутись до кошика'></PreviousPage>
       <div className='flex flex-row flex-wrap justify-center gap-36 mt-14 mb-20'>
         <PlacingAnOrder />
+
         <UserOrder />
       </div>
     </Container>

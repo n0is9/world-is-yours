@@ -1,81 +1,102 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 import ArrowDown from '../../assets/icons/arrow-up.svg';
 
-const CityDropdown = ({ selectedCountry, onSelectCity }) => {
+const CityDropdown = ({ onSelectCity, selectedCountry }) => {
   const [cities, setCities] = useState([]);
+  const [filteredCities, setFilteredCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState('');
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
-    const fetchCities = async () => {
-      try {
-        const response = await axios.post('https://countriesnow.space/api/v0.1/countries/cities', {
-          country: selectedCountry,
-        });
-
-        console.log('API response:', response.data);
-
-        const citiesData = response.data.data;
-
-        if (citiesData && citiesData.length > 0) {
-          setCities(citiesData);
-        } else {
-          console.warn('API не вернул список городов.');
-        }
-      } catch (error) {
-        console.error('Ошибка при получении списка городов:', error);
-      }
-    };
-
+    // Фетчимо список міст, тільки якщо вибрана країна
     if (selectedCountry) {
+      const fetchCities = async () => {
+        try {
+          const response = await axios.post(
+            'https://countriesnow.space/api/v0.1/countries/cities',
+            { country: selectedCountry },
+          );
+          const citiesData = response.data.data;
+          setCities(citiesData);
+          setFilteredCities(citiesData);
+        } catch (error) {
+          console.error('Error fetching cities:', error);
+        }
+      };
+
       fetchCities();
     }
-  }, [selectedCountry, onSelectCity]);
+  }, [selectedCountry]);
+
+  // Фільтрація міст на основі введеного тексту
+  const handleSearchChange = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+    if (query.length > 0) {
+      const filtered = cities.filter((city) =>
+        city.toLowerCase().includes(query.toLowerCase()),
+      );
+      setFilteredCities(filtered);
+    } else {
+      setFilteredCities(cities);
+    }
+  };
 
   const handleCityChange = (city) => {
     setSelectedCity(city);
     onSelectCity(city);
     setIsOpen(false);
+    setSearchQuery(city); // заповнюємо інпут обраним містом
   };
 
   const toggleSelect = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setIsOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener('click', handleClickOutside);
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, []);
-
   return (
     <>
-      <label htmlFor='text' className='mb-1 ml-1 text-textLight font-medium font-raleway text-sm'>
+      <label
+        htmlFor='city'
+        className='mb-1 ml-1 text-textLight font-medium font-raleway text-sm'
+      >
         Місто
       </label>
-      <div ref={dropdownRef} className={`select ${isOpen ? 'active' : ''} font-light border rounded-xl max-w-md p-3 border-black mb-4`}>
-        <div className='select-styled font-light flex items-center justify-between max-w-md' onClick={toggleSelect}>
-          {selectedCity ? selectedCity : 'Выберите город'}
-          <img src={ArrowDown} alt='стрелка вниз' className={`font-light w-4 ml-2 transform cursor-pointer ${isOpen ? 'rotate-0' : 'rotate-180'} transition-transform`} />
-        </div>
-        <ul className='select-options font-light z-50 mt-4 bg-white max-h-48 overflow-y-auto' style={{ display: isOpen ? 'block' : 'none' }}>
-          {cities
-            .filter((city) => city !== selectedCity)
-            .map((city, index) => (
-              <li key={`${city}-${index}`} onClick={() => handleCityChange(city)} className={`border p-2 rounded-xl mt-2 border-black cursor-pointer ${selectedCity === city ? 'is-selected' : ''}`}>
-                {city}
-              </li>
-            ))}
-        </ul>
+      <div className='relative max-w-md'>
+        {/* Поле для введення тексту */}
+        <input
+          type='text'
+          placeholder={user.address.city ? user.address.city : 'Оберіть місто'}
+          value={searchQuery}
+          onChange={handleSearchChange}
+          onClick={toggleSelect}
+          className='font-light border rounded-xl w-full p-3 border-black mb-2'
+          disabled={!selectedCountry} // Блокуємо, якщо країна не вибрана
+        />
+
+        {/* Випадаючий список */}
+        {isOpen && (
+          <ul className='absolute z-50 bg-white w-full max-h-48 overflow-y-auto border rounded-xl shadow-md'>
+            {filteredCities.length > 0 ? (
+              filteredCities.map((city, index) => (
+                <li
+                  key={`${city}-${index}`}
+                  onClick={() => handleCityChange(city)}
+                  className={`p-2 cursor-pointer hover:bg-black hover:text-white ${
+                    selectedCity === city ? 'bg-gray-200' : ''
+                  }`}
+                >
+                  {city}
+                </li>
+              ))
+            ) : (
+              <li className='p-2 text-gray-500'>Нічого не знайдено</li>
+            )}
+          </ul>
+        )}
       </div>
     </>
   );

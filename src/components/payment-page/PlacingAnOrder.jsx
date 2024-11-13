@@ -20,24 +20,38 @@ const PlacingAnOrder = () => {
 
   return (
     <div>
-      <h1 className='font-raleway font-semibold text-35px mb-4'>Оформлення замовлення</h1>
-      <div className='flex flex-row mb-2 gap-6'>
-        <p className='cursor-pointer'>Новий покупець</p>
-        <p className='cursor-pointer'>Я постійний клієнт</p>
-      </div>
+      <h1 className='font-raleway font-semibold text-35px mb-4'>
+        Оформлення замовлення
+      </h1>
+
       <div className='flex flex-row justify-between mb-10'>
-        <p className='text-gray font-raleway font-semibold text-20px cursor-pointer' onClick={handleContactInfoClick}>
+        <p
+          className={`font-raleway font-semibold text-20px cursor-pointer ${
+            step === 1 ? 'text-blue' : 'text-gray'
+          } hover:text-blue `}
+          onClick={handleContactInfoClick}
+        >
           Контактна інформація
         </p>
-        <p className='font-raleway font-semibold text-20px text-gray cursor-pointer' onClick={handleDeliveryClick}>
+        <p
+          className={`font-raleway font-semibold text-20px cursor-pointer ${
+            step === 2 ? 'text-blue' : 'text-gray'
+          } hover:text-blue `}
+          onClick={handleDeliveryClick}
+        >
           Доставка
         </p>
-        <p className='font-raleway font-semibold text-20px cursor-pointer text-blue' onClick={handlePayClick}>
+        <p
+          className={`font-raleway font-semibold text-20px cursor-pointer ${
+            step === 3 ? 'text-blue' : 'text-gray'
+          } hover:text-blue `}
+          onClick={handlePayClick}
+        >
           Оплата
         </p>
       </div>
-      {step === 1 && <ContactInfo />}
-      {step === 2 && <DeliveryInfo />}
+      {step === 1 && <ContactInfo onDeliveryClick={handleDeliveryClick} />}
+      {step === 2 && <DeliveryInfo onPayClick={handlePayClick} />}
       {step === 3 && <PayInfo />}
     </div>
   );

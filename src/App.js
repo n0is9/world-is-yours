@@ -25,6 +25,7 @@ const NotFound404 = lazy(() => import('./pages/NotFound404'));
 const CategoryPage = lazy(() => import('./pages/CategoryPage'));
 const PasswordRecovery = lazy(() => import('./pages/PasswordRecovery'));
 
+
 function App() {
   const dispatch = useDispatch();
 
@@ -129,7 +130,10 @@ function App() {
         <Routes>
           <Route exact path='/' element={<MainPage />} />
 
-          <Route path='/payment' element={<PaymentPage />} />
+          <Route path='/payment/' element={<PaymentPage />} />
+           
+           
+           
           <Route path='/info-help' element={<InfoPayment />} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/categories' element={<CategoryPage />} />

@@ -9,6 +9,13 @@ const initialState = {
     last_name: null,
     email: null,
     phone: null,
+    address: {
+      id: null,
+      address_line: null,
+      city: null,
+      country: null,
+      zip_code: null,
+    },
     date_of_birth: null,
     is_verified_email: false,
     image: null,

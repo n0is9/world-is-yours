@@ -11,13 +11,47 @@ const History = () => {
   //     id: 1,
   //     first_name: 'John',
   //     last_name: 'Doe',
-  //     address: '123 Main St, City',
+  //     address: {
+  //       id: 6,
+  //       address_line: 'Main St, 24',
+  //       city: 'Kharkiv',
+  //       country: 'Ukraine',
+  //       zip_code: '221003',
+  //     },
   //     basket_history: {
   //       purchased_items: [
   //         {
   //           quantity: 1,
   //           price: 10.0,
   //           sum: 10.0,
+  //           product_name: 'T-shirt 2',
+  //           product_image:
+  //             'https://backet-for-world-is-yours.s3.amazonaws.com/products_images/basin.jpg',
+  //         },
+
+  //         {
+  //           quantity: 1,
+  //           price: 10.0,
+  //           sum: 10.0,
+  //           product_name: 'T-shirt 2',
+  //           product_image:
+  //             'https://backet-for-world-is-yours.s3.amazonaws.com/products_images/t-shirt2.jpg',
+  //         },
+  //         {
+  //           quantity: 1,
+  //           price: 10.0,
+  //           sum: 10.0,
+  //           product_name: 'T-shirt 2',
+  //           product_image:
+  //             'https://backet-for-world-is-yours.s3.amazonaws.com/products_images/t-shirt1.jpg',
+  //         },
+  //         {
+  //           quantity: 1,
+  //           price: 10.0,
+  //           sum: 10.0,
+  //           product_name: 'T-shirt 2',
+  //           product_image:
+  //             'https://backet-for-world-is-yours.s3.amazonaws.com/products_images/t-shirt2.jpg',
   //         },
   //       ],
   //       total_sum: 10.0,
@@ -30,18 +64,39 @@ const History = () => {
   //     id: 2,
   //     first_name: 'John',
   //     last_name: 'Doe',
-  //     address: '456 Oak St, Town',
+  //     address: {
+  //       id: 6,
+  //       address_line: 'Main St, 24',
+  //       city: 'Kharkiv',
+  //       country: 'Ukraine',
+  //       zip_code: '221003',
+  //     },
   //     basket_history: {
   //       purchased_items: [
   //         {
   //           quantity: 2,
   //           price: 15.0,
   //           sum: 30.0,
+  //           product_name: 'T-shirt 2',
+  //           product_image:
+  //             'https://backet-for-world-is-yours.s3.amazonaws.com/products_images/basin.jpg',
   //         },
+  //         {
+  //           quantity: 2,
+  //           price: 15.0,
+  //           sum: 30.0,
+  //           product_name: 'T-shirt 2',
+  //           product_image:
+  //             'https://backet-for-world-is-yours.s3.amazonaws.com/products_images/t-shirt1.jpg',
+  //         },
+
   //         {
   //           quantity: 1,
   //           price: 270.0,
   //           sum: 270.0,
+  //           product_name: 'T-shirt 2',
+  //           product_image:
+  //             'https://backet-for-world-is-yours.s3.amazonaws.com/products_images/t-shirt2.jpg',
   //         },
   //       ],
   //       total_sum: 300.0,
@@ -50,7 +105,52 @@ const History = () => {
   //     status: 3,
   //     initiator: 1,
   //   },
+  //   {
+  //     id: 4,
+  //     address: {
+  //       id: 6,
+  //       address_line: 'Main St, 24',
+  //       city: 'Kharkiv',
+  //       country: 'Ukraine',
+  //       zip_code: '221003',
+  //     },
+  //     first_name: 'John',
+  //     last_name: 'Doe',
+  //     basket_history: {
+  //       total_sum: 65.97,
+  //       purchased_items: [
+  //         {
+  //           sum: 19.99,
+  //           price: 19.99,
+  //           quantity: 1,
+  //           product_name: 'T-shirt 1',
+  //           product_image:
+  //             'https://backet-for-world-is-yours.s3.amazonaws.com/products_images/t-shirt1.jpg',
+  //         },
+  //         {
+  //           sum: 45.98,
+  //           price: 22.99,
+  //           quantity: 2,
+  //           product_name: 'T-shirt 2',
+  //           product_image:
+  //             'https://backet-for-world-is-yours.s3.amazonaws.com/products_images/t-shirt2.jpg',
+  //         },
+  //         {
+  //           quantity: 2,
+  //           price: 15.0,
+  //           sum: 30.0,
+  //           product_name: 'T-shirt 2',
+  //           product_image:
+  //             'https://backet-for-world-is-yours.s3.amazonaws.com/products_images/basin.jpg',
+  //         },
+  //       ],
+  //     },
+  //     created: '2024-11-06T12:50:13.742845Z',
+  //     status: 2,
+  //     initiator: 11,
+  //   },
   // ]);
+
   const getOrder = async () => {
     try {
       const response = await $api.get('/api/orders/');
@@ -65,13 +165,43 @@ const History = () => {
     getOrder();
   }, []);
 
+  // Стан для відстеження видимих зображень
+  const [visibleImages, setVisibleImages] = useState(
+    orders.reduce((acc, order) => {
+      acc[order.id] = 2; // Спочатку для кожного замовлення показується 2 зображення
+      return acc;
+    }, {}),
+  );
+
+  // Стан для відстеження переглянутих зображень
+  const [seenImages, setSeenImages] = useState(
+    orders.reduce((acc, order) => {
+      acc[order.id] = []; // Масив, що зберігає індекси переглянутих зображень
+      return acc;
+    }, {}),
+  );
+
+  const showMoreImages = (orderId) => {
+    setVisibleImages((prev) => ({
+      ...prev,
+      [orderId]: prev[orderId] + 2, // Додаємо 2 зображення для поточного замовлення
+    }));
+
+    setSeenImages((prev) => ({
+      ...prev,
+      [orderId]: prev[orderId].concat(
+        Array.from({ length: 2 }, (_, i) => prev[orderId].length + i),
+      ), // Додаємо індекси нових переглянутих зображень
+    }));
+  };
+
   return (
     <m.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
-      <div className=" mb-12 text-blue text-[25px] font-semibold font-['Raleway']">
+      <div className="mb-12 text-blue text-[25px] font-semibold font-['Raleway']">
         Історія замовлень
       </div>
       {orders.length === 0 ? (
@@ -157,12 +287,29 @@ const History = () => {
                 {order.basket_history.total_sum} грн.
               </div>
             </div>
-            <div className='ImageContainer h-[100px] justify-start items-start gap-2.5 flex'>
-              <img
-                className='TrekkingShoes w-[100px] h-[100px] bg-stone-300 rounded-lg justify-center items-center flex'
-                src='https://via.placeholder.com/113x170'
-                alt='img'
-              />
+
+            <div className='ImageContainer h-[100px] w-[320px] justify-start items-start gap-2.5 flex'>
+              {order.basket_history.purchased_items
+                .slice(visibleImages[order.id] - 2, visibleImages[order.id]) // Відображаємо лише нові зображення
+                .map((item, index) => (
+                  <img
+                    key={index}
+                    className='TrekkingShoes w-[100px] h-[100px] bg-stone-300 rounded-lg justify-center items-center flex'
+                    src={item.product_image}
+                    alt={`product-${index}`}
+                  />
+                ))}
+
+              {/* Відображаємо кнопку, якщо залишаються приховані зображення */}
+              {order.basket_history.purchased_items.length >
+                visibleImages[order.id] && (
+                <button
+                  onClick={() => showMoreImages(order.id)}
+                  className='show-more-button text-grey font-bold w-[100px] h-[100px] border-2 border-grey rounded-md cursor-pointer'
+                >
+                  +2
+                </button>
+              )}
             </div>
           </div>
         ))
