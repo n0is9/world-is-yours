@@ -198,34 +198,21 @@ const History = () => {
           </p>
         </div>
       ) : (
-        orders.map((order) => {
-          // Перевіряємо, чи basket_history не є порожнім об'єктом і чи містить purchased_items
-          const hasPurchasedItems =
-            order.basket_history &&
-            Object.keys(order.basket_history).length > 0 &&
-            Array.isArray(order.basket_history.purchased_items) &&
-            order.basket_history.purchased_items.length > 0;
+        <div className='max-h-[420px] overflow-y-auto'>
+          {orders.map((order) => {
+            // Перевіряємо, чи basket_history не є порожнім об'єктом і чи містить purchased_items
+            const hasPurchasedItems =
+              order.basket_history &&
+              Object.keys(order.basket_history).length > 0 &&
+              Array.isArray(order.basket_history.purchased_items) &&
+              order.basket_history.purchased_items.length > 0;
 
-          return (
-            <div
-              key={order.id}
-              className='Order1 w-[1027px] h-[140px] p-5 rounded-[15px] mb-4 justify-between items-start inline-flex'
-              style={{
-                border: `2px solid ${
-                  order.status === 1
-                    ? '#1D4ED8' // Синій
-                    : order.status === 2
-                      ? '#EF4444' // Червоний
-                      : order.status === 3
-                        ? '#10B981' // Зелений
-                        : '#6B7280' // Сірий
-                }`,
-              }}
-            >
+            return (
               <div
-                className='InfoContainer w-[454px] self-stretch justify-between items-start gap-5 flex flex-col'
+                key={order.id}
+                className='Order1 w-[1027px] h-[140px] p-5 rounded-[15px] mb-4 justify-between items-start inline-flex'
                 style={{
-                  borderLeft: `3px solid ${
+                  border: `2px solid ${
                     order.status === 1
                       ? '#1D4ED8' // Синій
                       : order.status === 2
@@ -234,81 +221,101 @@ const History = () => {
                           ? '#10B981' // Зелений
                           : '#6B7280' // Сірий
                   }`,
-                  paddingLeft: '16px',
                 }}
               >
                 <div
-                  className="text-xl font-medium font-['Raleway']"
+                  className='InfoContainer w-[454px] self-stretch justify-between items-start gap-5 flex flex-col'
                   style={{
-                    color:
+                    borderLeft: `3px solid ${
                       order.status === 1
-                        ? '#1D4ED8'
+                        ? '#1D4ED8' // Синій
                         : order.status === 2
-                          ? '#EF4444'
+                          ? '#EF4444' // Червоний
                           : order.status === 3
-                            ? '#10B981'
-                            : '#6B7280',
+                            ? '#10B981' // Зелений
+                            : '#6B7280' // Сірий
+                    }`,
+                    paddingLeft: '16px',
                   }}
                 >
-                  {order.status === 1
-                    ? 'В процесі'
-                    : order.status === 2
-                      ? 'Відмінено'
-                      : order.status === 3
-                        ? 'Доставлено'
-                        : 'Невідомий статус'}
-                </div>
+                  <div
+                    className="text-xl font-medium font-['Raleway']"
+                    style={{
+                      color:
+                        order.status === 1
+                          ? '#1D4ED8'
+                          : order.status === 2
+                            ? '#EF4444'
+                            : order.status === 3
+                              ? '#10B981'
+                              : '#6B7280',
+                    }}
+                  >
+                    {order.status === 1
+                      ? 'В процесі'
+                      : order.status === 2
+                        ? 'Відмінено'
+                        : order.status === 3
+                          ? 'Доставлено'
+                          : 'Невідомий статус'}
+                  </div>
 
-                <div className='flex flex-col justify-start items-start text-zinc-500 text-lg font-medium font-["Raleway"]'>
-                  <div>Замовлення № {order.id}</div>
-                  <div>
-                    {new Date(order.created).toLocaleDateString('uk-UA', {
-                      day: '2-digit',
-                      month: 'long',
-                      year: 'numeric',
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })}
+                  <div className="flex flex-col justify-start items-start text-zinc-500 text-lg font-medium font-['Raleway']">
+                    <div>Замовлення № {order.id}</div>
+                    <div>
+                      {new Date(order.created).toLocaleDateString('uk-UA', {
+                        day: '2-digit',
+                        month: 'long',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      })}
+                    </div>
                   </div>
                 </div>
+
+                <div className='PriceContainer w-[100px] flex-col justify-start items-start gap-2.5 inline-flex'>
+                  <div className="text-black text-lg font-medium font-['Raleway']">
+                    Всього
+                  </div>
+                  <div className="text-black text-lg font-medium font-['Raleway']">
+                    {order.basket_history?.total_sum || 0} грн.
+                  </div>
+                </div>
+
+                {hasPurchasedItems && (
+                  <div className='ImageContainer h-[100px] w-[320px] justify-start items-start gap-2.5 flex'>
+                    {/* Оновлений код для відображення лише наступних 2 зображень */}
+                    {order.basket_history.purchased_items
+                      .slice(
+                        visibleImages[order.id] - 2, // Показуємо тільки 2 нових зображення
+                        visibleImages[order.id], // Оновлені зображення
+                      )
+                      .map((item, index) => (
+                        <img
+                          key={index}
+                          className='TrekkingShoes w-[100px] h-[100px] bg-stone-300 rounded-lg'
+                          src={item.product_image}
+                          alt={`product-${index}`}
+                        />
+                      ))}
+
+                    {/* Кнопка для додавання ще 2 зображень */}
+                    {order.basket_history.purchased_items.length >
+                      visibleImages[order.id] && (
+                      <button
+                        onClick={() => showMoreImages(order.id)}
+                        className='show-more-button text-grey font-bold w-[100px] h-[100px] border-2 border-grey rounded-md cursor-pointer'
+                      >
+                        +2
+                      </button>
+                    )}
+                  </div>
+                )}
               </div>
-
-              <div className='PriceContainer w-[100px] flex-col justify-start items-start gap-2.5 inline-flex'>
-                <div className="text-black text-lg font-medium font-['Raleway']">
-                  Всього
-                </div>
-                <div className="text-black text-lg font-medium font-['Raleway']">
-                  {order.basket_history?.total_sum || 0} грн.
-                </div>
-              </div>
-
-              {hasPurchasedItems && (
-                <div className='ImageContainer h-[100px] w-[320px] justify-start items-start gap-2.5 flex'>
-                  {order.basket_history.purchased_items
-                    .slice(0, visibleImages[order.id])
-                    .map((item, index) => (
-                      <img
-                        key={index}
-                        className='TrekkingShoes w-[100px] h-[100px] bg-stone-300 rounded-lg'
-                        src={item.product_image}
-                        alt={`product-${index}`}
-                      />
-                    ))}
-
-                  {order.basket_history.purchased_items.length >
-                    visibleImages[order.id] && (
-                    <button
-                      onClick={() => showMoreImages(order.id)}
-                      className='show-more-button text-grey font-bold w-[100px] h-[100px] border-2 border-grey rounded-md cursor-pointer'
-                    >
-                      +2
-                    </button>
-                  )}
-                </div>
-              )}
-            </div>
-          );
-        })
+            );
+          })}
+        </div>
       )}
     </m.div>
   );

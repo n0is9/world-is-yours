@@ -100,7 +100,7 @@ const UserOrder = () => {
   };
 
   return (
-    <div className='border text-blue rounded-xl p-7 h-screen'>
+    <div className='border text-blue rounded-xl p-7 max-h-[90vh]'>
       <div className='mt-2'>
         <div className='flex flex-row justify-between text-custom-black'>
           <h1 className='font-raleway font-semibold text-20px'>

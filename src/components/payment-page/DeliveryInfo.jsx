@@ -56,7 +56,7 @@ const DeliveryInfo = ({ onPayClick }) => {
     let inputValue = event.target.value;
 
     if (
-      /^[a-zA-Zа-яА-Я0-9\s.,/-]*$/.test(inputValue) &&
+      /^[a-zA-Zа-яА-Яїєіґ'0-9\s.,/-]*$/.test(inputValue) &&
       inputValue.length <= 60
     ) {
       setAddress(inputValue); // Оновлюємо значення адреси
