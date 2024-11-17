@@ -10,7 +10,7 @@ import MoveUp from '../components/common/MoveUp';
 import Button from '../components/common/Button';
 import arrowUp from '../assets/icons/arrow-up.svg';
 import Pagination from '../components/category-page/Pagination.jsx';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { getProducts } from '../redux/products/productsSelectors.js';
 import { fetchProducts } from '../redux/products/productsOperations.js';
 
@@ -22,9 +22,16 @@ const categoryList = [
   { categoryId: 4, name: 'specialdeals' },
 ];
 
-const CategoryPage = () => {
+const CategoryPage = ({ setPreviousURL }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const location = useLocation();
+
+  useEffect(() => {
+    const currentURL = location.pathname + location.search;
+    setPreviousURL(currentURL); // Зберігає поточний URL перед зміною
+  }, [location]);
 
   const dispatch = useDispatch();
 
@@ -47,7 +54,7 @@ const CategoryPage = () => {
   const fetchData = async (page_size, page, categoryId) => {
     try {
       if (categoryId) {
-        query.subcategory = '&subcategory=' + categoryId;
+        query.subcategory = `&subcategory=${categoryId}`;
       }
 
       let queryString = Object.values(query).join('');

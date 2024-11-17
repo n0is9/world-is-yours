@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { $api } from '../api/api';
 
 import Container from '../components/common/container';
 import PhotoGallery from '../components/product/PhotoGallery';
@@ -12,8 +11,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../redux/products/productsSelectors';
 import Loader from '../components/common/Loader';
 import { fetchOneProduct } from '../redux/products/productsOperations';
+import productsAPI from '../api/productsAPI';
 
-const ProductPage = () => {
+const ProductPage = ({ previousURL }) => {
+  const [relatedList, setRelatedList] = useState([]);
+  console.log('relatedList: ', relatedList);
+
   const dispatch = useDispatch();
   // =========== видалити після оновлення данних в бекенді !!!!
   const colors = [
@@ -40,7 +43,6 @@ const ProductPage = () => {
   const idNum = parseInt(id, 10);
 
   const { products, isLoading } = useSelector(getProducts);
-  console.log('isLoading: ', isLoading);
 
   if (!products.length) {
     dispatch(fetchOneProduct(idNum));
@@ -59,28 +61,17 @@ const ProductPage = () => {
   product.related_products = related_products;
   // ===================================================
 
-  const getRelatedList = (arr) => {
-    const relatedList = [];
-
-    arr.forEach((element) => {
-      const relatedProduct = products.find(
-        (item) => item.id.toString() === element.toString(),
-      );
-      if (relatedProduct) {
-        relatedList.push(relatedProduct);
-      }
-    });
-    return relatedList;
-  };
-
-  const relatedList = getRelatedList(product.related_products);
-  console.log('relatedList: ', relatedList);
+  useEffect(() => {
+    productsAPI
+      .getProductDataPromise(product.related_products)
+      .then((data) => setRelatedList(data));
+  }, []);
 
   return (
     <Container>
       {((isLoading || !products) && <Loader />) || (
         <>
-          <PreviousPage text='Каталог' link='/categories' />
+          <PreviousPage text='Каталог' link={previousURL} />
           <div className='flex justify-center items-center mt-20'>
             <div className='flex flex-row gap-20 basis-[1150px]'>
               <PhotoGallery data={product} />

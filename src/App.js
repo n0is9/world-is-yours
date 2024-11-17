@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import React, { Suspense, lazy, useEffect, useMemo, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -53,7 +53,6 @@ function App() {
       try {
         const data = await api2.getLanguage(locale);
         dispatch(setLanguage({ language: data }));
-        console.log(data);
         setLanguagueLoad(true);
       } catch (error) {
         console.error('Error in useTranslation:', error);
@@ -121,6 +120,8 @@ function App() {
     }
   }, []);
 
+  const [previousURL, setPreviousURL] = useState(null);
+
   return (
     <Suspense fallback={<Loader />}>
       {isLanguagueLoad ? null : <Loader />}
@@ -132,14 +133,20 @@ function App() {
           <Route path='/payment' element={<PaymentPage />} />
           <Route path='/info-help' element={<InfoPayment />} />
           <Route path='/profile' element={<Profile />} />
-          <Route path='/categories' element={<CategoryPage />} />
+          <Route
+            path='/categories'
+            element={<CategoryPage setPreviousURL={setPreviousURL} />}
+          />
           <Route path='/cart' element={<Cart />} />
           <Route path='/contacts' element={<Contacts />} />
           <Route
             path='/password_reset/:email/:code'
             element={<PasswordRecovery />}
           />
-          <Route path='/product/:id' element={<ProductPage />} />
+          <Route
+            path='/product/:id'
+            element={<ProductPage previousURL={previousURL} />}
+          />
           <Route path='/favorites' element={<Favorites />} />
           <Route path='*' element={<NotFound404 />} />
         </Routes>
