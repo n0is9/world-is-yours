@@ -43,7 +43,10 @@ const api2 = {
 
   updateUser: async (userData) => {
     try {
-      const response = await axios.patch(`/api/users/${userData.user_id}/`, userData);
+      const response = await axios.patch(
+        `/api/users/${userData.user_id}/`,
+        userData,
+      );
 
       return response;
     } catch (error) {
@@ -110,7 +113,9 @@ $api.interceptors.response.use(
   },
   (error) => {
     if (error.response && error.response.status === 401) {
-      console.error('Unauthorized error: Access is denied due to invalid credentials.');
+      console.error(
+        'Unauthorized error: Access is denied due to invalid credentials.',
+      );
     }
     return Promise.reject(error);
   },

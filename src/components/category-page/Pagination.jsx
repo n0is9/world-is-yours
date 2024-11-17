@@ -77,7 +77,6 @@ export default function Pagination({ totalPages, page }) {
         </button>,
       );
     }
-    console.log(pages);
 
     return pages;
   };

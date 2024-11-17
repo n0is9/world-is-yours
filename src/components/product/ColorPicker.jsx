@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 
-const ColorPicker = () => {
-  const [selectedColor, setSelectedColor] = useState(null);
-
-  const colors = ['red', 'green', 'purple', 'gray', 'black', 'white'];
-
+const ColorPicker = ({ setColor, selectedColor, colors }) => {
   return (
     <div className='flex flex-row mt-3 gap-4'>
       {colors &&
         colors.map((color) => (
-          <div key={color.id} className={`w-10 h-10 p-[2px] rounded-full cursor-pointer ${selectedColor === color ? 'border border-blue border-1' : ''}`} onClick={() => setSelectedColor(color)}>
-            <span className={`block h-full w-full rounded-full bg-[#000}]`}></span>
+          <div
+            key={color.name}
+            className={`w-10 h-10 p-[2px] rounded-full cursor-pointer ${selectedColor === color.name ? 'border border-blue border-1' : ''}`}
+            onClick={() => setColor(color.name)}
+          >
+            <span
+              className={`block h-full w-full rounded-full`}
+              style={{ backgroundColor: color.color }}
+            ></span>
           </div>
         ))}
     </div>

@@ -31,6 +31,7 @@
     "react-scripts": "5.0.1",
     "react-slick": "^0.29.0",
     "react-toastify": "^10.0.5",
+    "redux-persist": "^6.0.0",
     "scrolltrigger": "^1.0.1",
     "slick-carousel": "^1.8.1",
     "split-type": "^0.3.4",

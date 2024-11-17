@@ -16,14 +16,12 @@ const CategoryList = ({ setPage }) => {
   let navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryName = searchParams.get('category') || 'all';
-  console.log(categoryName);
 
   const fetchCategories = async () => {
     try {
       const response = await $api.get('/api/products/category/');
       setCategories(response.data);
       setSelectedFilter(response.data[0].id);
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -35,7 +33,6 @@ const CategoryList = ({ setPage }) => {
       (item) => item.category === selectedFilter,
     );
     setSubCategories(filteredProducts);
-    console.log(response.data);
   };
 
   useEffect(() => {
@@ -63,7 +60,6 @@ const CategoryList = ({ setPage }) => {
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen);
   };
-  console.log(categories);
   const changeCategory = (category) => {
     navigate(`?category=${category}&page=1`);
     // setPage(1);

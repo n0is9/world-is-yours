@@ -1,13 +1,13 @@
 import React from 'react';
 import ArrowLeft from '../../assets/icons/arrow-up.svg';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const PreviousPage = (props) => {
   const navigate = useNavigate();
-  const previousPath = navigate(-1);
+
   return (
-    <NavLink to={previousPath}>
-      <div className='flex flex-row mt-10 ml-10 gap-4'>
+    <button onClick={() => navigate(-1)} className='flex w-full'>
+      <div className='flex justify-self-start flex-row mt-10 ml-10 gap-4'>
         <img
           src={ArrowLeft}
           alt='arrow left'
@@ -15,7 +15,7 @@ const PreviousPage = (props) => {
         />
         <p className='raleway-500 text-18x'>{props.text}</p>
       </div>
-    </NavLink>
+    </button>
   );
 };
 

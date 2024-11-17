@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { $api } from '../api/api';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Container from '../components/common/container.jsx';
 import CategoryList from '../components/category-page/CategoryList';
@@ -11,6 +11,8 @@ import Button from '../components/common/Button';
 import arrowUp from '../assets/icons/arrow-up.svg';
 import Pagination from '../components/category-page/Pagination.jsx';
 import { useSearchParams } from 'react-router-dom';
+import { getProducts } from '../redux/products/productsSelectors.js';
+import { fetchProducts } from '../redux/products/productsOperations.js';
 
 const categoryList = [
   { categoryId: 0, name: 'all' },
@@ -21,13 +23,13 @@ const categoryList = [
 ];
 
 const CategoryPage = () => {
-  // const [categoryId, setCategoryId] = useState(null);
-  const filters = useSelector((state) => state.categryFilter);
-  const [arrivals, setArrivals] = useState([]);
-  // const [next, setNext] = useState('true');
-  const [totalItems, setTotalItems] = useState(0);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const dispatch = useDispatch();
+
+  const { products, productsCount } = useSelector(getProducts);
+  const filters = useSelector((state) => state.categryFilter);
 
   let categoryName = searchParams.get('category') || 'all';
   const { categoryId } =
@@ -44,35 +46,12 @@ const CategoryPage = () => {
   // fetch product
   const fetchData = async (page_size, page, categoryId) => {
     try {
-      // if (filters.category) {
-      //   query.category = '&category=' + filters.category;
-      // }
-
       if (categoryId) {
         query.subcategory = '&subcategory=' + categoryId;
       }
-      // if (id) {
-      //   query.subcategory = '&category=' + id;
-      // }
-      // if (query.subcategory) {
-      //   delete query.category;
-      // }
 
       let queryString = Object.values(query).join('');
-      // console.log(queryString);
-
-      const response = await $api.get(
-        `/api/products/?page_size=${page_size}&page=${page}${queryString}`,
-      );
-      console.log(response.data.results);
-
-      setArrivals(response.data.results);
-      setTotalItems(response.data.count);
-      // setNext(response.data.next);
-
-      // setArrivals((currentArrivals) => [...currentArrivals, ...response.data.results]);
-      console.log(arrivals, 'arrivals');
-      console.log(response.data, 'data');
+      dispatch(fetchProducts({ page_size, page, queryString }));
     } catch (error) {
       console.log(error);
     }
@@ -84,7 +63,7 @@ const CategoryPage = () => {
 
   // Pagination
   const pages = [];
-  const totalPages = Math.ceil(totalItems / perPage);
+  const totalPages = Math.ceil(productsCount / perPage);
 
   const setNewPage = (direction) => {
     if (page !== 1 && direction === -1) {
@@ -104,11 +83,11 @@ const CategoryPage = () => {
       <CategoryList setPage={setNewPage} />
       {isPopupOpen && <FilterPopup onClose={handleTogglePopup} />}
       <div className='grid grid-flow-row-dense gap-4 mx-10 mb-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center'>
-        {arrivals.map((item) => (
+        {products?.map((item) => (
           <Card data={item} key={item.id} />
         ))}
       </div>
-      {arrivals.length > 0 ? (
+      {products?.length > 0 ? (
         <>
           <div className='pagination flex justify-center items-center py-10 my-12'>
             <Button
