@@ -1,12 +1,11 @@
-import react from 'react';
+import React from 'react';
+import { motion as m } from 'framer-motion';
 
 const Container = (props) => {
-  const { children, className, id } = props;
-
   return (
-    <div className={`max-w-[1820px] px-16 mx-auto ${className}`} id={id}>
-      {children}
-    </div>
+    <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }} className={`custom-container ${props.className ? props.className : ''} ${props.maxW ? 'max-w-[${props.maxW}]' : ''}`}>
+      {props.children}
+    </m.div>
   );
 };
 
