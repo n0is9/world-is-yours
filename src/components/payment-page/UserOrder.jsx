@@ -125,7 +125,7 @@ const UserOrder = () => {
                       <img
                         src={product.image_1}
                         alt={product.name}
-                        className='w-32 h-32 rounded-lg'
+                        className='w-32 h-32 rounded-lg object-cover'
                       />
                       <div className='flex flex-col ml-4 justify-center gap-8'>
                         <p className='font-medium text-lg'>{product.name}</p>
