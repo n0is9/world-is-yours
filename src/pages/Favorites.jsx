@@ -5,16 +5,20 @@ import { useSelector } from 'react-redux';
 import { motion as m } from 'framer-motion';
 
 import Card from '../components/common/Card';
+import SkeletonCard from '../components/common/SkeletonCard.jsx';
 import Container from '../components/common/container';
 import NotFound404 from './NotFound404';
 
 const Favorites = () => {
   const wishlist = useSelector((state) => state.wishlist.items);
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
     const fetchProducts = async () => {
+      setLoading(true);
       const newProducts = [];
 
       for (const id of wishlist) {
@@ -46,10 +50,13 @@ const Favorites = () => {
           ),
         ];
       });
+      setLoading(false);
     };
 
     if (wishlist.length > 0) {
       fetchProducts();
+    } else {
+      setLoading(false);
     }
   }, [wishlist]);
 
@@ -78,9 +85,12 @@ const Favorites = () => {
         </div>
 
         <div className='grid grid-flow-row-dense gap-x-5 gap-y-[50px] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center'>
-          {memoProducts.map((product) => (
-            <Card key={product.id} data={product} />
-          ))}
+          {/* Показуємо скелетони під час завантаження */}
+          {loading
+            ? wishlist.map((_, index) => <SkeletonCard key={index} />)
+            : memoProducts.map((product) => (
+                <Card key={product.id} data={product} />
+              ))}
         </div>
       </Container>
     </m.div>
