@@ -167,7 +167,7 @@ const Cart = () => {
     );
   }
 
-  if (cart.length === 0) {
+  if (!loading && cart.length === 0) {
     return (
       <div className='w-full flex justify-center items-center flex-col mt-12 mb-60'>
         <p className='font-raleway font-semibold text-40px mb-20'>Кошик</p>
