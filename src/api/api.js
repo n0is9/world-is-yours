@@ -1,8 +1,6 @@
 import axios from 'axios';
 import config from '../config/config';
 
-// const BASE_URL = 'http://localhost:8000';
-
 const api2 = {
   // language switch
   getLanguage: async (code) => {

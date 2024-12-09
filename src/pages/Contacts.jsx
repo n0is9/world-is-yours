@@ -1,4 +1,3 @@
-import React from 'react';
 import ChatPopupContact from '../components/contacts/ChatPopupContent';
 import MediaIcons from '../components/contacts/MediaIcons';
 

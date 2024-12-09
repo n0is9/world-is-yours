@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import CloseIcon from '../../assets/icons/icon-close.svg';
-
+import { useState } from 'react';
 import { AnimatePresence, motion as m } from 'framer-motion';
+
+import CloseIcon from '../../assets/icons/icon-close.svg';
 
 const Accordion = () => {
   const [openIndex, setOpenIndex] = useState(null);

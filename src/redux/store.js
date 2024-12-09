@@ -5,7 +5,7 @@ import headerReducer from './headerSlice';
 import userReducer from './userSlice';
 import wishlistReducer from './wishlistSlice';
 import cartReducer from './cartSlice';
-import filtersReduser from './categoryParamsSlice';
+import filtersReducer from './categoryParamsSlice';
 
 const store = configureStore({
   reducer: {
@@ -14,7 +14,7 @@ const store = configureStore({
     user: userReducer,
     wishlist: wishlistReducer,
     cart: cartReducer,
-    categryFilter: filtersReduser,
+    categryFilter: filtersReducer,
     // тут можна додати інші reducers за необхідності
   },
 });

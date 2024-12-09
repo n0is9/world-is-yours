@@ -1,4 +1,3 @@
-import React from 'react';
 import LogoWorldIsYoursDark from '../../assets/icons/dark/logo-dark.svg';
 
 const Loader = () => {

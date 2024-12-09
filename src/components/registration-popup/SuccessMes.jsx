@@ -1,8 +1,8 @@
-import React from "react";
-// import React, { useEffect } from "react";
-import styles from "./signup.module.css";
 import Button from "../common/Button";
-import closeIcon from "../../assets/icons/icon-close.svg";
+
+import closeIcon from "../../assets/icons/icon-close.svg"
+
+import styles from "./signup.module.css";
 
 const SuccessMes = ({onClose, openLogin }) => {
   // useEffect(() => {

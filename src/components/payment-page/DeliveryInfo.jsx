@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { toast, ToastContainer } from 'react-toastify';
+
 import { $api } from '../../api/api.js';
 import { updateUser } from '../../redux/userSlice';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 import Button from '../common/Button';
 import DeliveryOptions from './DeliveryOptions';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const DeliveryInfo = ({ onPayClick }) => {
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
 
-  React.useEffect(() => {
+  useEffect(() => {
     console.log('User state after dispatch:', user);
     const updateUserOnBackend = async () => {
       try {

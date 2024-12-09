@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLocale } from '../../redux/localeSlice';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 
-import ArrowDown from '../../assets/icons/arrow-up.svg';
-import LogoWorldIsYoursDark from '../../assets/icons/dark/logo-dark.svg';
-import SearchIconDark from '../../assets/icons/dark/icon-search-dark.svg';
+import { setLocale } from '../../redux/localeSlice';
 
-// import { setIsCategoriesOpen } from "../../redux/headerSlice";
-import DonateBanner from '../common/DonateBanner';
 import useTranslation from '../../locale/locales';
+
 import Categories from './Categories';
 import SignUp from '../registration-popup/SignUp';
 import RemindPas from '../registration-popup/RemindPas';
 import LogIn from '../registration-popup/LogIn';
 import SuccessMes from '../registration-popup/SuccessMes';
 import LoginStatus from '../feature/header/loginStatus';
-import globalStyle from './globalStyles.module.css';
+
+import ArrowDown from '../../assets/icons/arrow-up.svg';
+import LogoWorldIsYoursDark from '../../assets/icons/dark/logo-dark.svg';
+import SearchIconDark from '../../assets/icons/dark/icon-search-dark.svg';
+
 import 'react-toastify/dist/ReactToastify.css';
 
 function Header() {

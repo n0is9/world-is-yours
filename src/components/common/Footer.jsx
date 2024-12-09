@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+
+import NewsLetter from './NewsLetter';
+import ChatPopup from '../main-page/ChatPopup';
+
 import LogoWorldIsYours from '../../assets/icons/light/logo-light.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -12,8 +16,7 @@ import {
 import IconCopyright from '../../assets/icons/icon-copyright.svg';
 import IconChat from '../../assets/icons/icon-chat.svg';
 import IconArrowRight from '../../assets/icons/arrow-up.svg';
-import NewsLetter from './NewsLetter';
-import ChatPopup from '../main-page/ChatPopup';
+
 import './media-queries.css';
 
 const Footer = () => {

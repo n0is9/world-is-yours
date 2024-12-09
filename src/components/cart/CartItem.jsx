@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+
 import order from '../../assets/temporary-img/tent.png';
 import trash from '../../assets/icons/icon-trash.svg';
 import ArrowDown from '../../assets/icons/arrow-up.svg';

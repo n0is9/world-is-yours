@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import Button from "../common/Button";
-import styles from "../registration-popup/signup.module.css";
-import ColorPicker from "./ColorPicker";
-import ClothingSizePicker from "./ClothingSizePicker";
-import ShoeSizePicker from "./ShoeSizePicker";
-import AccordionText from "./AccordionText";
+import { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import { $api } from "../../api/api";
 
 import { useDispatch, useSelector } from "react-redux";
 import { addItemCart, removeItemCart } from "../../redux/cartSlice";
+
+import Button from "../common/Button";
+import ColorPicker from "./ColorPicker";
+import ShoeSizePicker from "./ShoeSizePicker";
+import AccordionText from "./AccordionText";
+
+import "react-toastify/dist/ReactToastify.css";
 
 const FilterList = ({ data }) => {
   const dispatch = useDispatch();

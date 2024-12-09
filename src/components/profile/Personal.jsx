@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { motion as m } from 'framer-motion';
 
 import { updateUser } from '../../redux/userSlice';
 import { $api } from '../../api/api.js';
 
 import Button from '../common/Button';
+
 import eyeOff from '../../assets/icons/icon-Eye-off.svg';
 import eyeOn from '../../assets/icons/icon-openEye.svg';
 
-import { motion as m } from 'framer-motion';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Personal = () => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);

@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { $api } from '../api/api';
 import {
   removeItemCart,
   clearCart,
   updateQuantityCart,
 } from '../redux/cartSlice';
+
 import CartItem from '../components/cart/CartItem';
 import Button from '../components/common/Button';
-import Container from '../components/common/container';
-
-import { $api } from '../api/api';
+import Container from '../components/common/Container';
 
 const Cart = () => {
   const dispatch = useDispatch();

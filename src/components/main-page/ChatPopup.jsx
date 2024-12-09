@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
-import styles from './main.module.css';
+import { useState } from 'react';
+
 import Input from '../common/Input';
-import closeIcon from '../../assets/icons/icon-close.svg';
 import Button from '../common/Button';
+
+import closeIcon from '../../assets/icons/icon-close.svg';
 import attentionIcon from '../../assets/icons/icon-attention.svg';
+
+import styles from './main.module.css';
 
 const ChatPopup = ({ onClose }) => {
   const [name, setName] = useState('');

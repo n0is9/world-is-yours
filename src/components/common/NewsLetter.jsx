@@ -1,7 +1,8 @@
+import { useState } from "react";
 
-import React, { useState } from "react";
-import styles from "../registration-popup/signup.module.css";
 import Button from "../common/Button";
+
+import styles from "../registration-popup/signup.module.css";
 
 const NewsLetter = () => {
   const [isOpen, setIsOpen] = useState(true); 

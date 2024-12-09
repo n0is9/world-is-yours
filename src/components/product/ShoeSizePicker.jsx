@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const ShoeSizePicker = () => {
   const [selectedSize, setSelectedSize] = useState(null);

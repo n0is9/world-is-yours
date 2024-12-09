@@ -1,4 +1,3 @@
-import React from 'react';
 import WhyUsSwiper from "./WhyUsSwiper";
 
 function WhyUs() {

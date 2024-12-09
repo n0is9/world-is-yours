@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { $api } from '../../api/api';
 import useTranslation from '../../locale/locales';
 
-import Container from '../common/container';
+import Container from '../common/Container';
 import Card from '../common/Card';
+
 const FavoritesCardList = () => {
   const t = useTranslation();
   const [products, setProducts] = useState([]);

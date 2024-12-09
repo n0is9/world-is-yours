@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import ArrowDown from '../../assets/icons/arrow-up.svg';
 
 const CountryDropdown = ({ onSelectCountry }) => {
   const user = useSelector((state) => state.user.user);
+
   const [countries, setCountries] = useState([]);
   const [filteredCountries, setFilteredCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState('');

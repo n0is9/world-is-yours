@@ -1,6 +1,6 @@
-import React from 'react';
-import ArrowLeft from '../../assets/icons/arrow-up.svg';
 import { NavLink, useNavigate } from 'react-router-dom';
+
+import ArrowLeft from '../../assets/icons/arrow-up.svg';
 
 const PreviousPage = (props) => {
   const navigate = useNavigate();

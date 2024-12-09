@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { motion as m } from 'framer-motion';
 import * as Yup from 'yup';
+
 import { updateUser } from '../../redux/userSlice';
 import { $api } from '../../api/api.js';
+
 import Button from '../common/Button';
-import { motion as m } from 'framer-motion';
 
 const ContactInfo = ({ onDeliveryClick }) => {
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
-  console.log('userState', user);
 
   const validationSchema = Yup.object({
     first_name: Yup.string()

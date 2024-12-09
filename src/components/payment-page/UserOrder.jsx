@@ -1,17 +1,17 @@
-import React from 'react';
-// import order from '../../assets/temporary-img/tent.png';
-import ArrowDown from '../../assets/icons/arrow-up.svg';
 import { useEffect, useState } from 'react';
-import DeleteIcon from '../../assets/icons/icon-trash.svg';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { removeItemCart, updateQuantityCart } from '../../redux/cartSlice.js';
 import { $api } from '../../api/api.js';
+
+import ArrowDown from '../../assets/icons/arrow-up.svg';
+import DeleteIcon from '../../assets/icons/icon-trash.svg';
 
 const UserOrder = () => {
   const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
-  const [cart, setCart] = useState([]);
 
+  const [cart, setCart] = useState([]);
   const [total, setTotal] = useState(0);
   const [upd, setUpd] = useState(0);
   const [basket, setBasket] = useState(0);

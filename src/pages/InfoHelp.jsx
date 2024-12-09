@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import Container from '../components/common/container';
+import Container from '../components/common/Container';
 import SideLinks from '../components/info-help/SideLinks';
 import Payment from '../components/info-help/Payment';
 import Return from '../components/info-help/Return';

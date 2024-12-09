@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import ArrowDown from '../../assets/icons/arrow-up.svg';
 
 const CityDropdown = ({ onSelectCity, selectedCountry }) => {
   const [cities, setCities] = useState([]);
@@ -9,6 +8,7 @@ const CityDropdown = ({ onSelectCity, selectedCountry }) => {
   const [selectedCity, setSelectedCity] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+
   const user = useSelector((state) => state.user.user);
 
   useEffect(() => {

@@ -1,10 +1,12 @@
-import React, { useRef } from 'react';
-import CloseIcon from '../../assets/icons/icon-close.svg';
+import { useRef } from 'react';
+import { motion as m } from 'framer-motion';
+
 import CategoryFilters from './CategoryFilters';
 import Button from '../common/Button';
-import styles from '../main-page/main.module.css';
 
-import { motion as m } from 'framer-motion';
+import CloseIcon from '../../assets/icons/icon-close.svg';
+
+import styles from '../main-page/main.module.css';
 
 const FilterPopup = ({ onClose }) => {
   const popupRef = useRef(null);

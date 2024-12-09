@@ -1,7 +1,9 @@
 import React from "react";
+
+import Button from "../common/Button";
+
 import Summer from "../../assets/icons/icon-sun.svg";
 import Winter from "../../assets/icons/icon-snow.svg";
-import Button from "../common/Button";
 
 const SeasonSelect = () => {
   return (

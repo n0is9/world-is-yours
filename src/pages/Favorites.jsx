@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { $api } from '../api/api';
 import { useSelector } from 'react-redux';
 
 import { motion as m } from 'framer-motion';
 
 import Card from '../components/common/Card';
-import Container from '../components/common/container';
+import Container from '../components/common/Container';
 import NotFound404 from './NotFound404';
 
 const Favorites = () => {

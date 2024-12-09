@@ -1,5 +1,3 @@
-import React from "react";
-
 const DeliveryOptions = ({ handleOptionChange, deliveryOptionError }) => {
   return (
     <div className="flex flex-col ml-2">

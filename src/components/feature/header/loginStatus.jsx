@@ -1,7 +1,6 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-// import ProfileIconDark from "../../assets/icons/dark/icon-profile-dark.svg";
+
 import ProfileIconDark from '../../../assets/icons/dark/icon-profile-dark.svg';
 
 const LoginStatus = ({ setLoginOpen }) => {

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { $api } from '../../api/api.js';
-
+import { useEffect, useState } from 'react';
 import { motion as m } from 'framer-motion';
+
+import { $api } from '../../api/api.js';
 
 const History = () => {
   const [orders, setOrders] = useState([]);

@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { $api } from '../api/api';
 import { useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 
-import Container from '../components/common/container.jsx';
+import Container from '../components/common/Container.jsx';
 import CategoryList from '../components/category-page/CategoryList';
 import FilterPopup from '../components/category-page/FilterPopup';
 import Card from '../components/common/Card';
 import MoveUp from '../components/common/MoveUp';
 import Button from '../components/common/Button';
-import arrowUp from '../assets/icons/arrow-up.svg';
 import Pagination from '../components/category-page/Pagination.jsx';
-import { useSearchParams } from 'react-router-dom';
+
+import arrowUp from '../assets/icons/arrow-up.svg';
 
 const categoryList = [
   { categoryId: 0, name: 'all' },

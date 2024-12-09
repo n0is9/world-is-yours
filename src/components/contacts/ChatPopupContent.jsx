@@ -1,9 +1,11 @@
-import React from 'react';
 import { useState } from 'react';
-import styles from '../main-page/main.module.css';
+
 import Input from '../common/Input';
 import Button from '../common/Button';
+
 import attentionIcon from '../../assets/icons/icon-attention.svg';
+
+import styles from '../main-page/main.module.css';
 
 const ChatPopupContact = () => {
   const [name, setName] = useState('');

@@ -1,20 +1,24 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import styles from './signup.module.css';
-import Input from '../common/Input';
-import Button from '../common/Button';
-import Facebook from '../../assets/icons/media-icons/facebook-color.svg';
-import Google from '../../assets/icons/media-icons/google-color.svg';
-import Apple from '../../assets/icons/media-icons/apple-color.svg';
+
+import { $api } from '../../api/api';
+import { login, updateUser } from '../../redux/userSlice';
+import useTranslation from '../../locale/locales';
 import { facebookProvider, googleProvider } from './firebase/provider';
 import socialMediaAuth from './firebase/auth';
+
+import Input from '../common/Input';
+import Button from '../common/Button';
+
 import closeIcon from '../../assets/icons/icon-close.svg';
 import attentionIcon from '../../assets/icons/icon-attention.svg';
 import openEye from '../../assets/icons/icon-openEye.svg';
 import closeEye from '../../assets/icons/icon-Eye-off.svg';
-import useTranslation from '../../locale/locales';
-import { $api } from '../../api/api';
-import { login, updateUser } from '../../redux/userSlice';
+import Facebook from '../../assets/icons/media-icons/facebook-color.svg';
+import Google from '../../assets/icons/media-icons/google-color.svg';
+import Apple from '../../assets/icons/media-icons/apple-color.svg';
+
+import styles from './signup.module.css';
 
 const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
   const dispatch = useDispatch();

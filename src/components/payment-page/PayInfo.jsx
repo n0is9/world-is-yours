@@ -1,21 +1,23 @@
-import React from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 import { $api } from '../../api/api';
 
 import Button from '../common/Button';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const PayInfo = () => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   // Отримуємо дані користувача зі стору
   const user = useSelector((state) => state.user.user);
-  console.log('user', user);
+
   const handleOptionChange = (value) => {
     setSelectedOption(value);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('submit');

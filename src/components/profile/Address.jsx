@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { motion as m } from 'framer-motion';
+
 import CountryDropdown from '../payment-page/CountryDropDown';
 import CityDropdown from '../payment-page/CityDropDown';
+import Button from '../common/Button';
+
 import TrashIcon from '../../assets/icons/icon-trash.svg';
 import LocationIcon from '../../assets/icons/icon-location.svg';
 
-import { motion as m } from 'framer-motion';
-import Button from '../common/Button';
-
-const Adress = () => {
+const Address = () => {
   const [address, setAddress] = useState('');
   const [apartment, setApartment] = useState('');
   const [addressError, setAddressError] = useState('');
@@ -110,4 +111,4 @@ const Adress = () => {
   );
 };
 
-export default Adress;
+export default Address;

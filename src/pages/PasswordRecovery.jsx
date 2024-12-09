@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+
+import { $api } from '../api/api.js';
+
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
-import styles from '../components/registration-popup/signup.module.css';
+
 import openEye from '../assets/icons/icon-openEye.svg';
 import closeEye from '../assets/icons/icon-Eye-off.svg';
-import { $api } from '../api/api.js';
-import { toast, ToastContainer } from 'react-toastify';
+
+import styles from '../components/registration-popup/signup.module.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 const PasswordRecovery = () => {

@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
+
+import { addItem, removeItem } from "../../redux/wishlistSlice";
+import { $api } from "../../api/api";
 
 import HeartIcon from "../../assets/icons/icon-heart.svg";
 import HeartIconRed from "../../assets/icons/icon-heart-red.svg";
 
-import { addItem, removeItem } from "../../redux/wishlistSlice";
-import { $api } from "../../api/api";
-import { useDispatch, useSelector } from "react-redux";
-import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const PhotoGallery = ({ data }) => {

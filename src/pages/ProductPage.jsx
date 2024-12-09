@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { $api } from '../api/api';
 
-import Container from '../components/common/container';
+import Container from '../components/common/Container';
 import PhotoGallery from '../components/product/PhotoGallery';
 import FilterList from '../components/product/FilterList';
 import PreviousPage from '../components/common/PreviousPage';
 import MoveUp from '../components/common/MoveUp';
 import Card from '../components/common/Card';
-import { useParams } from 'react-router-dom';
 
 const ProductPage = () => {
   const { id } = useParams();

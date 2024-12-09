@@ -1,11 +1,8 @@
-import React from 'react';
 import { useState } from 'react';
 
 import { motion as m } from 'framer-motion';
 
-// components
 import WhyUs from '../components/main-page/WhyUs';
-// import SeasonSelect from "../components/main-page/SeasonSelect";
 import FavouritesCardList from '../components/main-page/FavouritesCardList';
 import NewArrivalsCardList from '../components/main-page/NewArrivalsCardList';
 import ScrollingText from '../components/scrolling-effect/ScrollingText';
@@ -13,6 +10,7 @@ import ChatPopup from '../components/main-page/ChatPopup';
 import Slider from '../components/main-page/Slider';
 import useTranslation from '../locale/locales';
 import MoveUp from '../components/common/MoveUp';
+
 import ArrowIcon from '../assets/icons/icon-arrow.svg';
 import ChatIcon from '../assets/icons/button_chat.svg';
 

@@ -1,14 +1,18 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import styles from './signup.module.css';
+
+import { $api } from '../../api/api';
+import useTranslation from '../../locale/locales';
+
 import Input from '../common/Input';
 import Button from '../common/Button';
-import closeIcon from '../../assets/icons/icon-close.svg';
-import useTranslation from '../../locale/locales';
 import LogIn from '../registration-popup/LogIn.jsx';
+
 import attentionIcon from '../../assets/icons/icon-attention.svg';
-import { $api } from '../../api/api';
+import closeIcon from '../../assets/icons/icon-close.svg';
+
+import styles from './signup.module.css';
 
 const RemindPas = ({ onClose, openLogin, openSuccess }) => {
   const t = useTranslation();

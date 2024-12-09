@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
+
 import ArrowDown from "../../assets/icons/arrow-up.svg";
 
 const DropDownList = ({ options, label}) => {

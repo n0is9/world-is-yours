@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { logout } from '../redux/userSlice';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-
-import Container from '../components/common/container';
-import Personal from '../components/profile/personal';
-import NotFound404 from './NotFound404';
-import Adress from '../components/profile/adress';
-import History from '../components/profile/history';
-import Button from '../components/common/Button';
 import Cookies from 'js-cookie';
+
+import { logout } from '../redux/userSlice';
+
+import Container from '../components/common/Container';
+import Personal from '../components/profile/Personal';
+import NotFound404 from './NotFound404';
+import Address from '../components/profile/Address';
+import History from '../components/profile/History';
+import Button from '../components/common/Button';
 
 const Profile = () => {
   const location = useLocation();
@@ -71,7 +72,7 @@ const Profile = () => {
           {/* right side */}
           <div className='basis-5/5 pl-70 border-l border-solid border-gray-500'>
             {selectedComponent === 'personal' && <Personal />}
-            {selectedComponent === 'addresses' && <Adress />}
+            {selectedComponent === 'addresses' && <Address />}
             {selectedComponent === 'history' && (
               <div>
                 <History />

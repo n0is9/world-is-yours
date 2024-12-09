@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import ClothingSizePicker from '../product/ClothingSizePicker';
-import CloseIcon from '../../assets/icons/icon-close.svg';
-
+import { useState } from 'react';
 import { AnimatePresence, motion as m } from 'framer-motion';
+
+import ClothingSizePicker from '../product/ClothingSizePicker';
+
+import CloseIcon from '../../assets/icons/icon-close.svg';
 
 const CategoryFilters = () => {
   const [openIndex, setOpenIndex] = useState(null);

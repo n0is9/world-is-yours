@@ -1,9 +1,9 @@
-import React from 'react';
 import {Swiper, SwiperSlide} from 'swiper/react';
+import {Scrollbar, Autoplay, Pagination,} from "swiper/modules";
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import {Scrollbar, Autoplay, Pagination,} from "swiper/modules";
+
 import whyUsImage1 from '../../assets/img/why-us-image-1.png'
 import whyUsImage2 from '../../assets/img/why-us-image-2.png'
 import whyUsImage3 from '../../assets/img/why-us-image-3.png'

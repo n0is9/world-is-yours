@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
-// import ArrowRight from "../../assets/icons/arrow-up.svg";
 import { $api } from '../../api/api';
 
 import Card from '../common/Card';
-import Container from '../common/container';
+import Container from '../common/Container';
+
 import useTranslation from '../../locale/locales';
 
 const NewArrivalsCardList = () => {
   const t = useTranslation();
-  const [arrivals, setArrivals] = useState([]);
 
+  const [arrivals, setArrivals] = useState([]);
   const [page, setPage] = useState(1);
   const [next, setNext] = useState('true');
 

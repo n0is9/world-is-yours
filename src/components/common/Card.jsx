@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import HeartIcon from '../../assets/icons/icon-heart.svg';
-import HeartIconRed from '../../assets/icons/icon-heart-red.svg';
-import Button from './Button';
-import Cart from '../../assets/icons/dark/icon-cart-dark.svg';
-import CartFull from '../../assets/icons/dark/icon-cart-dark-full.svg';
-import { $api } from '../../api/api';
+import { useEffect, useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import { motion as m } from 'framer-motion';
+
 import { addItem, removeItem } from '../../redux/wishlistSlice';
 import { addItemCart, removeItemCart } from '../../redux/cartSlice';
-import { toast, ToastContainer } from 'react-toastify';
+
+import { $api } from '../../api/api';
+
+import Button from './Button';
+
+import HeartIcon from '../../assets/icons/icon-heart.svg';
+import HeartIconRed from '../../assets/icons/icon-heart-red.svg';
+import Cart from '../../assets/icons/dark/icon-cart-dark.svg';
+import CartFull from '../../assets/icons/dark/icon-cart-dark-full.svg';
+
 import 'react-toastify/dist/ReactToastify.css';
-
-import { NavLink } from 'react-router-dom';
-
-import { motion as m } from 'framer-motion';
 
 const Card = ({ data }) => {
   const dispatch = useDispatch();

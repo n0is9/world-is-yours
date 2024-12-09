@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import FilterPopup from './FilterPopup';
-import Filter from '../../assets/icons/icon-filters.svg';
-import { $api } from '../../api/api';
+import { useEffect, useState } from 'react';
 import { NavLink, useNavigate, useSearchParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setCategory, setSubcategory } from '../../redux/categoryParamsSlice';
+
+import { $api } from '../../api/api';
+
+import FilterPopup from './FilterPopup';
+
+import Filter from '../../assets/icons/icon-filters.svg';
 
 const CategoryList = ({ setPage }) => {
   const [selectedFilter, setSelectedFilter] = useState('');
@@ -12,11 +15,13 @@ const CategoryList = ({ setPage }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
+
   const dispatch = useDispatch();
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryName = searchParams.get('category') || 'all';
-  console.log(categoryName);
+
 
   const fetchCategories = async () => {
     try {

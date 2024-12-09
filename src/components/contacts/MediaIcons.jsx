@@ -1,5 +1,3 @@
-import React from 'react';
-import styles from '../main-page/main.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faInstagram,
@@ -8,6 +6,8 @@ import {
   faYoutube,
   faTelegram,
 } from '@fortawesome/free-brands-svg-icons';
+
+import styles from '../main-page/main.module.css';
 
 const MediaIcons = () => {
   return (
