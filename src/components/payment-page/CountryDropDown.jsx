@@ -21,6 +21,7 @@ const CountryDropdown = ({ onSelectCountry }) => {
         const countriesData = response.data.data.map(
           (country) => country.country,
         );
+
         setCountries(countriesData.sort());
         setFilteredCountries(countriesData.sort());
       } catch (error) {
@@ -34,11 +35,13 @@ const CountryDropdown = ({ onSelectCountry }) => {
   // Фільтрація країн на основі введеного тексту
   const handleSearchChange = (e) => {
     const query = e.target.value;
+
     setSearchQuery(query);
     if (query.length > 0) {
       const filtered = countries.filter((country) =>
         country.toLowerCase().includes(query.toLowerCase()),
       );
+
       setFilteredCountries(filtered);
     } else {
       setFilteredCountries(countries);
@@ -79,7 +82,10 @@ const CountryDropdown = ({ onSelectCountry }) => {
 
         {/* Випадаючий список */}
         {isOpen && (
-          <ul className='absolute z-50 bg-white w-full max-h-48 overflow-y-auto border rounded-xl shadow-md'>
+          <ul
+            className='absolute z-50 bg-white w-full max-h-48 overflow-y-auto
+          border rounded-xl shadow-md'
+          >
             {filteredCountries.length > 0 ? (
               filteredCountries.map((country, index) => (
                 <li

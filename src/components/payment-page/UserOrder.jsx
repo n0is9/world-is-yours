@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { removeItemCart, updateQuantityCart } from '../../redux/cartSlice.js';
-import { $api } from '../../api/api.js';
+import { removeItemCart, updateQuantityCart } from '@redux/cartSlice';
+import { $api } from '@api/api';
 
-import ArrowDown from '../../assets/icons/arrow-up.svg';
-import DeleteIcon from '../../assets/icons/icon-trash.svg';
+import ArrowDown from '@assets/icons/arrow-up.svg';
+import DeleteIcon from '@assets/icons/icon-trash.svg';
 
 const UserOrder = () => {
   const cartItems = useSelector((state) => state.cart.items);
@@ -20,6 +20,7 @@ const UserOrder = () => {
     try {
       const basketResponse = await $api.get(`/api/baskets/`);
       const basketItems = basketResponse.data;
+
       setBasket(basketItems);
 
       let newTotal = 0;
@@ -31,7 +32,9 @@ const UserOrder = () => {
             quantity: item.quantity,
             basketId: item.id,
           };
+
           newTotal += productData.price * item.quantity;
+
           return productData;
         }),
       );
@@ -60,7 +63,10 @@ const UserOrder = () => {
 
   const handleQuantityChange = (productId, action) => {
     const product = cart.find((item) => item.basketId === productId);
-    if (!product) return;
+
+    if (!product) {
+      return;
+    }
 
     const newQuantity =
       action === 'increment' ? product.quantity + 1 : product.quantity - 1;
@@ -68,6 +74,7 @@ const UserOrder = () => {
     if (newQuantity > 0) {
       updBasket(productId, newQuantity);
     }
+
     console.log('product', product);
     dispatch(updateQuantityCart({ product: productId, quantity: newQuantity }));
   };
@@ -84,6 +91,7 @@ const UserOrder = () => {
       setUpd(Math.floor(Math.random() * 100) + 1);
     }
   };
+
   const calculateTotalPrice = () => {
     const subtotal = cart
       .reduce((total, product) => {
@@ -96,6 +104,7 @@ const UserOrder = () => {
     const delivery = 0; // Доставка
 
     const totalPrice = subtotal - discount + delivery;
+
     return totalPrice;
   };
 
@@ -119,7 +128,7 @@ const UserOrder = () => {
           ) : (
             <>
               {cart.map((product) => (
-                <React.Fragment key={product.id}>
+                <Fragment key={product.id}>
                   <div className='flex flex-row justify-between text-custom-black'>
                     <div className='flex flex-row mr-20'>
                       <img
@@ -182,7 +191,7 @@ const UserOrder = () => {
                     </div>
                   </div>
                   <hr className='text-gray mt-3 mb-3' />
-                </React.Fragment>
+                </Fragment>
               ))}
             </>
           )}

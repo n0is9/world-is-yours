@@ -1,8 +1,8 @@
 import { getAuth, signInWithPopup } from 'firebase/auth';
-import { app } from './config'; 
+import { app } from './config';
 
 const socialMediaAuth = (provider) => {
-  const auth = getAuth(app); 
+  const auth = getAuth(app);
 
   return signInWithPopup(auth, provider)
     .then((res) => {
@@ -14,8 +14,3 @@ const socialMediaAuth = (provider) => {
 };
 
 export default socialMediaAuth;
-
-
-
-
-

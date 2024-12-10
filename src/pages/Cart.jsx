@@ -2,21 +2,22 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { $api } from '../api/api';
+import { $api } from '@api/api';
 import {
   removeItemCart,
   clearCart,
   updateQuantityCart,
-} from '../redux/cartSlice';
+} from '@redux/cartSlice';
 
-import CartItem from '../components/cart/CartItem';
-import Button from '../components/common/Button';
-import Container from '../components/common/Container';
+import CartItem from '@components/cart/CartItem';
+import Button from '@common/Button';
+import Container from '@common/Container';
 
 const Cart = () => {
   const dispatch = useDispatch();
 
   const cartItems = useSelector((state) => state.cart.items);
+
   useEffect(() => {
     console.log('cartItems', cartItems);
   }, [cartItems]);
@@ -31,6 +32,7 @@ const Cart = () => {
     try {
       const basketResponse = await $api.get(`/api/baskets/`);
       const basketItems = basketResponse.data;
+
       setBasket(basketItems);
 
       let newTotal = 0;
@@ -42,7 +44,9 @@ const Cart = () => {
             quantity: item.quantity,
             basketId: item.id,
           };
+
           newTotal += productData.price * item.quantity;
+
           return productData;
         }),
       );
@@ -71,7 +75,10 @@ const Cart = () => {
 
   const handleQuantityChange = (productId, action) => {
     const product = cart.find((item) => item.basketId === productId);
-    if (!product) return;
+
+    if (!product) {
+      return;
+    }
 
     const newQuantity =
       action === 'increment' ? product.quantity + 1 : product.quantity - 1;
@@ -79,6 +86,7 @@ const Cart = () => {
     if (newQuantity > 0) {
       updBasket(productId, newQuantity);
     }
+
     console.log('product', product);
     dispatch(updateQuantityCart({ product: productId, quantity: newQuantity }));
   };
@@ -89,7 +97,7 @@ const Cart = () => {
       // Створюємо масив промісів для кожного запиту на видалення
       const deleteRequests = basket.map((item) => {
         console.log(item);
-        if (basket.length != 0) {
+        if (basket.length) {
           console.log(basket.length);
           $api.delete(`/api/baskets/${item.id}/`);
           // .then(() => { });
@@ -128,7 +136,9 @@ const Cart = () => {
         </p>
         <Link to='/'>
           <Button
-            classNameBtn='w-22 bg-gray-dark my-12 p-4 border rounded-xl leading-none font-bold text-20px text-white duration-300 hover:bg-transparent hover:text-black focus:bg-transparent focus:text-black'
+            classNameBtn='w-22 bg-gray-dark my-12 p-4 border rounded-xl leading-none font-bold
+            text-20px text-white duration-300 hover:bg-transparent hover:text-black
+            focus:bg-transparent focus:text-black'
             nameBtn='submitForm'
             valueBtn='submit'
             type='submit'
@@ -147,7 +157,8 @@ const Cart = () => {
           <p className='font-raleway font-semibold text-40px mx-auto'>Кошик</p>{' '}
           <span className='hidden'>{upd}</span>
           <p
-            className='absolute end-0 font-raleway font-normal text-lg cursor-pointer hover:underline focus:underline'
+            className='absolute end-0 font-raleway font-normal text-lg
+            cursor-pointer hover:underline focus:underline'
             onClick={handleRemoveAllItems}
             tabIndex='0'
           >
@@ -177,7 +188,11 @@ const Cart = () => {
             Всього: {total} грн
           </p>
           <Link to='/payment'>
-            <Button classNameBtn='w-22 bg-gray-dark p-4 border rounded-xl font-bold text-18px text-white duration-300 hover:bg-transparent hover:text-black focus:bg-transparent focus:text-black'>
+            <Button
+              classNameBtn='w-22 bg-gray-dark p-4 border rounded-xl font-bold text-18px text-white
+              duration-300 hover:bg-transparent hover:text-black focus:bg-transparent
+              focus:text-black'
+            >
               Оформити замовлення
             </Button>
           </Link>

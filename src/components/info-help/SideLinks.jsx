@@ -29,10 +29,17 @@ const SideLinks = ({ onLinkClick }) => {
   };
 
   return (
-    <div className='flex flex-col gap-6 border-r border-slate-400 pr-[70px] mr-[70px] flex-[0_0_17rem]'>
+    <div
+      className='flex flex-col gap-6 border-r border-slate-400
+    pr-[70px] mr-[70px] flex-[0_0_17rem]'
+    >
       {tabs &&
         Object.entries(tabs).map(([tabName, tabLabel]) => (
-          <p key={tabName} className={getTabClasses(tabName)} onClick={() => handleTabChange(tabName)}>
+          <p
+            key={tabName}
+            className={getTabClasses(tabName)}
+            onClick={() => handleTabChange(tabName)}
+          >
             {tabLabel}
           </p>
         ))}

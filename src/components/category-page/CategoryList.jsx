@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { NavLink, useNavigate, useSearchParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setCategory, setSubcategory } from '../../redux/categoryParamsSlice';
+import { setSubcategory } from '@redux/categoryParamsSlice';
 
-import { $api } from '../../api/api';
+import { $api } from '@api/api';
 
 import FilterPopup from './FilterPopup';
 
-import Filter from '../../assets/icons/icon-filters.svg';
+import Filter from '@assets/icons/icon-filters.svg';
 
 const CategoryList = ({ setPage }) => {
   const [selectedFilter, setSelectedFilter] = useState('');
@@ -22,10 +22,10 @@ const CategoryList = ({ setPage }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryName = searchParams.get('category') || 'all';
 
-
   const fetchCategories = async () => {
     try {
       const response = await $api.get('/api/products/category/');
+
       setCategories(response.data);
       setSelectedFilter(response.data[0].id);
       console.log(response.data);
@@ -39,6 +39,7 @@ const CategoryList = ({ setPage }) => {
     const filteredProducts = response.data.filter(
       (item) => item.category === selectedFilter,
     );
+
     setSubCategories(filteredProducts);
     console.log(response.data);
   };
@@ -68,11 +69,13 @@ const CategoryList = ({ setPage }) => {
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen);
   };
+
   console.log(categories);
   const changeCategory = (category) => {
     navigate(`?category=${category}&page=1`);
     // setPage(1);
   };
+
   return (
     <div className='flex flex-col m-10 w-full'>
       <h1 className='text-blue text-2xl mb-4 font-semibold'>Категорії</h1>

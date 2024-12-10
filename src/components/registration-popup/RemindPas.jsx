@@ -2,15 +2,15 @@ import { useRef, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { $api } from '../../api/api';
-import useTranslation from '../../locale/locales';
+import { $api } from '@api/api';
+import useTranslation from '@locale/locales';
 
-import Input from '../common/Input';
-import Button from '../common/Button';
+import Input from '@common/Input';
+import Button from '@common/Button';
 import LogIn from '../registration-popup/LogIn.jsx';
 
-import attentionIcon from '../../assets/icons/icon-attention.svg';
-import closeIcon from '../../assets/icons/icon-close.svg';
+import attentionIcon from '@assets/icons/icon-attention.svg';
+import closeIcon from '@assets/icons/icon-close.svg';
 
 import styles from './signup.module.css';
 
@@ -52,6 +52,7 @@ const RemindPas = ({ onClose, openLogin, openSuccess }) => {
         setEmailError('Символ "." не може йти одразу після символу "@"');
       } else {
         setEmailError(null);
+
         return true;
       }
     }
@@ -64,7 +65,9 @@ const RemindPas = ({ onClose, openLogin, openSuccess }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     isValidationOnRef.current = true;
-    if (!emailValidation(userEmail)) return;
+    if (!emailValidation(userEmail)) {
+      return;
+    }
 
     setIsLoading(true);
 

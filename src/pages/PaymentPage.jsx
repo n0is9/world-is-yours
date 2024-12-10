@@ -1,8 +1,8 @@
-import UserOrder from '../components/payment-page/UserOrder';
-import PlacingAnOrder from '../components/payment-page/PlacingAnOrder';
-import PreviousPage from '../components/common/PreviousPage';
+import UserOrder from '@components/payment-page/UserOrder';
+import PlacingAnOrder from '@components/payment-page/PlacingAnOrder';
+import PreviousPage from '@common/PreviousPage';
 
-import Container from '../components/common/Container';
+import Container from '@common/Container';
 
 const PaymentPage = () => {
   return (

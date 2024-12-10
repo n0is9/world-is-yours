@@ -1,7 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 export const wishlistSlice = createSlice({
-  name: "wishlist",
+  name: 'wishlist',
   initialState: {
     items: [],
   },

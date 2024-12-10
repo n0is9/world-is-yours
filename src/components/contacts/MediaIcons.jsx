@@ -19,7 +19,8 @@ const MediaIcons = () => {
           href='https://www.instagram.com/'
           target='_blank'
           rel='noopener noreferrer'
-          className='text-gray flex items-center text-lg duration-200 hover:text-blue focus:text-blue'
+          className='text-gray flex items-center text-lg
+          duration-200 hover:text-blue focus:text-blue'
         >
           <FontAwesomeIcon
             icon={faInstagram}
@@ -35,7 +36,8 @@ const MediaIcons = () => {
           href='https://www.facebook.com/'
           target='_blank'
           rel='noopener noreferrer'
-          className='text-gray flex items-center text-lg duration-200  hover:text-blue focus:text-blue'
+          className='text-gray flex items-center text-lg
+          duration-200  hover:text-blue focus:text-blue'
         >
           <FontAwesomeIcon icon={faFacebook} size='2x' />
           <p className='ml-5'>Facebook</p>
@@ -47,7 +49,8 @@ const MediaIcons = () => {
           href='https://www.tiktok.com/'
           target='_blank'
           rel='noopener noreferrer'
-          className='text-gray flex items-center text-lg duration-200  hover:text-blue focus:text-blue'
+          className='text-gray flex items-center text-lg
+          duration-200  hover:text-blue focus:text-blue'
         >
           <FontAwesomeIcon icon={faTiktok} size='2x' />
           <p className='ml-5'>TikTok</p>
@@ -59,7 +62,8 @@ const MediaIcons = () => {
           href='https://www.youtube.com/'
           target='_blank'
           rel='noopener noreferrer'
-          className='text-gray flex items-center text-lg duration-200  hover:text-blue focus:text-blue'
+          className='text-gray flex items-center text-lg
+          duration-200  hover:text-blue focus:text-blue'
         >
           <FontAwesomeIcon icon={faYoutube} size='2x' />
           <p className='ml-5'>YouTube</p>
@@ -71,7 +75,8 @@ const MediaIcons = () => {
           href='https://t.me/'
           target='_blank'
           rel='noopener noreferrer'
-          className='text-gray flex items-center text-lg duration-200 hover:text-blue focus:text-blue'
+          className='text-gray flex items-center text-lg
+          duration-200 hover:text-blue focus:text-blue'
         >
           <FontAwesomeIcon icon={faTelegram} size='2x' />
           <p className='ml-5'>Telegram</p>

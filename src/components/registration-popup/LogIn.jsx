@@ -2,25 +2,25 @@ import { useRef, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { $api } from '../../api/api';
+import { $api } from '@api/api';
 import { useDispatch } from 'react-redux';
-import { login, updateUser } from '../../redux/userSlice';
+import { login, updateUser } from '@redux/userSlice';
 
 import { facebookProvider, googleProvider } from './firebase/provider';
 import socialMediaAuth from './firebase/auth';
-import useTranslation from '../../locale/locales';
+import useTranslation from '@locale/locales';
 
-import Input from '../common/Input';
-import Button from '../common/Button';
+import Input from '@common/Input';
+import Button from '@common/Button';
 import RemindPas from '../registration-popup/RemindPas.jsx';
 
-import closeIcon from '../../assets/icons/icon-close.svg';
-import Facebook from '../../assets/icons/media-icons/facebook-color.svg';
-import Google from '../../assets/icons/media-icons/google-color.svg';
-import Apple from '../../assets/icons/media-icons/apple-color.svg'
-import attentionIcon from '../../assets/icons/icon-attention.svg';
-import openEye from '../../assets/icons/icon-openEye.svg';
-import closeEye from '../../assets/icons/icon-Eye-off.svg';
+import closeIcon from '@assets/icons/icon-close.svg';
+import Facebook from '@assets/icons/media-icons/facebook-color.svg';
+import Google from '@assets/icons/media-icons/google-color.svg';
+import Apple from '@assets/icons/media-icons/apple-color.svg';
+import attentionIcon from '@assets/icons/icon-attention.svg';
+import openEye from '@assets/icons/icon-openEye.svg';
+import closeEye from '@assets/icons/icon-Eye-off.svg';
 
 import styles from './signup.module.css';
 
@@ -104,6 +104,7 @@ const LogIn = ({ onClose, openSignUp, openSuccess }) => {
         setEmailError('Символ "." не може йти одразу після символу "@"');
       } else {
         setEmailError(null);
+
         return true;
       }
     }
@@ -121,6 +122,7 @@ const LogIn = ({ onClose, openSignUp, openSuccess }) => {
         setPasswordError('Пароль містить не припустимі символи');
       } else {
         setPasswordError(null);
+
         return true;
       }
     }
@@ -140,6 +142,7 @@ const LogIn = ({ onClose, openSignUp, openSuccess }) => {
 
   const setCookie = (name, object, daysToExpire) => {
     const expires = new Date();
+
     expires.setTime(expires.getTime() + daysToExpire * 24 * 60 * 60 * 1000);
     document.cookie = `${name}=${encodeURIComponent(JSON.stringify(object))};expires=${expires.toUTCString()};path=/`;
   };
@@ -186,6 +189,7 @@ const LogIn = ({ onClose, openSignUp, openSuccess }) => {
         username: userData.email,
         password: userData.password,
       });
+
       console.log('Response body:', signInResult);
 
       handleSignInStatus(signInResult.status, signInResult);

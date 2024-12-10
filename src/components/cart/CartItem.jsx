@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
-import order from '../../assets/temporary-img/tent.png';
-import trash from '../../assets/icons/icon-trash.svg';
-import ArrowDown from '../../assets/icons/arrow-up.svg';
+import trash from '@assets/icons/icon-trash.svg';
+import ArrowDown from '@assets/icons/arrow-up.svg';
 
 const CartItem = ({ product, handleQuantityChange, handleRemoveItem }) => {
   // const calculateProductTotal = () => {
@@ -21,9 +20,11 @@ const CartItem = ({ product, handleQuantityChange, handleRemoveItem }) => {
     if (oldPrice <= 0) {
       return 'Немає';
     }
+
     if (oldPrice <= price) {
       return 'Немає';
     }
+
     const discount = ((oldPrice - price) / oldPrice) * 100;
 
     if (discount < 0) {
@@ -36,7 +37,10 @@ const CartItem = ({ product, handleQuantityChange, handleRemoveItem }) => {
   useEffect(() => console.log(product), []);
 
   return (
-    <div className='flex flex-row justify-between items-end [&:not(:last-child)]:border-b border-gray p-4'>
+    <div
+      className='flex flex-row justify-between items-end
+      [&:not(:last-child)]:border-b border-gray p-4'
+    >
       <div className='flex flex-row items-center'>
         <img
           src={product.image_1}
@@ -100,7 +104,8 @@ const CartItem = ({ product, handleQuantityChange, handleRemoveItem }) => {
         <img
           src={trash}
           alt='delete icon'
-          className='cursor-pointer w-10 h-10 mb-9 p-2 border border-transparent rounded-lg duration-100 hover:border-slate-400 focus:border-slate-400'
+          className='cursor-pointer w-10 h-10 mb-9 p-2 border border-transparent rounded-lg
+          duration-100 hover:border-slate-400 focus:border-slate-400'
           onClick={() => handleRemoveItem(product.basketId)}
           tabIndex='0'
         />

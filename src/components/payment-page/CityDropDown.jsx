@@ -21,6 +21,7 @@ const CityDropdown = ({ onSelectCity, selectedCountry }) => {
             { country: selectedCountry },
           );
           const citiesData = response.data.data;
+
           setCities(citiesData);
           setFilteredCities(citiesData);
         } catch (error) {
@@ -35,11 +36,13 @@ const CityDropdown = ({ onSelectCity, selectedCountry }) => {
   // Фільтрація міст на основі введеного тексту
   const handleSearchChange = (e) => {
     const query = e.target.value;
+
     setSearchQuery(query);
     if (query.length > 0) {
       const filtered = cities.filter((city) =>
         city.toLowerCase().includes(query.toLowerCase()),
       );
+
       setFilteredCities(filtered);
     } else {
       setFilteredCities(cities);
@@ -79,7 +82,10 @@ const CityDropdown = ({ onSelectCity, selectedCountry }) => {
 
         {/* Випадаючий список */}
         {isOpen && (
-          <ul className='absolute z-50 bg-white w-full max-h-48 overflow-y-auto border rounded-xl shadow-md'>
+          <ul
+            className='absolute z-50 bg-white w-full max-h-48 overflow-y-auto
+          border rounded-xl shadow-md'
+          >
             {filteredCities.length > 0 ? (
               filteredCities.map((city, index) => (
                 <li

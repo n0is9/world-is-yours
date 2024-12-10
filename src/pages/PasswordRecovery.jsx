@@ -2,15 +2,15 @@ import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 
-import { $api } from '../api/api.js';
+import { $api } from '@api/api.js';
 
-import Input from '../components/common/Input';
-import Button from '../components/common/Button';
+import Input from '@common/Input';
+import Button from '@common/Button';
 
-import openEye from '../assets/icons/icon-openEye.svg';
-import closeEye from '../assets/icons/icon-Eye-off.svg';
+import openEye from '@assets/icons/icon-openEye.svg';
+import closeEye from '@assets/icons/icon-Eye-off.svg';
 
-import styles from '../components/registration-popup/signup.module.css';
+import styles from '@components/registration-popup/signup.module.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 const PasswordRecovery = () => {
@@ -25,6 +25,7 @@ const PasswordRecovery = () => {
   const navigate = useNavigate();
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
+
     setUserPassword(newPassword);
 
     // Валідація пароля
@@ -37,6 +38,7 @@ const PasswordRecovery = () => {
 
   const handleConfirmPasswordChange = (e) => {
     const newPassword = e.target.value;
+
     setConfirmPassword(newPassword);
 
     // Валідація підтвердження пароля
@@ -63,8 +65,10 @@ const PasswordRecovery = () => {
     // Перевірка наявності помилок перед відправкою
     if (passwordError || confirmPasswordError) {
       console.log('Будь ласка, виправте помилки в формі.');
+
       return;
     }
+
     console.log(email, userPassword, code);
     try {
       const response = await $api.post('/api/set-password/', {
@@ -72,6 +76,7 @@ const PasswordRecovery = () => {
         email: email,
         code: code,
       });
+
       console.log(response.data);
 
       toast.info('Password successfully updated', {
@@ -83,6 +88,7 @@ const PasswordRecovery = () => {
       console.log(error, 'error');
       const message =
         error.response?.data?.message || 'Error resetting password';
+
       toast.info(message, {
         position: 'top-center',
         autoClose: 3000,

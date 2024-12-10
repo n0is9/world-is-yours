@@ -1,11 +1,11 @@
 import { useState, useEffect, useMemo } from 'react';
-import { $api } from '../api/api';
+import { $api } from '@api/api';
 import { useSelector } from 'react-redux';
 
 import { motion as m } from 'framer-motion';
 
-import Card from '../components/common/Card';
-import Container from '../components/common/Container';
+import Card from '@common/Card';
+import Container from '@common/Container';
 import NotFound404 from './NotFound404';
 
 const Favorites = () => {
@@ -20,10 +20,12 @@ const Favorites = () => {
       for (const id of wishlist) {
         try {
           const response = await $api.get(`/api/products/${id}/`);
+
           console.log(response);
           const productExists = newProducts.some(
             (product) => product.id === response.data.id,
           );
+
           console.log(productExists, 'productExists');
           if (!productExists) {
             newProducts.push(response.data);
@@ -59,8 +61,10 @@ const Favorites = () => {
 
   if (!user.email) {
     console.log('user in store==' + JSON.stringify(user, null, 2));
+
     return <NotFound404 />;
   }
+
   return (
     <m.div
       initial={{ opacity: 0 }}
@@ -77,7 +81,10 @@ const Favorites = () => {
           </h1>
         </div>
 
-        <div className='grid grid-flow-row-dense gap-x-5 gap-y-[50px] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center'>
+        <div
+          className='grid grid-flow-row-dense gap-x-5 gap-y-[50px] grid-cols-1
+        md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center'
+        >
           {memoProducts.map((product) => (
             <Card key={product.id} data={product} />
           ))}

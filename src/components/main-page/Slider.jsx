@@ -4,9 +4,9 @@ import 'slick-carousel/slick/slick-theme.css';
 
 import SlideCardLayout from './SlideCardLayout.jsx';
 
-import bg1 from '../../assets/img/slider-first.png';
-import bg2 from '../../assets/img/slider-second.png';
-import bg3 from '../../assets/img/slider-third.png';
+import bg1 from '@assets/img/slider-first.png';
+import bg2 from '@assets/img/slider-second.png';
+import bg3 from '@assets/img/slider-third.png';
 
 const SimpleSlider = () => {
   const settings = {

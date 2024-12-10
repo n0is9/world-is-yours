@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import Button from "../common/Button";
+import Button from '@common/Button';
 
-import styles from "../registration-popup/signup.module.css";
+import styles from '../registration-popup/signup.module.css';
 
 const NewsLetter = () => {
-  const [isOpen, setIsOpen] = useState(true); 
+  const [isOpen, setIsOpen] = useState(true);
 
   const handleClose = () => {
     setIsOpen(false);
@@ -20,12 +20,12 @@ const NewsLetter = () => {
         >
           <div className={styles.titleWrapNews}>
             <h2 className={styles.titleNews}>
-              Дякуємо за підписку на нашу розсилку!{" "}
+              Дякуємо за підписку на нашу розсилку!{' '}
             </h2>
           </div>
           <div className={styles.btnWrapNews}>
             <p className={styles.textNews}>
-              Тепер ви будете отримувати свіжі новини, акції та оновлення.{" "}
+              Тепер ви будете отримувати свіжі новини, акції та оновлення.{' '}
               <br /> Залишайтеся з нами!
             </p>
             <Button classNameBtn={styles.btnNews} onClickBtn={handleClose}>
@@ -39,5 +39,3 @@ const NewsLetter = () => {
 };
 
 export default NewsLetter;
-
-

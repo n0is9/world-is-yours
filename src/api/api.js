@@ -1,14 +1,14 @@
 import axios from 'axios';
-import config from '../config/config';
 
 const api2 = {
   // language switch
   getLanguage: async (code) => {
     try {
       const response = await axios.get(`/api/language/${code}/`);
+
       return response.data;
     } catch (error) {
-      // console.error('Error fetching posts:', error);
+      console.error('Error fetching posts:', error);
       throw error;
     }
   },
@@ -31,6 +31,7 @@ const api2 = {
         username: userData.email,
         password: userData.password,
       });
+
       // console.log('signIn success  status:', response.status);
       return response;
     } catch (error) {
@@ -41,7 +42,10 @@ const api2 = {
 
   updateUser: async (userData) => {
     try {
-      const response = await axios.patch(`/api/users/${userData.user_id}/`, userData);
+      const response = await axios.patch(
+        `/api/users/${userData.user_id}/`,
+        userData,
+      );
 
       return response;
     } catch (error) {
@@ -53,6 +57,7 @@ const api2 = {
   socialLogin: async (idToken) => {
     try {
       const response = await axios.post(`/api/auth/social-login`, { idToken });
+
       // console.log('socialLogin success:', response);
       return response;
     } catch (error) {
@@ -64,9 +69,10 @@ const api2 = {
   resetPassword: async (userData) => {
     try {
       const response = await axios.post(`/api/password_reset/`, userData);
+
       return response;
     } catch (error) {
-      // console.error('Error registering user in api:', error);
+      console.error('Error registering user in api:', error);
       throw error;
     }
   },
@@ -81,20 +87,26 @@ $api.interceptors.request.use(
     function getCookie(name) {
       const value = `; ${document.cookie}`;
       const parts = value.split(`; ${name}=`);
+
       if (parts.length === 2) {
         return JSON.parse(decodeURIComponent(parts.pop().split(';').shift()));
       }
     }
+
     const user = getCookie('user');
+
     if (user) {
       // console.log("cookie", document.cookie);
       const token = user.token;
+
       if (token) {
+        // eslint-disable-next-line no-param-reassign
         config.headers['Authorization'] = `Token ${token}`;
 
         //  console.log("Token added to request:", token);
       }
     }
+
     return config;
   },
   (error) => {
@@ -108,8 +120,11 @@ $api.interceptors.response.use(
   },
   (error) => {
     if (error.response && error.response.status === 401) {
-      console.error('Unauthorized error: Access is denied due to invalid credentials.');
+      console.error(
+        'Unauthorized error: Access is denied due to invalid credentials.',
+      );
     }
+
     return Promise.reject(error);
   },
 );

@@ -3,8 +3,8 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { motion as m } from 'framer-motion';
 import * as Yup from 'yup';
 
-import { updateUser } from '../../redux/userSlice';
-import { $api } from '../../api/api.js';
+import { updateUser } from '@redux/userSlice';
+import { $api } from '@api/api';
 
 import Button from '../common/Button';
 
@@ -27,6 +27,7 @@ const ContactInfo = ({ onDeliveryClick }) => {
       .matches(/^\d{4}-\d{2}-\d{2}$/, 'Date must be in the format YYYY-MM-DD')
       .nullable(),
   });
+
   return (
     <m.div
       initial={{ opacity: 0 }}
@@ -98,7 +99,8 @@ const ContactInfo = ({ onDeliveryClick }) => {
                           name='first_name'
                           type='text'
                           placeholder="введіть своє ім'я"
-                          className='flex mt-2 w-full p-3 items-center rounded-xl border border-black focus:border-blue-500 outline-none'
+                          className='flex mt-2 w-full p-3 items-center rounded-xl
+                          border border-black focus:border-blue-500 outline-none'
                         />
                       </label>
                       <ErrorMessage
@@ -118,7 +120,8 @@ const ContactInfo = ({ onDeliveryClick }) => {
                           name='last_name'
                           type='text'
                           placeholder='Введіть своє прізвище'
-                          className='flex mt-2 w-full p-3 items-center rounded-xl border border-black focus:border-blue-500 outline-none'
+                          className='flex mt-2 w-full p-3 items-center rounded-xl border
+                          border-black focus:border-blue-500 outline-none'
                         />
                       </label>
                       <ErrorMessage
@@ -141,7 +144,8 @@ const ContactInfo = ({ onDeliveryClick }) => {
                         id='phone'
                         name='phone'
                         type='text'
-                        className='w-[360px] px-4 py-3 bg-white rounded-[10px] border border-black text-zinc-500 text-base font-light placeholder-zinc-500'
+                        className='w-[360px] px-4 py-3 bg-white rounded-[10px] border
+                        border-black text-zinc-500 text-base font-light placeholder-zinc-500'
                         placeholder='(+380) XX XXX XX XX'
                       />
                     </div>
@@ -163,7 +167,8 @@ const ContactInfo = ({ onDeliveryClick }) => {
                         name='email'
                         type='text'
                         placeholder='Введіть адресу електронної пошти'
-                        className='flex mt-2 w-5/5 p-3 items-center self-stretch rounded-xl border border-black focus:border-blue-500 outline-none'
+                        className='flex mt-2 w-5/5 p-3 items-center self-stretch rounded-xl border
+                        border-black focus:border-blue-500 outline-none'
                       />
                     </label>
                     <ErrorMessage
@@ -184,7 +189,8 @@ const ContactInfo = ({ onDeliveryClick }) => {
                         name='date_of_birth'
                         type='text'
                         placeholder='yyyy-mm-dd'
-                        className='flex mt-2 w-5/5 p-3 items-center self-stretch rounded-xl border border-black focus:border-blue-500 outline-none'
+                        className='flex mt-2 w-5/5 p-3 items-center self-stretch rounded-xl border
+                        border-black focus:border-blue-500 outline-none'
                       />
                     </label>
 
@@ -195,7 +201,9 @@ const ContactInfo = ({ onDeliveryClick }) => {
                     />
                   </div>
                   <Button
-                    classNameBtn='w-full bg-gray-dark my-12 p-4 border rounded-xl leading-none font-bold text-20px text-white duration-300 hover:bg-transparent hover:text-black focus:bg-transparent focus:text-black'
+                    classNameBtn='w-full bg-gray-dark my-12 p-4 border rounded-xl leading-none
+                    font-bold text-20px text-white duration-300 hover:bg-transparent
+                    hover:text-black focus:bg-transparent focus:text-black'
                     nameBtn='submitForm'
                     valueBtn='submit'
                     type='submit'

@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast, ToastContainer } from 'react-toastify';
 
-import { $api } from '../../api/api.js';
-import { updateUser } from '../../redux/userSlice';
+import { $api } from '@api/api';
+import { updateUser } from '@redux/userSlice';
 
-import Button from '../common/Button';
+import Button from '@common/Button';
 import DeliveryOptions from './DeliveryOptions';
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -26,6 +26,7 @@ const DeliveryInfo = ({ onPayClick }) => {
             zip_code: user.address.zip_code,
           },
         });
+
         console.log('Backend response:', response.data);
         toast.info('Your data has been updated successfully', {
           position: 'top-center',
@@ -35,6 +36,7 @@ const DeliveryInfo = ({ onPayClick }) => {
         console.error('Error updating user on backend:', error);
       }
     };
+
     if (user) {
       updateUserOnBackend();
     }
@@ -55,18 +57,21 @@ const DeliveryInfo = ({ onPayClick }) => {
 
   const handleCountryChange = (event) => {
     const value = event.target.value.trim();
+
     setSelectedCountry(value);
     setSelectedCountryError('');
   };
 
   const handleCityChange = (event) => {
     const value = event.target.value.trim();
+
     setSelectedCity(value);
     setSelectedCityError('');
   };
 
   const handleAddressChange = (event) => {
     const value = event.target.value.trim();
+
     if (/^[a-zA-Zа-яА-Яїєіґ'0-9\s.,/-]*$/.test(value) && value.length <= 60) {
       setAddress(value);
       setAddressError('');
@@ -115,6 +120,7 @@ const DeliveryInfo = ({ onPayClick }) => {
           autoClose: 3000,
         },
       );
+
       return;
     }
 
@@ -217,7 +223,9 @@ const DeliveryInfo = ({ onPayClick }) => {
 
           {/* Кнопка підтвердження */}
           <Button
-            classNameBtn='max-w-md bg-gray-dark my-12 p-4 border rounded-xl leading-none font-bold text-20px text-white duration-300 hover:bg-transparent hover:text-black focus:bg-transparent focus:text-black'
+            classNameBtn='max-w-md bg-gray-dark my-12 p-4 border rounded-xl leading-none
+            font-bold text-20px text-white duration-300 hover:bg-transparent hover:text-black
+            focus:bg-transparent focus:text-black'
             nameBtn='submitForm'
             valueBtn='submit'
           >
