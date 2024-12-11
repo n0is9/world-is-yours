@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import ArrowDown from '../../assets/icons/arrow-up.svg';
 
 const CityDropdown = ({ onSelectCity, selectedCountry }) => {
   const [cities, setCities] = useState([]);
@@ -9,6 +8,7 @@ const CityDropdown = ({ onSelectCity, selectedCountry }) => {
   const [selectedCity, setSelectedCity] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+
   const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
@@ -21,6 +21,7 @@ const CityDropdown = ({ onSelectCity, selectedCountry }) => {
             { country: selectedCountry },
           );
           const citiesData = response.data.data;
+
           setCities(citiesData);
           setFilteredCities(citiesData);
         } catch (error) {
@@ -35,11 +36,13 @@ const CityDropdown = ({ onSelectCity, selectedCountry }) => {
   // Фільтрація міст на основі введеного тексту
   const handleSearchChange = (e) => {
     const query = e.target.value;
+
     setSearchQuery(query);
     if (query.length > 0) {
       const filtered = cities.filter((city) =>
         city.toLowerCase().includes(query.toLowerCase()),
       );
+
       setFilteredCities(filtered);
     } else {
       setFilteredCities(cities);
@@ -79,7 +82,10 @@ const CityDropdown = ({ onSelectCity, selectedCountry }) => {
 
         {/* Випадаючий список */}
         {isOpen && (
-          <ul className='absolute z-50 bg-white w-full max-h-48 overflow-y-auto border rounded-xl shadow-md'>
+          <ul
+            className='absolute z-50 bg-white w-full max-h-48 overflow-y-auto
+          border rounded-xl shadow-md'
+          >
             {filteredCities.length > 0 ? (
               filteredCities.map((city, index) => (
                 <li

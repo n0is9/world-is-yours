@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { $api } from '../../api/api.js';
-
+import { useEffect, useState } from 'react';
 import { motion as m } from 'framer-motion';
+
+import { $api } from '@api/api';
 
 const History = () => {
   const [orders, setOrders] = useState([]);
@@ -154,6 +154,7 @@ const History = () => {
   const getOrder = async () => {
     try {
       const response = await $api.get('/api/orders/');
+
       setOrders(response.data);
       console.log(response.data);
     } catch (error) {
@@ -168,7 +169,9 @@ const History = () => {
   const [visibleImages, setVisibleImages] = useState(() =>
     orders.length > 0
       ? orders.reduce((acc, order) => {
+          // eslint-disable-next-line no-param-reassign
           acc[order.id] = 2; // Спочатку для кожного замовлення показується 2 зображення
+
           return acc;
         }, {})
       : {},
@@ -191,7 +194,10 @@ const History = () => {
         Історія замовлень
       </div>
       {orders.length === 0 ? (
-        <div className='Order1 w-[1027px] h-[140px] p-5 rounded-[15px] border border-blue flex justify-center items-center'>
+        <div
+          className='Order1 w-[1027px] h-[140px] p-5 rounded-[15px] border
+        border-blue flex justify-center items-center'
+        >
           <p className='font-raleway text-[18px] font-semibold text-center text-gray'>
             Замовлень ще немає <br />
             Будь ласка зробіть замовлення!
@@ -210,7 +216,8 @@ const History = () => {
             return (
               <div
                 key={order.id}
-                className='Order1 w-[1027px] h-[140px] p-5 rounded-[15px] mb-4 justify-between items-start inline-flex'
+                className='Order1 w-[1027px] h-[140px] p-5 rounded-[15px]
+                mb-4 justify-between items-start inline-flex'
                 style={{
                   border: `2px solid ${
                     order.status === 1
@@ -224,7 +231,8 @@ const History = () => {
                 }}
               >
                 <div
-                  className='InfoContainer w-[454px] self-stretch justify-between items-start gap-5 flex flex-col'
+                  className='InfoContainer w-[454px] self-stretch justify-between
+                  items-start gap-5 flex flex-col'
                   style={{
                     borderLeft: `3px solid ${
                       order.status === 1
@@ -260,7 +268,10 @@ const History = () => {
                           : 'Невідомий статус'}
                   </div>
 
-                  <div className="flex flex-col justify-start items-start text-zinc-500 text-lg font-medium font-['Raleway']">
+                  <div
+                    className="flex flex-col justify-start items-start text-zinc-500
+                  text-lg font-medium font-['Raleway']"
+                  >
                     <div>Замовлення № {order.id}</div>
                     <div>
                       {new Date(order.created).toLocaleDateString('uk-UA', {
@@ -274,7 +285,10 @@ const History = () => {
                   </div>
                 </div>
 
-                <div className='PriceContainer w-[100px] flex-col justify-start items-start gap-2.5 inline-flex'>
+                <div
+                  className='PriceContainer w-[100px] flex-col justify-start
+                items-start gap-2.5 inline-flex'
+                >
                   <div className="text-black text-lg font-medium font-['Raleway']">
                     Всього
                   </div>
@@ -284,7 +298,10 @@ const History = () => {
                 </div>
 
                 {hasPurchasedItems && (
-                  <div className='ImageContainer h-[100px] w-[320px] justify-start items-start gap-2.5 flex'>
+                  <div
+                    className='ImageContainer h-[100px] w-[320px] justify-start
+                  items-start gap-2.5 flex'
+                  >
                     {/* Оновлений код для відображення лише наступних 2 зображень */}
                     {order.basket_history.purchased_items
                       .slice(
@@ -305,7 +322,8 @@ const History = () => {
                       visibleImages[order.id] && (
                       <button
                         onClick={() => showMoreImages(order.id)}
-                        className='show-more-button text-grey font-bold w-[100px] h-[100px] border-2 border-grey rounded-md cursor-pointer'
+                        className='show-more-button text-grey font-bold w-[100px] h-[100px]
+                        border-2 border-grey rounded-md cursor-pointer'
                       >
                         +2
                       </button>

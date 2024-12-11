@@ -1,5 +1,4 @@
 import { initializeApp } from 'firebase/app';
-// import { getAnalytics } from 'firebase/analytics';
 
 // Конфігурація Firebase через змінні оточення
 const firebaseConfig = {
@@ -17,5 +16,3 @@ const app = initializeApp(firebaseConfig);
 
 // export { app, analytics };
 export { app };
-
-

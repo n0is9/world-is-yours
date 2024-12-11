@@ -1,22 +1,24 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import globalStyle from './globalStyles.module.css';
-
-import { $api } from '../../api/api';
+import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setCategory, setSubcategory } from '../../redux/categoryParamsSlice';
-
 import { motion as m } from 'framer-motion';
+
+import { $api } from '@api/api';
+
+import { setCategory, setSubcategory } from '@redux/categoryParamsSlice';
+
+import globalStyle from './globalStyles.module.css';
 
 function Categories({ onClose }) {
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
   const dispatch = useDispatch();
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const fetchCategories = async () => {
     try {
       const response = await $api.get('/api/products/category/');
+
       setCategories(response.data);
     } catch (error) {
       console.log(error);
@@ -26,8 +28,10 @@ function Categories({ onClose }) {
   const fetchSubCategories = async () => {
     const response = await $api.get('/api/products/subcategory/');
     const filteredProducts = response.data;
+
     setSubCategories(filteredProducts);
   };
+
   console.log(subCategories);
   useEffect(() => {
     fetchCategories();
@@ -56,6 +60,7 @@ function Categories({ onClose }) {
       onClose();
     }
   };
+
   useEffect(() => {
     document.addEventListener('click', handleDocumentClick);
 

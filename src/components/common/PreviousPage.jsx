@@ -1,10 +1,11 @@
-import React from 'react';
-import ArrowLeft from '../../assets/icons/arrow-up.svg';
 import { NavLink, useNavigate } from 'react-router-dom';
+
+import ArrowLeft from '@assets/icons/arrow-up.svg';
 
 const PreviousPage = (props) => {
   const navigate = useNavigate();
   const previousPath = navigate(-1);
+
   return (
     <NavLink to={previousPath}>
       <div className='flex flex-row mt-10 ml-10 gap-4'>

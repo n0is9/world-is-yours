@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import HeartIcon from '../../assets/icons/icon-heart.svg';
-import HeartIconRed from '../../assets/icons/icon-heart-red.svg';
-import Button from './Button';
-import Cart from '../../assets/icons/dark/icon-cart-dark.svg';
-import CartFull from '../../assets/icons/dark/icon-cart-dark-full.svg';
-import { $api } from '../../api/api';
-import { useDispatch, useSelector } from 'react-redux';
-import { addItem, removeItem } from '../../redux/wishlistSlice';
-import { addItemCart, removeItemCart } from '../../redux/cartSlice';
+import { useEffect, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-
 import { motion as m } from 'framer-motion';
+
+import { addItem, removeItem } from '@redux/wishlistSlice';
+import { addItemCart, removeItemCart } from '@redux/cartSlice';
+
+import { $api } from '@api/api';
+
+import Button from './Button';
+
+import HeartIcon from '@assets/icons/icon-heart.svg';
+import HeartIconRed from '@assets/icons/icon-heart-red.svg';
+import Cart from '@assets/icons/dark/icon-cart-dark.svg';
+import CartFull from '@assets/icons/dark/icon-cart-dark-full.svg';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const Card = ({ data }) => {
   const dispatch = useDispatch();
@@ -24,6 +27,7 @@ const Card = ({ data }) => {
   const wishlist = useSelector((state) => state.wishlist.items);
 
   const cart = useSelector((state) => state.cart.items);
+
   console.log('cart', cart);
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 
@@ -48,6 +52,7 @@ const Card = ({ data }) => {
         position: 'top-center',
         autoClose: 3000,
       });
+
       return;
     }
 
@@ -70,17 +75,20 @@ const Card = ({ data }) => {
         position: 'top-center',
         autoClose: 3000,
       });
+
       return;
     }
 
     try {
       if (!isCart) {
         const response = await $api.post(`/api/baskets/`, { product: data.id });
+
         dispatch(addItemCart(response.data));
 
         console.log(response.data);
       } else {
         const response = await $api.delete(`/api/baskets/${isCart.id}/`);
+
         dispatch(removeItemCart(data.id));
 
         console.log('після видалення', response);
@@ -89,6 +97,7 @@ const Card = ({ data }) => {
       console.log(error);
     }
   };
+
   return (
     <m.div
       initial={{ opacity: 0.5 }}

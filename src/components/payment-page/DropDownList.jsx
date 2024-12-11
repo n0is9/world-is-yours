@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
-import ArrowDown from "../../assets/icons/arrow-up.svg";
+import { useState, useEffect, useRef } from 'react';
 
-const DropDownList = ({ options, label}) => {
+import ArrowDown from '@assets/icons/arrow-up.svg';
+
+const DropDownList = ({ options, label }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const dropdownRef = useRef(null);
@@ -22,9 +23,10 @@ const DropDownList = ({ options, label}) => {
   };
 
   useEffect(() => {
-    document.addEventListener("click", handleClickOutside);
+    document.addEventListener('click', handleClickOutside);
+
     return () => {
-      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener('click', handleClickOutside);
     };
   }, []);
 
@@ -36,26 +38,25 @@ const DropDownList = ({ options, label}) => {
     <div
       ref={dropdownRef}
       className={`select  ${
-        isOpen ? "active " : ""
+        isOpen ? 'active ' : ''
       } font-light border rounded-xl max-w-md p-3 border-black mb-4`}
     >
       <div
-        className="select-styled font-light flex flex-row justify-between max-w-md gap-4"
+        className='select-styled font-light flex flex-row justify-between max-w-md gap-4'
         onClick={toggleSelect}
       >
         {selectedOption ? selectedOption.label : label}
         <img
           src={ArrowDown}
-          alt="arrow down"
+          alt='arrow down'
           className={`font-light w-4 mr-2 transform cursor-pointer ${
-            isOpen ? "rotate-0" : "rotate-180"
+            isOpen ? 'rotate-0' : 'rotate-180'
           } transition-transform`}
-          
         />
       </div>
       <ul
-        className="select-options font-light z-50 mt-4 bg-white " //absolute
-        style={{ display: isOpen ? "block" : "none" }}
+        className='select-options font-light z-50 mt-4 bg-white ' //absolute
+        style={{ display: isOpen ? 'block' : 'none' }}
       >
         {options.map((option) => (
           <li
@@ -63,8 +64,9 @@ const DropDownList = ({ options, label}) => {
             onClick={() => handleSelect(option)}
             className={
               selectedOption === option
-                ? "is-selected border p-2 rounded-xl mt-2 w-1/2 border-black cursor-pointer border-bold"
-                : "border p-2 rounded-xl mt-2 border-black cursor-pointer"
+                ? 'is-selected border p-2 rounded-xl mt-2 w-1/2 border-black' +
+                  'cursor-pointer border-bold'
+                : 'border p-2 rounded-xl mt-2 border-black cursor-pointer'
             }
           >
             {option.label}

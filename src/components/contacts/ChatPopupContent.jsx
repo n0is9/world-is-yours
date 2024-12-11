@@ -1,9 +1,11 @@
-import React from 'react';
 import { useState } from 'react';
+
+import Input from '@common/Input';
+import Button from '@common/Button';
+
+import attentionIcon from '@assets/icons/icon-attention.svg';
+
 import styles from '../main-page/main.module.css';
-import Input from '../common/Input';
-import Button from '../common/Button';
-import attentionIcon from '../../assets/icons/icon-attention.svg';
 
 const ChatPopupContact = () => {
   const [name, setName] = useState('');
@@ -24,6 +26,7 @@ const ChatPopupContact = () => {
 
   const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     return regex.test(email);
   };
 
@@ -82,11 +85,13 @@ const ChatPopupContact = () => {
       setNameError(
         'Name and surname should be 3-16 characters long and should not contain numbers',
       );
+
       return false;
     }
 
     if (!validateEmail(email)) {
       setEmailError('Invalid email address');
+
       return false;
     }
 
@@ -94,11 +99,13 @@ const ChatPopupContact = () => {
       setThemeError(
         'Theme should be 6-20 characters long and should not contain numbers',
       );
+
       return false;
     }
 
     if (textArea.length < 10) {
       setTextAreaError('Text should be at least 10 characters long');
+
       return false;
     }
   };
@@ -113,7 +120,7 @@ const ChatPopupContact = () => {
           htmlFor='name'
           className='mb-2 ml-1 text-textLight font-medium font-raleway text-sm'
         >
-          Ім'я та прізвище
+          Ім&#39;я та прізвище
         </label>
         <div className={styles.inputContainer}>
           {nameError && (

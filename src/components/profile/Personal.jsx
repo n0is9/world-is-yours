@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-import { updateUser } from '../../redux/userSlice';
-import { $api } from '../../api/api.js';
-
-import Button from '../common/Button';
-import eyeOff from '../../assets/icons/icon-Eye-off.svg';
-import eyeOn from '../../assets/icons/icon-openEye.svg';
-
 import { motion as m } from 'framer-motion';
+
+import { updateUser } from '@redux/userSlice';
+import { $api } from '@api/api.js';
+
+import Button from '@common/Button';
+
+import eyeOff from '@assets/icons/icon-Eye-off.svg';
+import eyeOn from '@assets/icons/icon-openEye.svg';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const Personal = () => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
@@ -20,6 +21,7 @@ const Personal = () => {
 
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
+
   console.log('userState', user);
   const validationSchema = Yup.object({
     first_name: Yup.string()
@@ -40,13 +42,17 @@ const Personal = () => {
       .oneOf([Yup.ref('password'), null], 'Passwords must match')
       .nullable(),
   });
+
   return (
     <m.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
-      <h3 className='text-blue font-raleway lining-nums proportional-nums  font-semibold mb-10 text-2xl'>
+      <h3
+        className='text-blue font-raleway lining-nums proportional-nums
+      font-semibold mb-10 text-2xl'
+      >
         Контактна інформація
       </h3>
       <div className='flex justify-start gap-x-32   flex-row xxl:flex-row'>
@@ -126,7 +132,8 @@ const Personal = () => {
                           name='first_name'
                           type='text'
                           placeholder="введіть своє ім'я"
-                          className='flex mt-2 w-full p-3 items-center rounded-xl border border-black focus:border-blue-500 outline-none'
+                          className='flex mt-2 w-full p-3 items-center rounded-xl border
+                          border-black focus:border-blue-500 outline-none'
                         />
                       </label>
                       <ErrorMessage
@@ -146,7 +153,8 @@ const Personal = () => {
                           name='last_name'
                           type='text'
                           placeholder='Введіть своє прізвище'
-                          className='flex mt-2 w-full p-3 items-center rounded-xl border border-black focus:border-blue-500 outline-none'
+                          className='flex mt-2 w-full p-3 items-center rounded-xl
+                          border border-black focus:border-blue-500 outline-none'
                         />
                       </label>
                       <ErrorMessage
@@ -169,7 +177,8 @@ const Personal = () => {
                         id='phone'
                         name='phone'
                         type='text'
-                        className='w-[360px] px-4 py-3 bg-white rounded-[10px] border border-black text-zinc-500 text-base font-light placeholder-zinc-500'
+                        className='w-[360px] px-4 py-3 bg-white rounded-[10px] border
+                        border-black text-zinc-500 text-base font-light placeholder-zinc-500'
                         placeholder='(+380) XX XXX XX XX'
                       />
                     </div>
@@ -191,7 +200,8 @@ const Personal = () => {
                         name='email'
                         type='text'
                         placeholder='Введіть адресу електронної пошти'
-                        className='flex mt-2 w-5/5 p-3 items-center self-stretch rounded-xl border border-black focus:border-blue-500 outline-none'
+                        className='flex mt-2 w-5/5 p-3 items-center self-stretch rounded-xl
+                        border border-black focus:border-blue-500 outline-none'
                       />
                     </label>
                     <ErrorMessage
@@ -212,7 +222,8 @@ const Personal = () => {
                         name='date_of_birth'
                         type='text'
                         placeholder='yyyy-mm-dd'
-                        className='flex mt-2 w-5/5 p-3 items-center self-stretch rounded-xl border border-black focus:border-blue-500 outline-none'
+                        className='flex mt-2 w-5/5 p-3 items-center self-stretch rounded-xl
+                        border border-black focus:border-blue-500 outline-none'
                       />
                     </label>
 
@@ -225,7 +236,8 @@ const Personal = () => {
 
                   <Button
                     type='submit'
-                    classNameBtn='w-full mt-7 bg-gray-dark p-4 border rounded-xl font-bold text-18px text-white duration-300 hover:bg-transparent hover:text-black'
+                    classNameBtn='w-full mt-7 bg-gray-dark p-4 border rounded-xl font-bold
+                    text-18px text-white duration-300 hover:bg-transparent hover:text-black'
                   >
                     Зберегти
                   </Button>
@@ -251,7 +263,8 @@ const Personal = () => {
                           name='password'
                           autoComplete='new-password'
                           type={isPasswordVisible ? 'text' : 'password'}
-                          className='flex-1 p-3 rounded-xl border border-black focus:border-blue-500 outline-none'
+                          className='flex-1 p-3 rounded-xl border border-black
+                          focus:border-blue-500 outline-none'
                         />
                         <div
                           onClick={() => setPasswordVisible(!isPasswordVisible)}
@@ -288,7 +301,8 @@ const Personal = () => {
                           name='confirmPassword'
                           autoComplete='new-password'
                           type={isPasswordConfirmVisible ? 'text' : 'password'}
-                          className='flex-1 p-3 rounded-xl border border-black focus:border-blue-500 outline-none'
+                          className='flex-1 p-3 rounded-xl border border-black
+                          focus:border-blue-500 outline-none'
                         />
                         <div
                           onClick={() =>
