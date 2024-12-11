@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { motion } from 'framer-motion';
 
 import { $api } from '@api/api';
+
 import {
   removeItemCart,
   clearCart,
@@ -10,8 +12,9 @@ import {
 } from '@redux/cartSlice';
 
 import CartItem from '@components/cart/CartItem';
-import Button from '@common/Button';
-import Container from '@common/Container';
+import Button from '@components/common/Button';
+import Container from '@components/common/container';
+import SkeletonCart from '@components/common/SkeletonCart.jsx';
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -27,9 +30,11 @@ const Cart = () => {
   const [total, setTotal] = useState(0);
   const [upd, setUpd] = useState(0);
   const [basket, setBasket] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   const fetchBasket = async () => {
     try {
+      setLoading(true);
       const basketResponse = await $api.get(`/api/baskets/`);
       const basketItems = basketResponse.data;
 
@@ -57,6 +62,8 @@ const Cart = () => {
       setTotal(newTotal.toFixed(2));
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -127,7 +134,49 @@ const Cart = () => {
     }
   };
 
-  if (cart.length === 0) {
+  useEffect(() => {
+    console.log('Loading state:', loading);
+  }, [loading]);
+
+  if (loading && cartItems.length > 0) {
+    return (
+      <Container>
+        <motion.div
+          initial={{ opacity: 0.2 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 2, repeat: Infinity, repeatType: 'reverse' }}
+        >
+          <div className='w-8/12 mt-12 mb-14 ml-4'>
+            <div className='flex justify-center mb-8'>
+              <p className='font-raleway font-semibold text-40px'>Кошик</p>
+            </div>
+            <div className='flex flex-col gap-4'>
+              {Array.from({ length: cartItems.length }).map((_, idx) => (
+                <SkeletonCart key={idx} />
+              ))}
+            </div>
+          </div>
+          <div className='w-10/12'>
+            <hr className='text-gray' />
+
+            <div className='flex flex-row text-center items-center justify-end my-10'>
+              <p className='w-full items-center font-semibold text-xl font-sans'>
+                Всього:
+              </p>
+
+              <Button classNameBtn='w-22 bg-grayLight p-4 border rounded-xl font-bold text-18px text-white duration-300 '>
+                Оформити замовлення
+              </Button>
+            </div>
+
+            <hr className='mb-10 text-gray' />
+          </div>
+        </motion.div>
+      </Container>
+    );
+  }
+
+  if (!loading && cart.length === 0) {
     return (
       <div className='w-full flex justify-center items-center flex-col mt-12 mb-60'>
         <p className='font-raleway font-semibold text-40px mb-20'>Кошик</p>
