@@ -21,10 +21,10 @@ const SkeletonCart = ({ className }) => {
         </div>
         <div className='flex flex-col justify-between'>
           <div className=''>
-            <p className='text-gray mt-3 font-normal text-xl'>Ціна:</p>
+            <p className='text-gray mt-3 font-normal text-xl'>Ціна: гр.</p>
             <p className='text-gray mt-3 font-normal text-xl'>Знижка:</p>
             <p className='text-gray mt-3 font-semibold text-grayDark text-xl font-sans'>
-              Всього:
+              Всього: гр.
             </p>
           </div>
         </div>
