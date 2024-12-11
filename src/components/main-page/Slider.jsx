@@ -1,8 +1,12 @@
-import React from "react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import styles from "./main.module.css";
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
+import SlideCardLayout from './SlideCardLayout.jsx';
+
+import bg1 from '@assets/img/slider-first.png';
+import bg2 from '@assets/img/slider-second.png';
+import bg3 from '@assets/img/slider-third.png';
 
 const SimpleSlider = () => {
   const settings = {
@@ -16,35 +20,40 @@ const SimpleSlider = () => {
   };
 
   return (
-    <Slider className={styles.slider} {...settings} >
-      <div className={styles.backImgFirst} id="sectionFav">
-        <div className={styles.cardS}>
-          <p className={styles.textS}>СЕЗОННИЙ РОЗПРОДАЖ</p>
-        </div>
-        <h2 className={styles.titleS}>Зимовий розпродаж -30%</h2>
-        <p className={styles.subtitleS}>
-          Заощаджуйте на обраному зимовому одязі, <br/> спорядженні та аксесуарах.{" "}
-          <br /> До 20.02.2024
-        </p>
-      </div>
-      <div className={styles.backImgSecond}>
-        <div className={styles.cardSCenter}>
-          <p className={styles.textS}>БЕЗКОШТОВНА ДОСТАВКА</p>
-        </div>
-        <h2 className={styles.titleSCenter}>Безкоштовна доставка для замовлень від 2000 грн</h2>
-        <p className={styles.subtitleS}>
-        Подорожуйте з комфортом, не переймайтеся вартістю доставки!{" "}
-        </p>
-      </div>
-      <div className={styles.backImgThird}>
-      <div className={styles.cardS}>
-          <p className={styles.textS}>ЗНИЖКИ ДО -15%</p>
-        </div>
-        <h2 className={styles.titleSBlack}>Знижка на все для намету!</h2>
-        <p className={styles.subtitleSBlack}>
-        Час вирушити у дику природу! Купуйте товари для кемпінгу та отримайте знижку 15%. Зробіть своє пригодницьке відкриття комфортним та незабутнім.
-        </p>
-      </div>
+    <Slider className='mx-[3%] my-[4%]' {...settings}>
+      <SlideCardLayout
+        backGround={bg1}
+        plateText='Сезонний роспродаж'
+        textPosition='left'
+        title='Зимовий розпродаж -30%'
+        textColor='#ffffff'
+        isSectionFav={true}
+      >
+        Заощаджуйте на обраному зимовому одязі, <br /> спорядженні та
+        аксесуарах. <br /> До 20.02.2025
+      </SlideCardLayout>
+      <SlideCardLayout
+        backGround={bg2}
+        plateText='Безкоштовна доставка'
+        textPosition='center'
+        title='Безкоштовна доставка для замовлень від 2000 грн'
+        textColor='#ffffff'
+      >
+        Подорожуйте з комфортом, не переймайтеся вартістю доставки!
+      </SlideCardLayout>
+
+      <SlideCardLayout
+        backGround={bg3}
+        plateText='Знижки до -15%'
+        textPosition='left'
+        title='Знижка на все для намету!'
+        textColor='#202020'
+        isSectionFav={true}
+      >
+        Час вирушити у дику природу! Купуйте товари для кемпінгу та отримайте
+        знижку 15%. Зробіть своє пригодницьке відкриття комфортним та
+        незабутнім.
+      </SlideCardLayout>
     </Slider>
   );
 };

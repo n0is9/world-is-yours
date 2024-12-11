@@ -1,9 +1,17 @@
-import React, { useState } from 'react';
-import Input from '../components/common/Input';
-import Button from '../components/common/Button';
-import styles from '../components/registration-popup/signup.module.css';
-import openEye from '../assets/icons/icon-openEye.svg';
-import closeEye from '../assets/icons/icon-Eye-off.svg';
+import { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+
+import { $api } from '@api/api.js';
+
+import Input from '@common/Input';
+import Button from '@common/Button';
+
+import openEye from '@assets/icons/icon-openEye.svg';
+import closeEye from '@assets/icons/icon-Eye-off.svg';
+
+import styles from '@components/registration-popup/signup.module.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PasswordRecovery = () => {
   const [userPassword, setUserPassword] = useState('');
@@ -13,13 +21,16 @@ const PasswordRecovery = () => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
+  const { email, code } = useParams();
+  const navigate = useNavigate();
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
+
     setUserPassword(newPassword);
 
     // Валідація пароля
-    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$/.test(newPassword)) {
-      setPasswordError('8-16, [a-z], [A-Z]');
+    if (!/^.{8,}$/.test(newPassword)) {
+      setPasswordError('Мінімум 8 символів');
     } else {
       setPasswordError('');
     }
@@ -27,6 +38,7 @@ const PasswordRecovery = () => {
 
   const handleConfirmPasswordChange = (e) => {
     const newPassword = e.target.value;
+
     setConfirmPassword(newPassword);
 
     // Валідація підтвердження пароля
@@ -45,19 +57,47 @@ const PasswordRecovery = () => {
     setConfirmPasswordVisible(!isConfirmPasswordVisible);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log('email', email);
+    console.log('code', code);
+    console.log('userPassword', userPassword);
     // Перевірка наявності помилок перед відправкою
     if (passwordError || confirmPasswordError) {
       console.log('Будь ласка, виправте помилки в формі.');
+
       return;
     }
 
-    // дії при успішній відправці форми
-    console.log('Пароль успішно змінено');
+    console.log(email, userPassword, code);
+    try {
+      const response = await $api.post('/api/set-password/', {
+        password: userPassword,
+        email: email,
+        code: code,
+      });
+
+      console.log(response.data);
+
+      toast.info('Password successfully updated', {
+        position: 'top-center',
+        autoClose: 3000,
+      });
+      navigate('/');
+    } catch (error) {
+      console.log(error, 'error');
+      const message =
+        error.response?.data?.message || 'Error resetting password';
+
+      toast.info(message, {
+        position: 'top-center',
+        autoClose: 3000,
+      });
+    }
   };
 
   return (
-    <div className={styles.wrap}>
+    <form onSubmit={handleSubmit} className={styles.wrap}>
       <h1 className={styles.title}>Відновлення пароля</h1>
       <div className={styles.container}>
         <label className={styles.label} htmlFor='password'>
@@ -65,11 +105,27 @@ const PasswordRecovery = () => {
         </label>
         <div className={styles.passwordContainer}>
           <div className={styles.inputContainer}>
-            <Input classNameInput={styles.input} typeInput={isPasswordVisible ? 'text' : 'password'} id='password' nameInput='password' value={userPassword} placeholderInput='Придумайте пароль' onChangeInput={handlePasswordChange} required />
-            {passwordError && <div className={styles.error}>{passwordError}</div>}
+            <Input
+              classNameInput={styles.input}
+              typeInput={isPasswordVisible ? 'text' : 'password'}
+              id='password'
+              nameInput='password'
+              value={userPassword}
+              placeholderInput='Придумайте пароль'
+              onChangeInput={handlePasswordChange}
+              required
+            />
+            {passwordError && (
+              <div className={styles.error}>{passwordError}</div>
+            )}
           </div>
           <div className={styles.eyesIcon} onClick={togglePasswordVisibility}>
-            <img className='w-24px h-24px' src={isPasswordVisible ? closeEye : openEye} alt='eyeIcon' />
+            <img
+              className='w-24px h-24px'
+              src={isPasswordVisible ? openEye : closeEye}
+              alt={isPasswordVisible ? 'Сховати пароль' : 'Показати пароль'}
+              tabIndex='0'
+            />
           </div>
         </div>
       </div>
@@ -79,20 +135,42 @@ const PasswordRecovery = () => {
         </label>
         <div className={styles.passwordContainer}>
           <div className={styles.inputContainer}>
-            <Input classNameInput={styles.input} typeInput={isConfirmPasswordVisible ? 'text' : 'password'} id='confirmPassword' nameInput='confirmPassword' value={confirmPassword} placeholderInput='Введіть пароль ще раз' onChangeInput={handleConfirmPasswordChange} required />
-            {confirmPasswordError && <div className={styles.error}>{confirmPasswordError}</div>}
+            <Input
+              classNameInput={styles.input}
+              typeInput={isConfirmPasswordVisible ? 'text' : 'password'}
+              id='confirmPassword'
+              nameInput='confirmPassword'
+              value={confirmPassword}
+              placeholderInput='Введіть пароль ще раз'
+              onChangeInput={handleConfirmPasswordChange}
+              required
+            />
+            {confirmPasswordError && (
+              <div className={styles.error}>{confirmPasswordError}</div>
+            )}
           </div>
-          <div className={styles.eyesIcon} onClick={toggleConfirmPasswordVisibility}>
-            <img className='w-24px h-24px' src={isConfirmPasswordVisible ? closeEye : openEye} alt='eyeIcon' />
+          <div
+            className={styles.eyesIcon}
+            onClick={toggleConfirmPasswordVisibility}
+          >
+            <img
+              className='w-24px h-24px'
+              src={isConfirmPasswordVisible ? openEye : closeEye}
+              alt={
+                isConfirmPasswordVisible ? 'Сховати пароль' : 'Показати пароль'
+              }
+              tabIndex='0'
+            />
           </div>
         </div>
       </div>
       <div className={styles.container}>
-        <Button classNameBtn={styles.btn} type='button' onClick={handleSubmit}>
+        <Button classNameBtn={styles.btn} type='submit' onClick={handleSubmit}>
           Змінити пароль
         </Button>
       </div>
-    </div>
+      <ToastContainer />
+    </form>
   );
 };
 

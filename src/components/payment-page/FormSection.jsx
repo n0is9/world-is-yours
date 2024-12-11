@@ -1,5 +1,4 @@
-import React from "react";
-import Input from "../common/Input";
+import Input from '@common/Input';
 
 const FormSection = ({
   label,
@@ -7,25 +6,26 @@ const FormSection = ({
   onChange,
   error,
   placeholder,
-  type = "text",
+  type = 'text',
 }) => {
   return (
-    <div className="flex flex-col">
+    <div className='flex flex-col'>
       <label
         htmlFor={label.toLowerCase()}
-        className="mb-1 ml-1 text-textLight font-medium font-raleway text-sm"
+        className='mb-1 ml-1 text-textLight font-medium font-raleway text-sm'
       >
         {label}
       </label>
       <Input
-        classNameInput="font-light text-base text-gray border rounded-xl p-3 border-black font-raleway"
+        classNameInput='font-light text-base text-gray border
+        rounded-xl p-3 border-black font-raleway'
         typeInput={type}
         placeholderInput={placeholder}
         value={value}
         onChangeInput={(e) => onChange(e.target.value)}
-        className="font-light"
+        className='font-light'
       />
-      {error && <p className="text-red-400 text-xs ml-1">{error}</p>}
+      {error && <p className='text-red-400 text-xs ml-1'>{error}</p>}
     </div>
   );
 };
