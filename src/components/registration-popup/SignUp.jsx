@@ -1,20 +1,24 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import styles from './signup.module.css';
-import Input from '../common/Input';
-import Button from '../common/Button';
-import Facebook from '../../assets/icons/media-icons/facebook-color.svg';
-import Google from '../../assets/icons/media-icons/google-color.svg';
-import Apple from '../../assets/icons/media-icons/apple-color.svg';
+
+import { $api } from '@api/api';
+import { login, updateUser } from '@redux/userSlice';
+import useTranslation from '@locale/locales';
 import { facebookProvider, googleProvider } from './firebase/provider';
 import socialMediaAuth from './firebase/auth';
-import closeIcon from '../../assets/icons/icon-close.svg';
-import attentionIcon from '../../assets/icons/icon-attention.svg';
-import openEye from '../../assets/icons/icon-openEye.svg';
-import closeEye from '../../assets/icons/icon-Eye-off.svg';
-import useTranslation from '../../locale/locales';
-import { $api } from '../../api/api';
-import { login, updateUser } from '../../redux/userSlice';
+
+import Input from '@common/Input';
+import Button from '@common/Button';
+
+import closeIcon from '@assets/icons/icon-close.svg';
+import attentionIcon from '@assets/icons/icon-attention.svg';
+import openEye from '@assets/icons/icon-openEye.svg';
+import closeEye from '@assets/icons/icon-Eye-off.svg';
+import Facebook from '@assets/icons/media-icons/facebook-color.svg';
+import Google from '@assets/icons/media-icons/google-color.svg';
+import Apple from '@assets/icons/media-icons/apple-color.svg';
+
+import styles from './signup.module.css';
 
 const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
   const dispatch = useDispatch();
@@ -59,6 +63,7 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
 
   const setCookie = (name, object, daysToExpire) => {
     const expires = new Date();
+
     expires.setTime(expires.getTime() + daysToExpire * 24 * 60 * 60 * 1000);
     document.cookie = `${name}=${encodeURIComponent(JSON.stringify(object))};expires=${expires.toUTCString()};path=/`;
   };
@@ -74,6 +79,7 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
   const [passwordError, setPasswordError] = useState('');
 
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+
   console.log(isAuthenticated);
 
   const [isPasswordVisible, setPasswordVisible] = useState(false);
@@ -84,17 +90,21 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
     if (isValidationOnRef.current) {
       if (!name.trim()) {
         setNameError("Ім'я обов'язкове");
+
         return false;
       } else if (/^\s/.test(name)) {
         setNameError("Ім'я  не може починатися з пробілу");
       } else if (name.length < 2 || name.length > 32) {
         setNameError("Ім'я повинно бути від 2 до 32 символів");
+
         return false;
       } else if (!/^[a-zA-Z' -]+$/.test(name)) {
         setNameError("Ім'я містить не припустимі символи");
+
         return false;
       } else {
         setNameError(null);
+
         return true;
       }
     }
@@ -104,18 +114,23 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
     if (isValidationOnRef.current) {
       if (!surname.trim()) {
         setSurnameError("Прізвище обов'язкове");
+
         return false;
       } else if (/^\s/.test(surname)) {
         setSurnameError('Прізвище не може починатися з пробілу');
+
         return false;
       } else if (surname.length < 2 || surname.length > 32) {
         setSurnameError('Прізвище повинно бути від 2 до 32 символів');
+
         return false;
       } else if (!/^[a-zA-Z' -]+$/.test(surname)) {
         setSurnameError('Прізвище містить не припустимі символи');
+
         return false;
       } else {
         setSurnameError(null);
+
         return true;
       }
     }
@@ -125,27 +140,35 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
     if (isValidationOnRef.current) {
       if (!email.trim()) {
         setEmailError("Емейл обов'язковий");
+
         return false;
       } else if (/^\s/.test(email)) {
         setEmailError('Емейл не може починатися з пробілу');
+
         return false;
       } else if (email.length < 5 || email.length > 32) {
         setEmailError('Не вірно введений емейл');
+
         return false;
       } else if (!/@/.test(email) || !/\./.test(email)) {
         setEmailError('Не вірно введений емейл');
+
         return false;
       } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+$/.test(email)) {
         setEmailError('Не вірно введений емейл');
+
         return false;
       } else if (!/[a-zA-Z]{2,}$/.test(email.split('@')[1])) {
         setEmailError('Мінімум дві літери після крапки');
+
         return false;
       } else if (/@\./.test(email)) {
         setEmailError('Символ "." не може йти одразу після символу "@"');
+
         return false;
       } else {
         setEmailError(null);
+
         return true;
       }
     }
@@ -155,18 +178,23 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
     if (isValidationOnRef.current) {
       if (!password.trim()) {
         setPasswordError("Пароль обов'язковий");
+
         return false;
       } else if (/^\s/.test(password)) {
         setPasswordError('Пароль не може починатися з пробілу');
+
         return false;
       } else if (password.length < 6 || password.length > 32) {
         setPasswordError('Пароль повиннен бути від 6 до 32 символів');
+
         return false;
       } else if (!/^[a-zA-Z0-9@#$%^&_+]+$/.test(password)) {
         setPasswordError('Пароль містить не припустимі символи');
+
         return false;
       } else {
         setPasswordError(null);
+
         return true;
       }
     }

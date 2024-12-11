@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 // Початковий стан фільтрів
 const initialState = {
@@ -6,11 +6,11 @@ const initialState = {
   category: null,
   subcategory: null,
   is_on_sale: false,
-  spec: "",
+  spec: '',
 };
 
 export const filtersSlice = createSlice({
-  name: "filters",
+  name: 'filters',
   initialState,
   reducers: {
     setPrice: (state, action) => {
@@ -33,13 +33,7 @@ export const filtersSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const {
-  setPrice,
-  setCategory,
-  setSubcategory,
-  setIsOnSale,
-  setSpec,
-  resetFilters,
-} = filtersSlice.actions;
+export const { setPrice, setCategory, setSubcategory, setIsOnSale, setSpec, resetFilters } =
+  filtersSlice.actions;
 
 export default filtersSlice.reducer;

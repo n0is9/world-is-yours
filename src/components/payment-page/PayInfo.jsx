@@ -1,21 +1,23 @@
-import React from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { $api } from '../../api/api';
 
-import Button from '../common/Button';
+import { $api } from '@api/api';
+
+import Button from '@common/Button';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const PayInfo = () => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   // Отримуємо дані користувача зі стору
   const user = useSelector((state) => state.user.user);
-  console.log('user', user);
+
   const handleOptionChange = (value) => {
     setSelectedOption(value);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('submit');
@@ -67,6 +69,7 @@ const PayInfo = () => {
       {/* ДЛЯ НОВОГО ПОКУПЦЯ */}
 
       <div className='flex flex-col'>
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label className='text-textLight font-medium font-raleway text-sm mb-2'>
           Варіант оплати
         </label>
@@ -80,7 +83,7 @@ const PayInfo = () => {
               className='h-4 w-4'
               onChange={() => handleOptionChange('opt1')}
             />
-            <label for='opt1' className='text-base'>
+            <label htmlFor='opt1' className='text-base'>
               Готівка
             </label>
           </div>
@@ -93,7 +96,7 @@ const PayInfo = () => {
               className='h-4 w-4'
               onChange={() => handleOptionChange('opt1')}
             />
-            <label for='opt2' className='text-base'>
+            <label htmlFor='opt2' className='text-base'>
               Оплата банківською картою
             </label>
           </div>
@@ -106,13 +109,15 @@ const PayInfo = () => {
               className='h-4 w-4'
               onChange={() => handleOptionChange('opt1')}
             />
-            <label for='opt3' className='text-base'>
+            <label htmlFor='opt3' className='text-base'>
               Google Pay
             </label>
           </div>
           <Button
             type='submit' // Додано type='submit'
-            classNameBtn='max-w-md bg-gray-dark my-12 p-4 border rounded-xl leading-none font-bold text-20px text-white duration-300 hover:bg-transparent hover:text-black focus:bg-transparent focus:text-black'
+            classNameBtn='max-w-md bg-gray-dark my-12 p-4 border rounded-xl leading-none
+            font-bold text-20px text-white duration-300 hover:bg-transparent
+            hover:text-black focus:bg-transparent focus:text-black'
           >
             Оформити замовлення
           </Button>

@@ -5,13 +5,13 @@ const initialState = {
 };
 
 export const cartSlice = createSlice({
-  name: "cart",
+  name: 'cart',
   initialState,
   reducers: {
     // Додавання одного товару в корзину
     addItemCart: (state, action) => {
       const existingIndex = state.items.findIndex(
-        (item) => item.product === action.payload.product
+        (item) => item.product === action.payload.product,
       );
 
       if (existingIndex >= 0) {

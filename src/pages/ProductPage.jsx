@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { $api } from '../api/api';
-
-import Container from '../components/common/container';
-import PhotoGallery from '../components/product/PhotoGallery';
-import FilterList from '../components/product/FilterList';
-import PreviousPage from '../components/common/PreviousPage';
-import MoveUp from '../components/common/MoveUp';
-import Card from '../components/common/Card';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { $api } from '@api/api';
+
+import Container from '@common/Container';
+import PhotoGallery from '@components/product/PhotoGallery';
+import FilterList from '@components/product/FilterList';
+import PreviousPage from '@common/PreviousPage';
+import MoveUp from '@common/MoveUp';
+import Card from '@common/Card';
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -20,6 +20,7 @@ const ProductPage = () => {
       try {
         const response = await $api.get(`/api/products/${idNum}/`);
         const data = response.data;
+
         console.log(data, 'response');
         setProduct(data);
       } catch (error) {

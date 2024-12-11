@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const ShoeSizePicker = () => {
   const [selectedSize, setSelectedSize] = useState(null);
@@ -11,9 +11,17 @@ const ShoeSizePicker = () => {
         <div
           key={`shoe-${size}`}
           className={`font-sans relative w-10 h-10 rounded-full bg-gray-500 duration-300 cursor-pointer border border-gray`}
-          style={{ backgroundColor: selectedSize === `shoe-${size}` ? '#135CFB' : '', borderColor: selectedSize === `shoe-${size}` ? '#135CFB' : '' }}
-          onClick={() => setSelectedSize(`shoe-${size}`)}>
-          <span className={`text-[#515151] flex justify-center items-center absolute inset-0 ${selectedSize === `shoe-${size}` ? 'text-[#FFF]' : ''}`}>{size}</span>
+          style={{
+            backgroundColor: selectedSize === `shoe-${size}` ? '#135CFB' : '',
+            borderColor: selectedSize === `shoe-${size}` ? '#135CFB' : '',
+          }}
+          onClick={() => setSelectedSize(`shoe-${size}`)}
+        >
+          <span
+            className={`text-[#515151] flex justify-center items-center absolute inset-0 ${selectedSize === `shoe-${size}` ? 'text-[#FFF]' : ''}`}
+          >
+            {size}
+          </span>
         </div>
       ))}
     </div>

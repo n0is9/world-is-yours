@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import LogoWorldIsYours from '../../assets/icons/light/logo-light.svg';
+
+import NewsLetter from './NewsLetter';
+import ChatPopup from '../main-page/ChatPopup';
+
+import LogoWorldIsYours from '@assets/icons/light/logo-light.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faInstagram,
@@ -9,11 +13,10 @@ import {
   faYoutube,
   faTelegram,
 } from '@fortawesome/free-brands-svg-icons';
-import IconCopyright from '../../assets/icons/icon-copyright.svg';
-import IconChat from '../../assets/icons/icon-chat.svg';
-import IconArrowRight from '../../assets/icons/arrow-up.svg';
-import NewsLetter from './NewsLetter';
-import ChatPopup from '../main-page/ChatPopup';
+import IconCopyright from '@assets/icons/icon-copyright.svg';
+import IconChat from '@assets/icons/icon-chat.svg';
+import IconArrowRight from '@assets/icons/arrow-up.svg';
+
 import './media-queries.css';
 
 const Footer = () => {
@@ -50,7 +53,10 @@ const Footer = () => {
 
   return (
     <footer className='bg-gray-dark'>
-      <div className='container grid grid-cols-1 md:grid-cols-3 gap-10 justify-between pt-16 pb-5 mx-auto place-content-center place-items-center items-start'>
+      <div
+        className='container grid grid-cols-1 md:grid-cols-3 gap-10 justify-between pt-16 pb-5
+      mx-auto place-content-center place-items-center items-start'
+      >
         <div className='social-media-block ml-10 '>
           <h1 className='text-white mb-5 font-inter text-20px'>
             Ваша пригода починається тут
@@ -62,31 +68,36 @@ const Footer = () => {
           <div className='social-media-icons mt-6 mb-10 flex flex-row gap-4'>
             <a
               href='https://web.telegram.org/'
-              className='text-gray flex items-center text-lg duration-500 p-1 hover:text-blue focus:text-blue'
+              className='text-gray flex items-center text-lg duration-500
+              p-1 hover:text-blue focus:text-blue'
             >
               <FontAwesomeIcon icon={faTelegram} size='2x' />
             </a>
             <a
               href='https://www.instagram.com/'
-              className='text-gray flex items-center text-lg duration-500 p-1 hover:text-blue focus:text-blue'
+              className='text-gray flex items-center text-lg duration-500
+              p-1 hover:text-blue focus:text-blue'
             >
               <FontAwesomeIcon icon={faInstagram} size='2x' />
             </a>
             <a
               href='https://www.facebook.com/'
-              className='text-gray flex items-center text-lg duration-500 p-1 hover:text-blue focus:text-blue'
+              className='text-gray flex items-center text-lg duration-500
+              p-1 hover:text-blue focus:text-blue'
             >
               <FontAwesomeIcon icon={faFacebook} size='2x' />
             </a>
             <a
               href='https://www.tiktok.com/explore'
-              className='text-gray flex items-center text-lg duration-500 p-1 hover:text-blue focus:text-blue'
+              className='text-gray flex items-center text-lg duration-500
+              p-1 hover:text-blue focus:text-blue'
             >
               <FontAwesomeIcon icon={faTiktok} size='2x' />
             </a>
             <a
               href='https://www.youtube.com/'
-              className='text-gray flex items-center text-lg duration-500 p-1 hover:text-blue focus:text-blue'
+              className='text-gray flex items-center text-lg duration-500
+              p-1 hover:text-blue focus:text-blue'
             >
               <FontAwesomeIcon icon={faYoutube} size='2x' />
             </a>
@@ -118,7 +129,8 @@ const Footer = () => {
             <li>
               <NavLink
                 to='/info-help?component=payment'
-                className='text-white font-raleway font-400 text-16px hover:underline focus:underline'
+                className='text-white font-raleway font-400 text-16px 
+               hover:underline focus:underline'
               >
                 Оплата
               </NavLink>
@@ -126,7 +138,8 @@ const Footer = () => {
             <li>
               <NavLink
                 to='/info-help?component=delivery'
-                className='text-white font-raleway font-400 text-16px hover:underline focus:underline'
+                className='text-white font-raleway font-400 text-16px
+                hover:underline focus:underline'
               >
                 Доставка
               </NavLink>
@@ -134,7 +147,8 @@ const Footer = () => {
             <li>
               <NavLink
                 to='/info-help?component=return'
-                className='text-white font-raleway font-400 text-16px hover:underline focus:underline'
+                className='text-white font-raleway font-400 text-16px
+                hover:underline focus:underline'
               >
                 Повернення та обмін
               </NavLink>
@@ -163,7 +177,10 @@ const Footer = () => {
               </div>
             )}
             {isEmailSubmitted && isValidEmail && <NewsLetter />}
-            <div className='absolute inset-y-auto right-0 flex items-center pr-3 pointer-events-none'>
+            <div
+              className='absolute inset-y-auto right-0 flex
+            items-center pr-3 pointer-events-none'
+            >
               <img
                 src={IconArrowRight}
                 alt='arrow right'

@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { $api } from '../api/api';
+import { useEffect, useState } from 'react';
+import { $api } from '@api/api';
 import { useSelector } from 'react-redux';
-
-import Container from '../components/common/container.jsx';
-import CategoryList from '../components/category-page/CategoryList';
-import FilterPopup from '../components/category-page/FilterPopup';
-import Card from '../components/common/Card';
-import MoveUp from '../components/common/MoveUp';
-import Button from '../components/common/Button';
-import arrowUp from '../assets/icons/arrow-up.svg';
-import Pagination from '../components/category-page/Pagination.jsx';
 import { useSearchParams } from 'react-router-dom';
+
+import Container from '@common/Container.jsx';
+import CategoryList from '@components/category-page/CategoryList';
+import FilterPopup from '@components/category-page/FilterPopup';
+import Card from '@common/Card';
+import MoveUp from '@common/MoveUp';
+import Button from '@common/Button';
+import Pagination from '@components/category-page/Pagination.jsx';
+
+import arrowUp from '@assets/icons/arrow-up.svg';
 
 const categoryList = [
   { categoryId: 0, name: 'all' },
@@ -29,13 +30,13 @@ const CategoryPage = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  let categoryName = searchParams.get('category') || 'all';
+  const categoryName = searchParams.get('category') || 'all';
   const { categoryId } =
     categoryList.find((obj) => obj.name === categoryName) || 0;
-  let page = Number(searchParams.get('page')) || 1;
+  const page = Number(searchParams.get('page')) || 1;
 
   const perPage = 8;
-  let query = {};
+  const query = {};
 
   const handleTogglePopup = () => {
     setIsPopupOpen(!isPopupOpen);
@@ -58,12 +59,13 @@ const CategoryPage = () => {
       //   delete query.category;
       // }
 
-      let queryString = Object.values(query).join('');
+      const queryString = Object.values(query).join('');
       // console.log(queryString);
 
       const response = await $api.get(
         `/api/products/?page_size=${page_size}&page=${page}${queryString}`,
       );
+
       console.log(response.data.results);
 
       setArrivals(response.data.results);
@@ -103,7 +105,10 @@ const CategoryPage = () => {
     <Container>
       <CategoryList setPage={setNewPage} />
       {isPopupOpen && <FilterPopup onClose={handleTogglePopup} />}
-      <div className='grid grid-flow-row-dense gap-4 mx-10 mb-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center'>
+      <div
+        className='grid grid-flow-row-dense gap-4 mx-10 mb-12 grid-cols-1
+      md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center'
+      >
         {arrivals.map((item) => (
           <Card data={item} key={item.id} />
         ))}

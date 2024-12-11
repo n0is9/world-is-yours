@@ -9,6 +9,7 @@ export default function Pagination({ totalPages, page }) {
     searchParams.set('page', value);
     setSearchParams(searchParams);
   };
+
   const renderPages = () => {
     const pages = [];
     const visiblePageCount = 1;
@@ -77,6 +78,7 @@ export default function Pagination({ totalPages, page }) {
         </button>,
       );
     }
+
     console.log(pages);
 
     return pages;

@@ -1,5 +1,3 @@
-import bg from '../../assets/img/slider-first.png';
-
 export default function SlideCardLayout({
   backGround,
   isSectionFav = false,
@@ -24,19 +22,22 @@ export default function SlideCardLayout({
       }}
     >
       <div
-        className='p-[10px] leading-none bg-white text-[#202020] rounded-lg font-normal text-20px mdOnly:text-18px smOnly:text-[11px]'
+        className='p-[10px] leading-none bg-white text-[#202020] rounded-lg font-normal
+        text-20px mdOnly:text-18px smOnly:text-[11px]'
         style={{ maxWidth: 'fit-content' }}
       >
         <p className=''>{plateText}</p>
       </div>
       <h2
-        className='text-40px font-[600] max-w-[700px] leading-[1.17] mdOnly:text-30px smOnly:text-20px notXl:text-white'
+        className='text-40px font-[600] max-w-[700px] leading-[1.17] mdOnly:text-30px
+        smOnly:text-20px notXl:text-white'
         style={{ color: textColor, textAlign: textPosition }}
       >
         {title}
       </h2>
       <p
-        className='font-medium text-30px leading-[1.17] max-w-[950px] mdOnly:text-20px smOnly:text-[15px]'
+        className='font-medium text-30px leading-[1.17] max-w-[950px] mdOnly:text-20px
+        smOnly:text-[15px]'
         style={{ color: textColor, textAlign: textPosition }}
       >
         {children}
