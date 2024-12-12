@@ -185,26 +185,22 @@ const History = () => {
   };
 
   return (
-    <m.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
-    >
+    <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
       <div className="mb-12 text-blue text-[25px] font-semibold font-['Raleway']">
         Історія замовлень
       </div>
       {orders.length === 0 ? (
         <div
-          className='Order1 w-[1027px] h-[140px] p-5 rounded-[15px] border
-        border-blue flex justify-center items-center'
+          className="Order1 w-[1027px] h-[140px] p-5 rounded-[15px] border
+        border-blue flex justify-center items-center"
         >
-          <p className='font-raleway text-[18px] font-semibold text-center text-gray'>
+          <p className="font-raleway text-[18px] font-semibold text-center text-gray">
             Замовлень ще немає <br />
             Будь ласка зробіть замовлення!
           </p>
         </div>
       ) : (
-        <div className='max-h-[420px] overflow-y-auto'>
+        <div className="max-h-[420px] overflow-y-auto">
           {orders.map((order) => {
             // Перевіряємо, чи basket_history не є порожнім об'єктом і чи містить purchased_items
             const hasPurchasedItems =
@@ -216,8 +212,8 @@ const History = () => {
             return (
               <div
                 key={order.id}
-                className='Order1 w-[1027px] h-[140px] p-5 rounded-[15px]
-                mb-4 justify-between items-start inline-flex'
+                className="Order1 w-[1027px] h-[140px] p-5 rounded-[15px]
+                mb-4 justify-between items-start inline-flex"
                 style={{
                   border: `2px solid ${
                     order.status === 1
@@ -231,8 +227,8 @@ const History = () => {
                 }}
               >
                 <div
-                  className='InfoContainer w-[454px] self-stretch justify-between
-                  items-start gap-5 flex flex-col'
+                  className="InfoContainer w-[454px] self-stretch justify-between
+                  items-start gap-5 flex flex-col"
                   style={{
                     borderLeft: `3px solid ${
                       order.status === 1
@@ -286,12 +282,10 @@ const History = () => {
                 </div>
 
                 <div
-                  className='PriceContainer w-[100px] flex-col justify-start
-                items-start gap-2.5 inline-flex'
+                  className="PriceContainer w-[100px] flex-col justify-start
+                items-start gap-2.5 inline-flex"
                 >
-                  <div className="text-black text-lg font-medium font-['Raleway']">
-                    Всього
-                  </div>
+                  <div className="text-black text-lg font-medium font-['Raleway']">Всього</div>
                   <div className="text-black text-lg font-medium font-['Raleway']">
                     {order.basket_history?.total_sum || 0} грн.
                   </div>
@@ -299,8 +293,8 @@ const History = () => {
 
                 {hasPurchasedItems && (
                   <div
-                    className='ImageContainer h-[100px] w-[320px] justify-start
-                  items-start gap-2.5 flex'
+                    className="ImageContainer h-[100px] w-[320px] justify-start
+                  items-start gap-2.5 flex"
                   >
                     {/* Оновлений код для відображення лише наступних 2 зображень */}
                     {order.basket_history.purchased_items
@@ -311,19 +305,18 @@ const History = () => {
                       .map((item, index) => (
                         <img
                           key={index}
-                          className='TrekkingShoes w-[100px] h-[100px] bg-stone-300 rounded-lg'
+                          className="TrekkingShoes w-[100px] h-[100px] bg-stone-300 rounded-lg"
                           src={item.product_image}
                           alt={`product-${index}`}
                         />
                       ))}
 
                     {/* Кнопка для додавання ще 2 зображень */}
-                    {order.basket_history.purchased_items.length >
-                      visibleImages[order.id] && (
+                    {order.basket_history.purchased_items.length > visibleImages[order.id] && (
                       <button
                         onClick={() => showMoreImages(order.id)}
-                        className='show-more-button text-grey font-bold w-[100px] h-[100px]
-                        border-2 border-grey rounded-md cursor-pointer'
+                        className="show-more-button text-grey font-bold w-[100px] h-[100px]
+                        border-2 border-grey rounded-md cursor-pointer"
                       >
                         +2
                       </button>

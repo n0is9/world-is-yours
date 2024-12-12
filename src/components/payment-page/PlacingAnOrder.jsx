@@ -21,11 +21,9 @@ const PlacingAnOrder = () => {
 
   return (
     <div>
-      <h1 className='font-raleway font-semibold text-35px mb-4'>
-        Оформлення замовлення
-      </h1>
+      <h1 className="font-raleway font-semibold text-35px mb-4">Оформлення замовлення</h1>
 
-      <div className='flex flex-row justify-between mb-10'>
+      <div className="flex flex-row justify-between mb-10">
         <p
           className={`font-raleway font-semibold text-20px cursor-pointer ${
             step === 1 ? 'text-blue' : 'text-gray'

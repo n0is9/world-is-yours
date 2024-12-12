@@ -6,7 +6,7 @@ const ShoeSizePicker = () => {
   const shoeSizes = Array.from({ length: 7 }, (_, i) => i + 36);
 
   return (
-    <div className='flex flex-row mt-3 gap-4'>
+    <div className="flex flex-row mt-3 gap-4">
       {shoeSizes.map((size) => (
         <div
           key={`shoe-${size}`}

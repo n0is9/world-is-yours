@@ -86,8 +86,7 @@ const PasswordRecovery = () => {
       navigate('/');
     } catch (error) {
       console.log(error, 'error');
-      const message =
-        error.response?.data?.message || 'Error resetting password';
+      const message = error.response?.data?.message || 'Error resetting password';
 
       toast.info(message, {
         position: 'top-center',
@@ -100,7 +99,7 @@ const PasswordRecovery = () => {
     <form onSubmit={handleSubmit} className={styles.wrap}>
       <h1 className={styles.title}>Відновлення пароля</h1>
       <div className={styles.container}>
-        <label className={styles.label} htmlFor='password'>
+        <label className={styles.label} htmlFor="password">
           Пароль
         </label>
         <div className={styles.passwordContainer}>
@@ -108,29 +107,27 @@ const PasswordRecovery = () => {
             <Input
               classNameInput={styles.input}
               typeInput={isPasswordVisible ? 'text' : 'password'}
-              id='password'
-              nameInput='password'
+              id="password"
+              nameInput="password"
               value={userPassword}
-              placeholderInput='Придумайте пароль'
+              placeholderInput="Придумайте пароль"
               onChangeInput={handlePasswordChange}
               required
             />
-            {passwordError && (
-              <div className={styles.error}>{passwordError}</div>
-            )}
+            {passwordError && <div className={styles.error}>{passwordError}</div>}
           </div>
           <div className={styles.eyesIcon} onClick={togglePasswordVisibility}>
             <img
-              className='w-24px h-24px'
+              className="w-24px h-24px"
               src={isPasswordVisible ? openEye : closeEye}
               alt={isPasswordVisible ? 'Сховати пароль' : 'Показати пароль'}
-              tabIndex='0'
+              tabIndex="0"
             />
           </div>
         </div>
       </div>
       <div className={styles.container}>
-        <label className={styles.label} htmlFor='confirmPassword'>
+        <label className={styles.label} htmlFor="confirmPassword">
           Підтвердження пароля
         </label>
         <div className={styles.passwordContainer}>
@@ -138,34 +135,27 @@ const PasswordRecovery = () => {
             <Input
               classNameInput={styles.input}
               typeInput={isConfirmPasswordVisible ? 'text' : 'password'}
-              id='confirmPassword'
-              nameInput='confirmPassword'
+              id="confirmPassword"
+              nameInput="confirmPassword"
               value={confirmPassword}
-              placeholderInput='Введіть пароль ще раз'
+              placeholderInput="Введіть пароль ще раз"
               onChangeInput={handleConfirmPasswordChange}
               required
             />
-            {confirmPasswordError && (
-              <div className={styles.error}>{confirmPasswordError}</div>
-            )}
+            {confirmPasswordError && <div className={styles.error}>{confirmPasswordError}</div>}
           </div>
-          <div
-            className={styles.eyesIcon}
-            onClick={toggleConfirmPasswordVisibility}
-          >
+          <div className={styles.eyesIcon} onClick={toggleConfirmPasswordVisibility}>
             <img
-              className='w-24px h-24px'
+              className="w-24px h-24px"
               src={isConfirmPasswordVisible ? openEye : closeEye}
-              alt={
-                isConfirmPasswordVisible ? 'Сховати пароль' : 'Показати пароль'
-              }
-              tabIndex='0'
+              alt={isConfirmPasswordVisible ? 'Сховати пароль' : 'Показати пароль'}
+              tabIndex="0"
             />
           </div>
         </div>
       </div>
       <div className={styles.container}>
-        <Button classNameBtn={styles.btn} type='submit' onClick={handleSubmit}>
+        <Button classNameBtn={styles.btn} type="submit" onClick={handleSubmit}>
           Змінити пароль
         </Button>
       </div>

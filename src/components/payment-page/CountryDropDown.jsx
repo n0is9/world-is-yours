@@ -15,12 +15,8 @@ const CountryDropdown = ({ onSelectCountry }) => {
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const response = await axios.get(
-          'https://countriesnow.space/api/v0.1/countries',
-        );
-        const countriesData = response.data.data.map(
-          (country) => country.country,
-        );
+        const response = await axios.get('https://countriesnow.space/api/v0.1/countries');
+        const countriesData = response.data.data.map((country) => country.country);
 
         setCountries(countriesData.sort());
         setFilteredCountries(countriesData.sort());
@@ -62,29 +58,27 @@ const CountryDropdown = ({ onSelectCountry }) => {
   return (
     <>
       <label
-        htmlFor='country'
-        className='mb-1 ml-1 text-textLight font-medium font-raleway text-sm'
+        htmlFor="country"
+        className="mb-1 ml-1 text-textLight font-medium font-raleway text-sm"
       >
         Країна
       </label>
-      <div className='relative max-w-md'>
+      <div className="relative max-w-md">
         {/* Поле для введення тексту */}
         <input
-          type='text'
-          placeholder={
-            user.address.country ? user.address.country : 'Оберіть країну'
-          }
+          type="text"
+          placeholder={user.address.country ? user.address.country : 'Оберіть країну'}
           value={searchQuery}
           onChange={handleSearchChange}
           onClick={toggleSelect}
-          className='font-light border rounded-xl w-full p-3 border-black mb-2'
+          className="font-light border rounded-xl w-full p-3 border-black mb-2"
         />
 
         {/* Випадаючий список */}
         {isOpen && (
           <ul
-            className='absolute z-50 bg-white w-full max-h-48 overflow-y-auto
-          border rounded-xl shadow-md'
+            className="absolute z-50 bg-white w-full max-h-48 overflow-y-auto
+          border rounded-xl shadow-md"
           >
             {filteredCountries.length > 0 ? (
               filteredCountries.map((country, index) => (
@@ -99,7 +93,7 @@ const CountryDropdown = ({ onSelectCountry }) => {
                 </li>
               ))
             ) : (
-              <li className='p-2 text-gray-500'>Нічого не знайдено</li>
+              <li className="p-2 text-gray-500">Нічого не знайдено</li>
             )}
           </ul>
         )}

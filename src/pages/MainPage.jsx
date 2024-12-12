@@ -24,41 +24,31 @@ const MainPage = () => {
   };
 
   return (
-    <m.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
-    >
+    <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
       <div
-        className='bg-header bg-cover bg-no-repeat bg-bottom text-white'
+        className="bg-header bg-cover bg-no-repeat bg-bottom text-white"
         style={{ height: 'calc(100svh - 100px)' }}
       >
         {/* minus header and DonnateBanner height*/}
 
         {/* main page nav text */}
-        <div
-          className={`flex flex-col h-4/5 justify-center items-center px-10 `}
-        >
-          <p className='text-center text-5xl mb-10'>
-            {t('Your adventure starts here')}
-          </p>
-          <a href='#sectionFav' className='duration-300 focus:scale-125'>
-            <img className='cursor-pointer' src={ArrowIcon} alt='Arrow Down' />
+        <div className={`flex flex-col h-4/5 justify-center items-center px-10 `}>
+          <p className="text-center text-5xl mb-10">{t('Your adventure starts here')}</p>
+          <a href="#sectionFav" className="duration-300 focus:scale-125">
+            <img className="cursor-pointer" src={ArrowIcon} alt="Arrow Down" />
           </a>
         </div>
 
         {/* chat icon */}
         <div className={`flex flex-row-reverse h-1/5 items-center px-10 `}>
           <img
-            className='scale-75 cursor-pointer'
+            className="scale-75 cursor-pointer"
             src={ChatIcon}
-            alt='Arrow Down'
+            alt="Arrow Down"
             onClick={toggleChatPopup}
           />
 
-          {isChatPopupOpen && (
-            <ChatPopup onClose={() => setIsChatPopupOpen(false)} />
-          )}
+          {isChatPopupOpen && <ChatPopup onClose={() => setIsChatPopupOpen(false)} />}
         </div>
       </div>
       <Slider />

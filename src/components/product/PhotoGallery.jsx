@@ -67,34 +67,27 @@ const PhotoGallery = ({ data }) => {
   };
 
   return (
-    <div className='flex grow'>
-      <div className='flex flex-col'>
+    <div className="flex grow">
+      <div className="flex flex-col">
         {smallImages.map((image, id) => (
           <img
             key={id}
             src={image}
             alt={`Image ${id + 1}`}
-            className='w-32 h-32 mb-4 cursor-pointer rounded object-cover'
+            className="w-32 h-32 mb-4 cursor-pointer rounded object-cover"
             onClick={() => handleImageClick(id)}
           />
         ))}
       </div>
       <ToastContainer />
-      <div className='w-100 h-100 ml-4 cursor-pointer relative'>
-        <img
-          src={largeImage}
-          alt='Large Image'
-          className='object-cover w-full h-full rounded-xl'
-        />
-        <div
-          className='absolute top-3 right-3 m-2'
-          onClick={() => toggleWishList()}
-        >
+      <div className="w-100 h-100 ml-4 cursor-pointer relative">
+        <img src={largeImage} alt="Large Image" className="object-cover w-full h-full rounded-xl" />
+        <div className="absolute top-3 right-3 m-2" onClick={() => toggleWishList()}>
           <img
             src={isLiked ? HeartIconRed : HeartIcon}
-            alt='heart icon'
-            width='36'
-            className='cursor-pointer'
+            alt="heart icon"
+            width="36"
+            className="cursor-pointer"
           />
         </div>
       </div>

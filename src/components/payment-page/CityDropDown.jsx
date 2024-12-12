@@ -39,9 +39,7 @@ const CityDropdown = ({ onSelectCity, selectedCountry }) => {
 
     setSearchQuery(query);
     if (query.length > 0) {
-      const filtered = cities.filter((city) =>
-        city.toLowerCase().includes(query.toLowerCase()),
-      );
+      const filtered = cities.filter((city) => city.toLowerCase().includes(query.toLowerCase()));
 
       setFilteredCities(filtered);
     } else {
@@ -62,29 +60,26 @@ const CityDropdown = ({ onSelectCity, selectedCountry }) => {
 
   return (
     <>
-      <label
-        htmlFor='city'
-        className='mb-1 ml-1 text-textLight font-medium font-raleway text-sm'
-      >
+      <label htmlFor="city" className="mb-1 ml-1 text-textLight font-medium font-raleway text-sm">
         Місто
       </label>
-      <div className='relative max-w-md'>
+      <div className="relative max-w-md">
         {/* Поле для введення тексту */}
         <input
-          type='text'
+          type="text"
           placeholder={user.address.city ? user.address.city : 'Оберіть місто'}
           value={searchQuery}
           onChange={handleSearchChange}
           onClick={toggleSelect}
-          className='font-light border rounded-xl w-full p-3 border-black mb-2'
+          className="font-light border rounded-xl w-full p-3 border-black mb-2"
           disabled={!selectedCountry} // Блокуємо, якщо країна не вибрана
         />
 
         {/* Випадаючий список */}
         {isOpen && (
           <ul
-            className='absolute z-50 bg-white w-full max-h-48 overflow-y-auto
-          border rounded-xl shadow-md'
+            className="absolute z-50 bg-white w-full max-h-48 overflow-y-auto
+          border rounded-xl shadow-md"
           >
             {filteredCities.length > 0 ? (
               filteredCities.map((city, index) => (
@@ -99,7 +94,7 @@ const CityDropdown = ({ onSelectCity, selectedCountry }) => {
                 </li>
               ))
             ) : (
-              <li className='p-2 text-gray-500'>Нічого не знайдено</li>
+              <li className="p-2 text-gray-500">Нічого не знайдено</li>
             )}
           </ul>
         )}

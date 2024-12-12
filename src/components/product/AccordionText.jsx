@@ -34,27 +34,27 @@ const Accordion = () => {
   };
 
   return (
-    <div className='flex flex-col space-y-2'>
+    <div className="flex flex-col space-y-2">
       {data.map((item) => (
-        <div key={item.id} className='border-b border-1 py-4'>
+        <div key={item.id} className="border-b border-1 py-4">
           <div
-            className='flex justify-between items-center my-2 cursor-pointer transition-colors duration-300 ease-in-out'
+            className="flex justify-between items-center my-2 cursor-pointer transition-colors duration-300 ease-in-out"
             onClick={() => toggleAccordion(item.id)}
           >
-            <p className='text-lg font-medium'>{item.title}</p>
+            <p className="text-lg font-medium">{item.title}</p>
             <img
               src={CloseIcon}
-              alt='close icon'
+              alt="close icon"
               className={`cursor-pointer rotate-45 scale-[0.6] duration-300 ${openIndex === item.id ? 'rotate-[0]' : ''}`}
             />
           </div>
           <AnimatePresence>
             {openIndex === item.id && (
               <m.ul
-                className='flex flex-col gap-4 overflow-hidden'
-                initial='collapsed'
-                animate='open'
-                exit='collapsed'
+                className="flex flex-col gap-4 overflow-hidden"
+                initial="collapsed"
+                animate="open"
+                exit="collapsed"
                 variants={{
                   open: { height: 'auto' },
                   collapsed: { height: 0 },
@@ -62,10 +62,10 @@ const Accordion = () => {
                 transition={{ duration: 0.3 }}
               >
                 <li>
-                  <p className='mb-1 font-semibold font-Raleway text-base text-grayDark'>
+                  <p className="mb-1 font-semibold font-Raleway text-base text-grayDark">
                     {item.subtitle}
                   </p>
-                  <p className='font-light'>{item.content}</p>
+                  <p className="font-light">{item.content}</p>
                 </li>
               </m.ul>
             )}

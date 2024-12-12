@@ -47,18 +47,14 @@ const Profile = () => {
 
   return (
     <Container>
-      <div className='w-screen pt-20 px-170 pb-150'>
-        <h1 className='text-40px flex font-raleway text-2xl font-semibold'>
-          Профіль
-        </h1>
-        <div className='flex  mt-50  flex-col xl:flex-row'>
+      <div className="w-screen pt-20 px-170 pb-150">
+        <h1 className="text-40px flex font-raleway text-2xl font-semibold">Профіль</h1>
+        <div className="flex  mt-50  flex-col xl:flex-row">
           {/* left side */}
-          <div className='min-w-235  h-80 flex flex-col items-start gap-2'>
+          <div className="min-w-235  h-80 flex flex-col items-start gap-2">
             <Button
               classNameBtn={`font-raleway text-base font-medium ${
-                selectedComponent === 'personal'
-                  ? 'underline text-black'
-                  : 'text-gray'
+                selectedComponent === 'personal' ? 'underline text-black' : 'text-gray'
               }`}
               onClickBtn={() => handleComponentClick('personal')}
             >
@@ -89,7 +85,7 @@ const Profile = () => {
           </div>
 
           {/* right side */}
-          <div className='basis-5/5 pl-70 border-l border-solid border-gray-500'>
+          <div className="basis-5/5 pl-70 border-l border-solid border-gray-500">
             {selectedComponent === 'personal' && <Personal />}
             {selectedComponent === 'addresses' && <Address />}
             {selectedComponent === 'history' && (

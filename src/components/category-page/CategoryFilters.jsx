@@ -13,13 +13,7 @@ const CategoryFilters = () => {
     {
       id: 1,
       title: 'Впорядкувати за',
-      btn: [
-        'Акції',
-        'Кращі',
-        'Новинки',
-        'Ціна за зростанням',
-        'Ціна за спаданням',
-      ],
+      btn: ['Акції', 'Кращі', 'Новинки', 'Ціна за зростанням', 'Ціна за спаданням'],
     },
     { id: 2, title: 'Для кого', btn: ['Чоловіки', 'Жінки'] },
     { id: 3, title: 'Розмір' },
@@ -42,28 +36,28 @@ const CategoryFilters = () => {
   };
 
   return (
-    <div className='flex flex-col py-2 px-8'>
+    <div className="flex flex-col py-2 px-8">
       {data.map((item) => (
-        <div key={item.id} className='border-b border-gray py-1'>
+        <div key={item.id} className="border-b border-gray py-1">
           <div
-            className='flex justify-between items-center py-4 cursor-pointer
-            transition-colors duration-300 ease-in-out'
+            className="flex justify-between items-center py-4 cursor-pointer
+            transition-colors duration-300 ease-in-out"
             onClick={() => toggleAccordion(item.id)}
           >
-            <p className='text-base'>{item.title}</p>
+            <p className="text-base">{item.title}</p>
             <img
               src={CloseIcon}
-              alt='close icon'
+              alt="close icon"
               className={`cursor-pointer rotate-45 scale-[0.6] duration-300 ${openIndex === item.id ? 'rotate-[0]' : ''}`}
             />
           </div>
           <AnimatePresence>
             {openIndex === item.id && item.title === 'Розмір' && (
               <m.div
-                className='flex flex-wrap overflow-hidden'
-                initial='collapsed'
-                animate='open'
-                exit='collapsed'
+                className="flex flex-wrap overflow-hidden"
+                initial="collapsed"
+                animate="open"
+                exit="collapsed"
                 variants={{
                   open: { height: 'auto' },
                   collapsed: { height: 0 },
@@ -77,10 +71,10 @@ const CategoryFilters = () => {
           <AnimatePresence>
             {openIndex === item.id && item.btn && item.title !== 'Розмір' && (
               <m.div
-                className='flex flex-wrap overflow-hidden'
-                initial='collapsed'
-                animate='open'
-                exit='collapsed'
+                className="flex flex-wrap overflow-hidden"
+                initial="collapsed"
+                animate="open"
+                exit="collapsed"
                 variants={{
                   open: { height: 'auto' },
                   collapsed: { height: 0 },

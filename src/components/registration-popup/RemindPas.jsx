@@ -105,42 +105,26 @@ const RemindPas = ({ onClose, openLogin, openSuccess }) => {
   return (
     <>
       <div className={styles.overlay} onClick={onClose}>
-        <div
-          className={`${styles.popup} ${styles.open}`}
-          onClick={(e) => e.stopPropagation()}
-        >
+        <div className={`${styles.popup} ${styles.open}`} onClick={(e) => e.stopPropagation()}>
           <div className={styles.titleWrap}>
             <h2 className={styles.title}>Відновлення паролю</h2>
-            <img
-              className={styles.closeIcon}
-              src={closeIcon}
-              alt='close icon'
-              onClick={onClose}
-            />
+            <img className={styles.closeIcon} src={closeIcon} alt="close icon" onClick={onClose} />
           </div>
-          <form
-            noValidate
-            className={styles.form}
-            onSubmit={(e) => handleSubmit(e)}
-          >
+          <form noValidate className={styles.form} onSubmit={(e) => handleSubmit(e)}>
             <div className={styles.container}>
-              <label className={styles.label} htmlFor='email'>
+              <label className={styles.label} htmlFor="email">
                 {t('Email')}
               </label>
               <div className={styles.inputContainer}>
                 {emailError && (
-                  <img
-                    className={styles.attention}
-                    src={attentionIcon}
-                    alt='attention'
-                  />
+                  <img className={styles.attention} src={attentionIcon} alt="attention" />
                 )}
                 {emailError && <div className={styles.error}>{emailError}</div>}
                 <Input
                   classNameInput={styles.input}
-                  typeInput='email'
-                  id='email'
-                  nameInput='email'
+                  typeInput="email"
+                  id="email"
+                  nameInput="email"
                   value={userEmail}
                   placeholderInput={t('Enter your email address')}
                   onChangeInput={(e) => {
@@ -152,7 +136,7 @@ const RemindPas = ({ onClose, openLogin, openSuccess }) => {
               </div>
             </div>
 
-            <Button classNameBtn={styles.remind} type='submit'>
+            <Button classNameBtn={styles.remind} type="submit">
               Відправити лист на пошту
             </Button>
             <span

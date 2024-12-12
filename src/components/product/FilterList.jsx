@@ -65,26 +65,20 @@ const FilterList = ({ data }) => {
   });
 
   return (
-    <div className='flex flex-col w-96 gap-5 grow'>
-      <div className='flex flex-col w-96 gap-2'>
-        <h1 className='font-raleway font-semibold text-2xl text-left text-grayDark'>
-          {name}
-        </h1>
-        <p className='font-sans font-normal text-xl text-left text-grayDark mb-5'>
-          {price} грн{' '}
-        </p>
-        <p className='font-raleway font-light text-l text-left text-grayDark'>
-          {description}
-        </p>
+    <div className="flex flex-col w-96 gap-5 grow">
+      <div className="flex flex-col w-96 gap-2">
+        <h1 className="font-raleway font-semibold text-2xl text-left text-grayDark">{name}</h1>
+        <p className="font-sans font-normal text-xl text-left text-grayDark mb-5">{price} грн </p>
+        <p className="font-raleway font-light text-l text-left text-grayDark">{description}</p>
       </div>
-      <div className=''>
+      <div className="">
         <p>Колір</p>
         <span>{selectedColor}</span>
-        <div className='flex flex-row'>
+        <div className="flex flex-row">
           <ColorPicker />
         </div>
       </div>
-      <hr className='text-gray border-1' />
+      <hr className="text-gray border-1" />
       <ToastContainer />
       <div>
         <p>Розмір</p>

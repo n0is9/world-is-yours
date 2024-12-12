@@ -68,56 +68,56 @@ const PayInfo = () => {
     <>
       {/* ДЛЯ НОВОГО ПОКУПЦЯ */}
 
-      <div className='flex flex-col'>
+      <div className="flex flex-col">
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label className='text-textLight font-medium font-raleway text-sm mb-2'>
+        <label className="text-textLight font-medium font-raleway text-sm mb-2">
           Варіант оплати
         </label>
-        <form className='flex flex-col gap-2' onSubmit={handleSubmit}>
-          <div className='flex items-center gap-2'>
+        <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
+          <div className="flex items-center gap-2">
             <input
-              type='radio'
-              id='opt1'
-              name='opt1'
-              value='opt1'
-              className='h-4 w-4'
+              type="radio"
+              id="opt1"
+              name="opt1"
+              value="opt1"
+              className="h-4 w-4"
               onChange={() => handleOptionChange('opt1')}
             />
-            <label htmlFor='opt1' className='text-base'>
+            <label htmlFor="opt1" className="text-base">
               Готівка
             </label>
           </div>
-          <div className='flex items-center gap-2'>
+          <div className="flex items-center gap-2">
             <input
-              type='radio'
-              id='opt2'
-              name='opt1'
-              value='opt2'
-              className='h-4 w-4'
+              type="radio"
+              id="opt2"
+              name="opt1"
+              value="opt2"
+              className="h-4 w-4"
               onChange={() => handleOptionChange('opt1')}
             />
-            <label htmlFor='opt2' className='text-base'>
+            <label htmlFor="opt2" className="text-base">
               Оплата банківською картою
             </label>
           </div>
-          <div className='flex items-center gap-2'>
+          <div className="flex items-center gap-2">
             <input
-              type='radio'
-              id='opt3'
-              name='opt1'
-              value='opt3'
-              className='h-4 w-4'
+              type="radio"
+              id="opt3"
+              name="opt1"
+              value="opt3"
+              className="h-4 w-4"
               onChange={() => handleOptionChange('opt1')}
             />
-            <label htmlFor='opt3' className='text-base'>
+            <label htmlFor="opt3" className="text-base">
               Google Pay
             </label>
           </div>
           <Button
-            type='submit' // Додано type='submit'
-            classNameBtn='max-w-md bg-gray-dark my-12 p-4 border rounded-xl leading-none
+            type="submit" // Додано type='submit'
+            classNameBtn="max-w-md bg-gray-dark my-12 p-4 border rounded-xl leading-none
             font-bold text-20px text-white duration-300 hover:bg-transparent
-            hover:text-black focus:bg-transparent focus:text-black'
+            hover:text-black focus:bg-transparent focus:text-black"
           >
             Оформити замовлення
           </Button>

@@ -19,10 +19,7 @@ const Address = () => {
   const handleAddressChange = (event) => {
     const inputValue = event.target.value;
 
-    if (
-      /^[a-zA-Zа-яА-Я0-9\s.,]*$/.test(inputValue) &&
-      inputValue.length <= 60
-    ) {
+    if (/^[a-zA-Zа-яА-Я0-9\s.,]*$/.test(inputValue) && inputValue.length <= 60) {
       setAddress(inputValue);
       setAddressError('');
     } else {
@@ -61,16 +58,10 @@ const Address = () => {
   };
 
   return (
-    <m.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
-    >
-      <h1 className=" text-blue text-2xl font-semibold font-['Raleway'] mb-10">
-        Адресна книга
-      </h1>
-      <div className='flex justify-between gap-8'>
-        <div className='w-1/2 max-w-md'>
+    <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
+      <h1 className=" text-blue text-2xl font-semibold font-['Raleway'] mb-10">Адресна книга</h1>
+      <div className="flex justify-between gap-8">
+        <div className="w-1/2 max-w-md">
           <h3
             className=" text-black/100 text-opacity-20 text-xl
           font-medium font-['Raleway'] mb-8 "
@@ -80,80 +71,67 @@ const Address = () => {
 
           <CountryDropdown onSelectCountry={handleCountrySelect} />
           {selectedCountryError && (
-            <p className='text-red-500 text-xs mb-3 ml-2'>
-              {selectedCountryError}
-            </p>
+            <p className="text-red-500 text-xs mb-3 ml-2">{selectedCountryError}</p>
           )}
-          <CityDropdown
-            onSelectCity={handleCitySelect}
-            selectedCountry={selectedCountry}
-          />
+          <CityDropdown onSelectCity={handleCitySelect} selectedCountry={selectedCountry} />
 
-          <div className='flex flex-row gap-4 w-full justify-between'>
-            <div className='flex flex-col w-5/7 mb-4'>
+          <div className="flex flex-row gap-4 w-full justify-between">
+            <div className="flex flex-col w-5/7 mb-4">
               <label
-                htmlFor='text'
-                className='mb-1 ml-1 text-textLight font-medium font-raleway text-sm'
+                htmlFor="text"
+                className="mb-1 ml-1 text-textLight font-medium font-raleway text-sm"
               >
                 Адреса
               </label>
 
               <input
-                className='font-light border rounded-xl p-3 border-black mb-1 w-full'
-                placeholder='Введіть свою адресу'
+                className="font-light border rounded-xl p-3 border-black mb-1 w-full"
+                placeholder="Введіть свою адресу"
                 onChange={handleAddressChange}
                 value={address}
               ></input>
 
-              {addressError && (
-                <p className='text-red-500 text-xs mb-3 ml-2'>{addressError}</p>
-              )}
+              {addressError && <p className="text-red-500 text-xs mb-3 ml-2">{addressError}</p>}
             </div>
-            <div className='flex flex-col w-44'>
+            <div className="flex flex-col w-44">
               <label
-                htmlFor='text'
-                className='mb-1 text-textLight font-medium font-raleway text-sm'
+                htmlFor="text"
+                className="mb-1 text-textLight font-medium font-raleway text-sm"
               >
                 Поштовий індекc
               </label>
 
               <input
-                className='font-light border rounded-xl w-full p-3 pl-4 border-black mb-1'
-                placeholder='00000'
+                className="font-light border rounded-xl w-full p-3 pl-4 border-black mb-1"
+                placeholder="00000"
                 onChange={handleApartmentChange}
                 value={apartment}
               ></input>
-              {apartmentError && (
-                <p className='text-red-500 text-xs mb-3 ml-2'>
-                  {apartmentError}
-                </p>
-              )}
+              {apartmentError && <p className="text-red-500 text-xs mb-3 ml-2">{apartmentError}</p>}
             </div>
           </div>
           <Button
-            classNameBtn='w-full mt-4 bg-gray-dark p-4 border rounded-xl font-bold
+            classNameBtn="w-full mt-4 bg-gray-dark p-4 border rounded-xl font-bold
           text-18px text-white duration-300 hover:bg-transparent hover:text-black
-          focus:bg-transparent focus:text-black'
+          focus:bg-transparent focus:text-black"
           >
             Додати нову адресу
           </Button>
         </div>
 
-        <div className='w-1/2'>
+        <div className="w-1/2">
           <div
-            className='w-[261px] h-[109px] flex-col justify-start items-start
-          gap-[30px] inline-flex'
+            className="w-[261px] h-[109px] flex-col justify-start items-start
+          gap-[30px] inline-flex"
           >
-            <div className="text-black text-lg font-medium font-['Raleway']">
-              Додані адреси
-            </div>
-            <div className='justify-start items-start gap-5 inline-flex'>
-              <img src={LocationIcon} alt='LocationIcon' />
+            <div className="text-black text-lg font-medium font-['Raleway']">Додані адреси</div>
+            <div className="justify-start items-start gap-5 inline-flex">
+              <img src={LocationIcon} alt="LocationIcon" />
               <div
-                className='self-stretch flex-col justify-start items-start
-              gap-[5px] inline-flex'
+                className="self-stretch flex-col justify-start items-start
+              gap-[5px] inline-flex"
               >
-                <div className='w-[145px] flex-col justify-between items-end flex'>
+                <div className="w-[145px] flex-col justify-between items-end flex">
                   <div className="w-[145px] text-black text-lg font-medium font-['Raleway']">
                     Україна, Київ
                   </div>
@@ -166,11 +144,11 @@ const Address = () => {
                 </div>
               </div>
               <div
-                className='Trash w-10 h-10 p-2 rounded-[10px] justify-center
+                className="Trash w-10 h-10 p-2 rounded-[10px] justify-center
               items-center flex cursor-pointer border border-transparent rounded-lg
-              duration-100 hover:border-slate-400 focus:border-slate-400'
+              duration-100 hover:border-slate-400 focus:border-slate-400"
               >
-                <img src={TrashIcon} alt='TrashIcon' />
+                <img src={TrashIcon} alt="TrashIcon" />
               </div>
             </div>
           </div>

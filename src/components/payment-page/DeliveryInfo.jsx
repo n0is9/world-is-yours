@@ -42,9 +42,7 @@ const DeliveryInfo = ({ onPayClick }) => {
     }
   }, [user]);
 
-  const [selectedCountry, setSelectedCountry] = useState(
-    user?.address?.country || '',
-  );
+  const [selectedCountry, setSelectedCountry] = useState(user?.address?.country || '');
   const [selectedCity, setSelectedCity] = useState(user?.address?.city || '');
   const [address, setAddress] = useState(user?.address?.address_line || '');
 
@@ -76,9 +74,7 @@ const DeliveryInfo = ({ onPayClick }) => {
       setAddress(value);
       setAddressError('');
     } else {
-      setAddressError(
-        'Up to 60 characters, allowed: letters, numbers, spaces, ".", ",", "-", "/"',
-      );
+      setAddressError('Up to 60 characters, allowed: letters, numbers, spaces, ".", ",", "-", "/"');
     }
   };
 
@@ -141,44 +137,40 @@ const DeliveryInfo = ({ onPayClick }) => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div className='flex flex-col'>
+        <div className="flex flex-col">
           {/* Поле для країни */}
-          <div className='flex flex-col mb-4'>
-            <label htmlFor='country' className='text-sm font-medium mb-1'>
+          <div className="flex flex-col mb-4">
+            <label htmlFor="country" className="text-sm font-medium mb-1">
               Країна
             </label>
             <input
-              type='text'
-              id='country'
-              placeholder='Введіть країну'
+              type="text"
+              id="country"
+              placeholder="Введіть країну"
               value={selectedCountry}
               onChange={handleCountryChange}
-              className='border rounded-xl p-3'
+              className="border rounded-xl p-3"
             />
             {selectedCountryError && (
-              <p className='text-red-500 text-xs mt-1'>
-                {selectedCountryError}
-              </p>
+              <p className="text-red-500 text-xs mt-1">{selectedCountryError}</p>
             )}
           </div>
 
           {/* Поле для міста */}
-          <div className='flex flex-col mb-4'>
-            <label htmlFor='city' className='text-sm font-medium mb-1'>
+          <div className="flex flex-col mb-4">
+            <label htmlFor="city" className="text-sm font-medium mb-1">
               Місто
             </label>
             <input
-              type='text'
-              id='city'
-              placeholder='Введіть місто'
+              type="text"
+              id="city"
+              placeholder="Введіть місто"
               value={selectedCity}
               onChange={handleCityChange}
-              className='border rounded-xl p-3'
+              className="border rounded-xl p-3"
               disabled={!selectedCountry}
             />
-            {selectedCityError && (
-              <p className='text-red-500 text-xs mt-1'>{selectedCityError}</p>
-            )}
+            {selectedCityError && <p className="text-red-500 text-xs mt-1">{selectedCityError}</p>}
           </div>
 
           {/* Вибір варіантів доставки */}
@@ -188,46 +180,44 @@ const DeliveryInfo = ({ onPayClick }) => {
           />
 
           {/* Поле для адреси */}
-          <div className='flex flex-col mb-4 mt-5'>
-            <label htmlFor='address' className='text-sm font-medium mb-1'>
+          <div className="flex flex-col mb-4 mt-5">
+            <label htmlFor="address" className="text-sm font-medium mb-1">
               Номер відділення
             </label>
             <input
-              type='text'
-              id='address'
-              placeholder='Введіть свою адресу'
+              type="text"
+              id="address"
+              placeholder="Введіть свою адресу"
               value={address}
               onChange={handleAddressChange}
-              className='border rounded-xl p-3'
+              className="border rounded-xl p-3"
             />
-            {addressError && (
-              <p className='text-red-500 text-xs mt-1'>{addressError}</p>
-            )}
+            {addressError && <p className="text-red-500 text-xs mt-1">{addressError}</p>}
           </div>
 
           {/* Поле для додаткової інформації */}
-          <div className='flex flex-col mt-4'>
+          <div className="flex flex-col mt-4">
             <label
-              htmlFor='additionalInfo'
-              className='text-textLight font-medium font-raleway text-sm'
+              htmlFor="additionalInfo"
+              className="text-textLight font-medium font-raleway text-sm"
             >
               Додаткова інформація до доставки
             </label>
             <textarea
-              id='additionalInfo'
-              className='max-w-md px-3 py-2 border rounded-xl resize-none mt-1'
+              id="additionalInfo"
+              className="max-w-md px-3 py-2 border rounded-xl resize-none mt-1"
               style={{ height: '110px' }}
-              placeholder='Чи є додаткові умови для доставки?'
+              placeholder="Чи є додаткові умови для доставки?"
             ></textarea>
           </div>
 
           {/* Кнопка підтвердження */}
           <Button
-            classNameBtn='max-w-md bg-gray-dark my-12 p-4 border rounded-xl leading-none
+            classNameBtn="max-w-md bg-gray-dark my-12 p-4 border rounded-xl leading-none
             font-bold text-20px text-white duration-300 hover:bg-transparent hover:text-black
-            focus:bg-transparent focus:text-black'
-            nameBtn='submitForm'
-            valueBtn='submit'
+            focus:bg-transparent focus:text-black"
+            nameBtn="submitForm"
+            valueBtn="submit"
           >
             Варіанти оплати
           </Button>

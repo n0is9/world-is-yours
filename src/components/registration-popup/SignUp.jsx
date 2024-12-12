@@ -223,7 +223,7 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
       400: 'User already exists',
     };
 
-    if (statusMessages.hasOwnProperty(status)) {
+    if (Object.prototype.hasOwnProperty.call(statusMessages, status)) {
       console.log(statusMessages[status]);
 
       switch (status) {
@@ -256,9 +256,7 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
       handleRegistrationStatus(registrationResult.status, userData);
     } catch (error) {
       if (error.response && error.response.status) {
-        console.log(
-          `Error during registration in signUp. status: ${error.response.status}`,
-        );
+        console.log(`Error during registration in signUp. status: ${error.response.status}`);
         handleRegistrationStatus(error.response.status);
       } else {
         console.error('No server response error in SignUp', error);
@@ -272,7 +270,7 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
       400: 'status 400',
     };
 
-    if (statusMessages.hasOwnProperty(status)) {
+    if (Object.prototype.hasOwnProperty.call(statusMessages, status)) {
       console.log(statusMessages[status]);
 
       switch (status) {
@@ -305,9 +303,7 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
       console.log('signIn successful:', signInResult);
     } catch (error) {
       if (error.response && error.response.status) {
-        console.log(
-          `Error during login in signIn. status: ${error.response.status}`,
-        );
+        console.log(`Error during login in signIn. status: ${error.response.status}`);
         handleSignInStatus(error.response.status);
       } else {
         console.error('No server response error in signIn', error);
@@ -318,38 +314,26 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
   return (
     <>
       <div className={styles.overlay} onClick={onClose}>
-        <div
-          className={`${styles.popup} ${styles.open}`}
-          onClick={(e) => e.stopPropagation()}
-        >
+        <div className={`${styles.popup} ${styles.open}`} onClick={(e) => e.stopPropagation()}>
           <div className={styles.titleWrap}>
             <h2 className={styles.title}>{t('Registration')}</h2>
-            <img
-              className={styles.closeIcon}
-              src={closeIcon}
-              alt='close icon'
-              onClick={onClose}
-            />
+            <img className={styles.closeIcon} src={closeIcon} alt="close icon" onClick={onClose} />
           </div>
           <form noValidate className={styles.form} onSubmit={(e) => submit(e)}>
             <div className={styles.container}>
-              <label className={styles.label} htmlFor='name'>
+              <label className={styles.label} htmlFor="name">
                 {t('Name')}
               </label>
               <div className={styles.inputContainer}>
                 {nameError && (
-                  <img
-                    className={styles.attention}
-                    src={attentionIcon}
-                    alt='attention'
-                  />
+                  <img className={styles.attention} src={attentionIcon} alt="attention" />
                 )}
                 {nameError && <div className={styles.error}>{nameError}</div>}
                 <Input
                   classNameInput={styles.input}
-                  typeInput='text'
-                  id='name'
-                  nameInput='name'
+                  typeInput="text"
+                  id="name"
+                  nameInput="name"
                   valueInput={username}
                   placeholderInput={t('Enter your name')}
                   onChangeInput={(e) => {
@@ -362,25 +346,19 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
             </div>
 
             <div className={styles.container}>
-              <label className={styles.label} htmlFor='surname'>
+              <label className={styles.label} htmlFor="surname">
                 {t('Surname')}
               </label>
               <div className={styles.inputContainer}>
                 {surnameError && (
-                  <img
-                    className={styles.attention}
-                    src={attentionIcon}
-                    alt='attention'
-                  />
+                  <img className={styles.attention} src={attentionIcon} alt="attention" />
                 )}
-                {surnameError && (
-                  <div className={styles.error}>{surnameError}</div>
-                )}
+                {surnameError && <div className={styles.error}>{surnameError}</div>}
                 <Input
                   classNameInput={styles.input}
-                  typeInput='text'
-                  id='surname'
-                  nameInput='surname'
+                  typeInput="text"
+                  id="surname"
+                  nameInput="surname"
                   valueInput={userSurname}
                   placeholderInput={t('Enter your last name')}
                   onChangeInput={(e) => {
@@ -393,23 +371,19 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
             </div>
 
             <div className={styles.container}>
-              <label className={styles.label} htmlFor='email'>
+              <label className={styles.label} htmlFor="email">
                 {t('Email')}
               </label>
               <div className={styles.inputContainer}>
                 {emailError && (
-                  <img
-                    className={styles.attention}
-                    src={attentionIcon}
-                    alt='attention'
-                  />
+                  <img className={styles.attention} src={attentionIcon} alt="attention" />
                 )}
                 {emailError && <div className={styles.error}>{emailError}</div>}
                 <Input
                   classNameInput={styles.input}
-                  typeInput='email'
-                  id='email'
-                  nameInput='email'
+                  typeInput="email"
+                  id="email"
+                  nameInput="email"
                   value={userEmail}
                   placeholderInput={t('Enter your email address')}
                   onChangeInput={(e) => {
@@ -422,26 +396,20 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
             </div>
 
             <div className={styles.container}>
-              <label className={styles.label} htmlFor='password'>
+              <label className={styles.label} htmlFor="password">
                 {t('Password')}
               </label>
               <div className={styles.passwordContainer}>
                 <div className={styles.inputContainer}>
                   {passwordError && (
-                    <img
-                      className={styles.attention}
-                      src={attentionIcon}
-                      alt='attention'
-                    />
+                    <img className={styles.attention} src={attentionIcon} alt="attention" />
                   )}
-                  {passwordError && (
-                    <div className={styles.error}>{passwordError}</div>
-                  )}
+                  {passwordError && <div className={styles.error}>{passwordError}</div>}
                   <Input
                     classNameInput={styles.input}
                     typeInput={isPasswordVisible ? 'text' : 'password'}
-                    id='password'
-                    nameInput='password'
+                    id="password"
+                    nameInput="password"
                     value={userPassword}
                     placeholderInput={t('Create a password')}
                     onChangeInput={(e) => {
@@ -457,45 +425,43 @@ const SignUp = ({ onClose, openLogin, openRemindPass, openSuccess }) => {
                   onClick={() => setPasswordVisible(!isPasswordVisible)}
                 >
                   <img
-                    className='w-24px h-24px'
+                    className="w-24px h-24px"
                     src={isPasswordVisible ? openEye : closeEye}
-                    alt={
-                      isPasswordVisible ? 'Показати пароль' : 'Сховати пароль'
-                    }
-                    tabIndex='0'
+                    alt={isPasswordVisible ? 'Показати пароль' : 'Сховати пароль'}
+                    tabIndex="0"
                   />
                 </div>
               </div>
             </div>
 
-            <Button classNameBtn={styles.btn} type='submit'>
+            <Button classNameBtn={styles.btn} type="submit">
               Зареєструватися
             </Button>
 
             <div className={styles.alternative}>
               <hr className={styles.line} />
-              <p className='text-center text-gray'>або за допомогою</p>
+              <p className="text-center text-gray">або за допомогою</p>
               <hr className={styles.line} />
             </div>
-            <div className='flex flex-row gap-8 mt-8 mb-16 justify-center'>
+            <div className="flex flex-row gap-8 mt-8 mb-16 justify-center">
               <img
                 src={Facebook}
                 className={styles.mediaIcons}
-                alt='icon facebook'
+                alt="icon facebook"
                 onClick={() => handleOnClick(facebookProvider)}
                 disabled={isLoading}
               />
               <img
                 src={Google}
                 className={styles.mediaIcons}
-                alt='icon google'
+                alt="icon google"
                 onClick={() => handleOnClick(googleProvider)}
                 disabled={isLoading}
               />
-              <img src={Apple} className={styles.mediaIcons} alt='icon apple' />
+              <img src={Apple} className={styles.mediaIcons} alt="icon apple" />
             </div>
 
-            <p style={{ color: '#202020' }} className='text-center'>
+            <p style={{ color: '#202020' }} className="text-center">
               Вже є акаунт?{' '}
               <span
                 style={{

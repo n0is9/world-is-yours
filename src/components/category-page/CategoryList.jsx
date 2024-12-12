@@ -36,9 +36,7 @@ const CategoryList = ({ setPage }) => {
 
   const fetchSubCategories = async () => {
     const response = await $api.get('/api/products/subcategory/');
-    const filteredProducts = response.data.filter(
-      (item) => item.category === selectedFilter,
-    );
+    const filteredProducts = response.data.filter((item) => item.category === selectedFilter);
 
     setSubCategories(filteredProducts);
     console.log(response.data);
@@ -77,16 +75,16 @@ const CategoryList = ({ setPage }) => {
   };
 
   return (
-    <div className='flex flex-col m-10 w-full'>
-      <h1 className='text-blue text-2xl mb-4 font-semibold'>Категорії</h1>
-      <div className='flex flex-row justify-between items-end'>
-        <div className='flex flex-row gap-6 font-medium items-center'>
+    <div className="flex flex-col m-10 w-full">
+      <h1 className="text-blue text-2xl mb-4 font-semibold">Категорії</h1>
+      <div className="flex flex-row justify-between items-end">
+        <div className="flex flex-row gap-6 font-medium items-center">
           {/* categories */}
           <p
-            className='text-xl cursor-pointer duration-300 hover:text-neutral-600 focus:underline'
+            className="text-xl cursor-pointer duration-300 hover:text-neutral-600 focus:underline"
             onClick={() => changeCategory('all')}
-            tabIndex='0'
-            aria-label='Clickable filter disable'
+            tabIndex="0"
+            aria-label="Clickable filter disable"
           >
             Всі
           </p>
@@ -100,7 +98,7 @@ const CategoryList = ({ setPage }) => {
                   ? 'text-xl text-custom-black cursor-pointer duration-300 hover:text-neutral-500 focus:underline '
                   : 'hover:text-gray focus:text-gray no-underline'
               }
-              tabIndex='0'
+              tabIndex="0"
               aria-label={`${item.name} tab`}
             >
               {item.name}
@@ -109,21 +107,21 @@ const CategoryList = ({ setPage }) => {
         </div>
         <img
           src={Filter}
-          alt='filter icon'
-          className='cursor-pointer p-1 rounded-sm outline-slate-400 focus:outline focus:outline-1'
+          alt="filter icon"
+          className="cursor-pointer p-1 rounded-sm outline-slate-400 focus:outline focus:outline-1"
           onClick={togglePopup}
-          tabIndex='0'
+          tabIndex="0"
         />
       </div>
-      <hr className='text-blue my-2' />
-      <div className='flex flex-row gap-6'>
+      <hr className="text-blue my-2" />
+      <div className="flex flex-row gap-6">
         {/* sub categories */}
         {subCategories.map((item) => (
           <p
             key={item.id}
             className={`text-base text-gray font-medium cursor-pointer duration-300 hover:text-neutral-600 focus:underline ${selectedSubCategory === item.id ? 'underline text-custom-black' : ''}`}
             onClick={() => handleSubCategoryClick(item.id)}
-            tabIndex='0'
+            tabIndex="0"
           >
             {item.name}
           </p>

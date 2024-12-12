@@ -17,7 +17,7 @@ export default function Pagination({ totalPages, page }) {
     if (page >= 1) {
       pages.push(
         <button
-          type='button'
+          type="button"
           onClick={() => handleSetPage(1)}
           key={1}
           className={`text-xl font-sans mr-[20px] ${page === 1 ? 'text-black' : 'text-gray'}`}
@@ -29,10 +29,7 @@ export default function Pagination({ totalPages, page }) {
 
     if (page > visiblePageCount + 2) {
       pages.push(
-        <span
-          key='ellipsis1'
-          className='text-xl font-sans text-gray mr-[20px] max-w-[11px] '
-        >
+        <span key="ellipsis1" className="text-xl font-sans text-gray mr-[20px] max-w-[11px] ">
           ...
         </span>,
       );
@@ -45,7 +42,7 @@ export default function Pagination({ totalPages, page }) {
     ) {
       pages.push(
         <button
-          type='button'
+          type="button"
           onClick={() => handleSetPage(i)}
           key={i}
           className={`text-xl font-sans mr-[20px] ${page === i ? 'text-black' : 'text-gray'}`}
@@ -57,10 +54,7 @@ export default function Pagination({ totalPages, page }) {
 
     if (page < totalPages - 2) {
       pages.push(
-        <span
-          key='ellipsis2'
-          className='text-xl font-sans text-gray mr-[20px] max-w-[11px]'
-        >
+        <span key="ellipsis2" className="text-xl font-sans text-gray mr-[20px] max-w-[11px]">
           ...
         </span>,
       );
@@ -69,7 +63,7 @@ export default function Pagination({ totalPages, page }) {
     if (totalPages > 1) {
       pages.push(
         <button
-          type='button'
+          type="button"
           onClick={() => handleSetPage(totalPages)}
           key={totalPages}
           className={`text-xl font-sans ${totalPages === page ? 'text-black' : 'text-gray'}`}
@@ -84,7 +78,5 @@ export default function Pagination({ totalPages, page }) {
     return pages;
   };
 
-  return (
-    <div className='mx-[100px] flex justify-between '>{renderPages()}</div>
-  );
+  return <div className="mx-[100px] flex justify-between ">{renderPages()}</div>;
 }

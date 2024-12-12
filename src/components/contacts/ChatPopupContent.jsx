@@ -49,9 +49,7 @@ const ChatPopupContact = () => {
     if (!value.trim()) {
       setThemeError('Theme cannot be empty');
     } else if (!themeRegex.test(value)) {
-      setThemeError(
-        'Theme should be 6-20 characters long and should not contain numbers',
-      );
+      setThemeError('Theme should be 6-20 characters long and should not contain numbers');
     } else {
       setThemeError('');
     }
@@ -96,9 +94,7 @@ const ChatPopupContact = () => {
     }
 
     if (!themeRegex.test(theme)) {
-      setThemeError(
-        'Theme should be 6-20 characters long and should not contain numbers',
-      );
+      setThemeError('Theme should be 6-20 characters long and should not contain numbers');
 
       return false;
     }
@@ -111,31 +107,22 @@ const ChatPopupContact = () => {
   };
 
   return (
-    <div className='flex-[0_1_30rem]'>
+    <div className="flex-[0_1_30rem]">
       <div className={styles.titleWrap}>
         <h2 className={styles.title}>Зв’яжіться з нами!</h2>
       </div>
       <form className={styles.form} onSubmit={validateSignUpForm}>
-        <label
-          htmlFor='name'
-          className='mb-2 ml-1 text-textLight font-medium font-raleway text-sm'
-        >
+        <label htmlFor="name" className="mb-2 ml-1 text-textLight font-medium font-raleway text-sm">
           Ім&#39;я та прізвище
         </label>
         <div className={styles.inputContainer}>
-          {nameError && (
-            <img
-              className={styles.attention}
-              src={attentionIcon}
-              alt='attention'
-            />
-          )}
+          {nameError && <img className={styles.attention} src={attentionIcon} alt="attention" />}
           {nameError && <div className={styles.error}>{nameError}</div>}
           <Input
             classNameInput={styles.input}
-            typeInput='text'
-            id='name'
-            nameInput='name'
+            typeInput="text"
+            id="name"
+            nameInput="name"
             valueInput={name}
             placeholderInput="Введіть свої ім'я та прізвище"
             onChangeInput={(e) => {
@@ -146,27 +133,21 @@ const ChatPopupContact = () => {
           />
         </div>
         <label
-          htmlFor='email'
-          className='mb-2 ml-1 text-textLight font-medium font-raleway text-sm'
+          htmlFor="email"
+          className="mb-2 ml-1 text-textLight font-medium font-raleway text-sm"
         >
           Електронна пошта
         </label>
         <div className={styles.inputContainer}>
-          {emailError && (
-            <img
-              className={styles.attention}
-              src={attentionIcon}
-              alt='attention'
-            />
-          )}
+          {emailError && <img className={styles.attention} src={attentionIcon} alt="attention" />}
           {emailError && <div className={styles.error}>{emailError}</div>}
           <Input
             classNameInput={styles.input}
-            typeInput='email'
-            id='email'
-            nameInput='email'
+            typeInput="email"
+            id="email"
+            nameInput="email"
             value={email}
-            placeholderInput='Введіть свою електронну пошту'
+            placeholderInput="Введіть свою електронну пошту"
             onChangeInput={(e) => {
               setEmail(e.target.value);
               validateEmailOnChange(e.target.value);
@@ -175,27 +156,21 @@ const ChatPopupContact = () => {
           />
         </div>
         <label
-          htmlFor='theme'
-          className='mb-2 ml-1 text-textLight font-medium font-raleway text-sm'
+          htmlFor="theme"
+          className="mb-2 ml-1 text-textLight font-medium font-raleway text-sm"
         >
           Тема повідомлення
         </label>
         <div className={styles.inputContainer}>
-          {themeError && (
-            <img
-              className={styles.attention}
-              src={attentionIcon}
-              alt='attention'
-            />
-          )}
+          {themeError && <img className={styles.attention} src={attentionIcon} alt="attention" />}
           {themeError && <div className={styles.error}>{themeError}</div>}
           <Input
             classNameInput={styles.input}
-            typeInput='text'
-            id='theme'
-            nameInput='theme'
+            typeInput="text"
+            id="theme"
+            nameInput="theme"
             valueInput={theme}
-            placeholderInput='Введіть тему повідомлення'
+            placeholderInput="Введіть тему повідомлення"
             onChangeInput={(e) => {
               setTheme(e.target.value);
               validateTheme(e.target.value);
@@ -204,24 +179,20 @@ const ChatPopupContact = () => {
           />
         </div>
         <label
-          htmlFor='textArea'
-          className='mb-2 ml-1 text-textLight font-medium font-raleway text-sm'
+          htmlFor="textArea"
+          className="mb-2 ml-1 text-textLight font-medium font-raleway text-sm"
         >
           Текст повідомлення
         </label>
         <div className={styles.inputContainer}>
           {textAreaError && (
-            <img
-              className={styles.attention}
-              src={attentionIcon}
-              alt='attention'
-            />
+            <img className={styles.attention} src={attentionIcon} alt="attention" />
           )}
           {textAreaError && <div className={styles.error}>{textAreaError}</div>}
           <textarea
             className={styles.textarea}
             maxLength={120}
-            placeholder='Опишіть проблему, з якою звертаєтесь'
+            placeholder="Опишіть проблему, з якою звертаєтесь"
             value={textArea}
             onChange={(e) => {
               setTextArea(e.target.value);
@@ -230,7 +201,7 @@ const ChatPopupContact = () => {
             required
           ></textarea>
         </div>
-        <Button classNameBtn={styles.btn} type='submit'>
+        <Button classNameBtn={styles.btn} type="submit">
           Відправити
         </Button>
       </form>

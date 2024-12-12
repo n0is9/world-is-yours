@@ -27,14 +27,12 @@ const PasswordRecovery = lazy(() => import('@pages/PasswordRecovery'));
 function App() {
   const dispatch = useDispatch();
 
-  const [isLanguagueLoad, setLanguagueLoad] = useState(false);
+  const [isLanguageLoad, setLanguageLoad] = useState(false);
   // language switcher
   const availableLanguages = useMemo(() => ['en', 'uk'], []);
 
   useEffect(() => {
-    const userLanguages = navigator.languages || [
-      navigator.language || navigator.userLanguage,
-    ];
+    const userLanguages = navigator.languages || [navigator.language || navigator.userLanguage];
     const preferredLanguage = userLanguages.find((language) =>
       availableLanguages.includes(language),
     );
@@ -55,12 +53,12 @@ function App() {
 
         dispatch(setLanguage({ language: data }));
         console.log(data);
-        setLanguagueLoad(true);
+        setLanguageLoad(true);
       } catch (error) {
         console.error('Error in useTranslation:', error);
 
         setTimeout(() => {
-          setLanguagueLoad(true);
+          setLanguageLoad(true);
           console.log('here use effect error');
         }, 2000);
       }
@@ -79,9 +77,7 @@ function App() {
           // Попередньо перевіряємо, чи це дійсно JSON
           const cookieValue = parts.pop().split(';').shift();
 
-          return cookieValue
-            ? JSON.parse(decodeURIComponent(cookieValue))
-            : null;
+          return cookieValue ? JSON.parse(decodeURIComponent(cookieValue)) : null;
         } catch (e) {
           console.error('Error parsing cookie:', e);
 
@@ -134,26 +130,23 @@ function App() {
 
   return (
     <Suspense fallback={<Loader />}>
-      {isLanguagueLoad ? null : <Loader />}
+      {isLanguageLoad ? null : <Loader />}
       <Header />
       <main>
         <Routes>
-          <Route exact path='/' element={<MainPage />} />
+          <Route exact path="/" element={<MainPage />} />
 
-          <Route path='/payment/' element={<PaymentPage />} />
+          <Route path="/payment/" element={<PaymentPage />} />
 
-          <Route path='/info-help' element={<InfoPayment />} />
-          <Route path='/profile' element={<Profile />} />
-          <Route path='/categories' element={<CategoryPage />} />
-          <Route path='/cart' element={<Cart />} />
-          <Route path='/contacts' element={<Contacts />} />
-          <Route
-            path='/password_reset/:email/:code'
-            element={<PasswordRecovery />}
-          />
-          <Route path='/product/:id' element={<ProductPage />} />
-          <Route path='/favorites' element={<Favorites />} />
-          <Route path='*' element={<NotFound404 />} />
+          <Route path="/info-help" element={<InfoPayment />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/categories" element={<CategoryPage />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/contacts" element={<Contacts />} />
+          <Route path="/password_reset/:email/:code" element={<PasswordRecovery />} />
+          <Route path="/product/:id" element={<ProductPage />} />
+          <Route path="/favorites" element={<Favorites />} />
+          <Route path="*" element={<NotFound404 />} />
         </Routes>
       </main>
       <Footer />

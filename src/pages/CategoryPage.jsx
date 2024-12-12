@@ -31,8 +31,7 @@ const CategoryPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const categoryName = searchParams.get('category') || 'all';
-  const { categoryId } =
-    categoryList.find((obj) => obj.name === categoryName) || 0;
+  const { categoryId } = categoryList.find((obj) => obj.name === categoryName) || 0;
   const page = Number(searchParams.get('page')) || 1;
 
   const perPage = 8;
@@ -106,8 +105,8 @@ const CategoryPage = () => {
       <CategoryList setPage={setNewPage} />
       {isPopupOpen && <FilterPopup onClose={handleTogglePopup} />}
       <div
-        className='grid grid-flow-row-dense gap-4 mx-10 mb-12 grid-cols-1
-      md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center'
+        className="grid grid-flow-row-dense gap-4 mx-10 mb-12 grid-cols-1
+      md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center"
       >
         {arrivals.map((item) => (
           <Card data={item} key={item.id} />
@@ -115,14 +114,11 @@ const CategoryPage = () => {
       </div>
       {arrivals.length > 0 ? (
         <>
-          <div className='pagination flex justify-center items-center py-10 my-12'>
-            <Button
-              onClickBtn={() => setNewPage(-1)}
-              disabled={page === 1 ? true : false}
-            >
+          <div className="pagination flex justify-center items-center py-10 my-12">
+            <Button onClickBtn={() => setNewPage(-1)} disabled={page === 1 ? true : false}>
               <img
                 src={arrowUp}
-                alt='previous page button'
+                alt="previous page button"
                 className={`rotate-[270deg] ${page === 1 ? 'invert cursor-default' : ''}`}
               />
             </Button>
@@ -131,18 +127,18 @@ const CategoryPage = () => {
 
             <Button
               onClickBtn={() => setNewPage(+1)}
-              className='bg-black '
+              className="bg-black "
               disabled={page === totalPages ? true : false}
             >
               <img
                 src={arrowUp}
-                alt='next page button'
+                alt="next page button"
                 className={`rotate-90 ${page === totalPages ? 'invert cursor-default' : ''}`}
               />
             </Button>
           </div>
 
-          <hr className='text-gray w-[95%] mx-auto' />
+          <hr className="text-gray w-[95%] mx-auto" />
 
           <MoveUp />
         </>

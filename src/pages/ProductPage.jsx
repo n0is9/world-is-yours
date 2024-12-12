@@ -39,17 +39,17 @@ const ProductPage = () => {
 
   return (
     <Container>
-      <PreviousPage text='Каталог' link='/categories' />
-      <div className='flex justify-center items-center mt-20'>
-        <div className='flex flex-row gap-20 basis-[1150px]'>
+      <PreviousPage text="Каталог" link="/categories" />
+      <div className="flex justify-center items-center mt-20">
+        <div className="flex flex-row gap-20 basis-[1150px]">
           <PhotoGallery data={product} />
           <FilterList data={product} />
         </div>
       </div>
-      <div className='flex flex-col justify-center items-center'>
+      <div className="flex flex-col justify-center items-center">
         {product.related_products && (
           <>
-            <h1 className='font-raleway font-semibold text-4xl text-left text-grayDark mt-20 mb-10'>
+            <h1 className="font-raleway font-semibold text-4xl text-left text-grayDark mt-20 mb-10">
               Доповни комплект
             </h1>
             {product.related_products.map((item) => (
@@ -59,7 +59,7 @@ const ProductPage = () => {
         )}
         {product.seen_products && (
           <>
-            <h1 className='font-raleway font-semibold text-4xl text-left text-grayDark mt-20 mb-10'>
+            <h1 className="font-raleway font-semibold text-4xl text-left text-grayDark mt-20 mb-10">
               Вже переглянуте
             </h1>
             {product.seen_products.map((item) => (

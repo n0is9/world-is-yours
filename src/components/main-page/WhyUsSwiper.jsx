@@ -66,15 +66,15 @@ function WhyUsSwiper() {
     >
       {whyUsItems.map((w, index) => (
         <SwiperSlide key={w.id}>
-          <div className='mx-10 grid grid-cols-2 gap-x-10'>
-            <div className=' border-2 border-custom-black/30 rounded-3xl px-16'>
-              <p className='my-8 text-lg'>
+          <div className="mx-10 grid grid-cols-2 gap-x-10">
+            <div className=" border-2 border-custom-black/30 rounded-3xl px-16">
+              <p className="my-8 text-lg">
                 {index + 1}/{whyUsItems.length}
               </p>
-              <h1 className='mb-5 text-2xl font-semibold'>{w.tittle}</h1>
-              <p className='text-lg'>{w.subTittle}</p>
+              <h1 className="mb-5 text-2xl font-semibold">{w.tittle}</h1>
+              <p className="text-lg">{w.subTittle}</p>
             </div>
-            <img className='rounded-3xl' src={w.image} alt='' />
+            <img className="rounded-3xl" src={w.image} alt="" />
           </div>
         </SwiperSlide>
       ))}

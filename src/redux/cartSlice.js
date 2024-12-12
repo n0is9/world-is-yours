@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -24,6 +26,7 @@ export const cartSlice = createSlice({
     addItemsCart: (state, action) => {
       action.payload.forEach((newItem) => {
         const existingItem = state.items.find((item) => item.product === newItem.product);
+
         if (existingItem) {
           existingItem.quantity += newItem.quantity || 1;
         } else {
@@ -39,6 +42,7 @@ export const cartSlice = createSlice({
     updateQuantityCart: (state, action) => {
       const { product, quantity } = action.payload;
       const existingItem = state.items.find((item) => item.product === product);
+
       if (existingItem) {
         existingItem.quantity = quantity;
       }

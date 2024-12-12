@@ -42,20 +42,20 @@ const DropDownList = ({ options, label }) => {
       } font-light border rounded-xl max-w-md p-3 border-black mb-4`}
     >
       <div
-        className='select-styled font-light flex flex-row justify-between max-w-md gap-4'
+        className="select-styled font-light flex flex-row justify-between max-w-md gap-4"
         onClick={toggleSelect}
       >
         {selectedOption ? selectedOption.label : label}
         <img
           src={ArrowDown}
-          alt='arrow down'
+          alt="arrow down"
           className={`font-light w-4 mr-2 transform cursor-pointer ${
             isOpen ? 'rotate-0' : 'rotate-180'
           } transition-transform`}
         />
       </div>
       <ul
-        className='select-options font-light z-50 mt-4 bg-white ' //absolute
+        className="select-options font-light z-50 mt-4 bg-white " //absolute
         style={{ display: isOpen ? 'block' : 'none' }}
       >
         {options.map((option) => (

@@ -1,10 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const PostOfficeDropdown = ({
-  selectedCity,
-  selectedDeliveryType,
-  onSelectPostOffice,
-}) => {
+const PostOfficeDropdown = ({ selectedCity, selectedDeliveryType, onSelectPostOffice }) => {
   const [postOffices, setPostOffices] = useState([]);
 
   useEffect(() => {
@@ -44,7 +40,7 @@ const PostOfficeDropdown = ({
 
   return (
     <select onChange={(e) => onSelectPostOffice(e.target.value)}>
-      <option value=''>Оберіть відділення</option>
+      <option value="">Оберіть відділення</option>
       {postOffices.map((office) => (
         <option key={office.Ref} value={office.Ref}>
           {office.Description} - {office.Address}

@@ -76,42 +76,39 @@ function Categories({ onClose }) {
       animate={{ x: '-50%', y: 0, opacity: 1 }}
       transition={{ duration: 0.4 }}
     >
-      <div className='Catalog bg-white pt-8 px-12 pb-12 text-xl text-custom-black font-semibold rounded-b-2xl'>
-        <div className='mb-10'>
-          <p className='text-base font-medium pb-2'>
-            {memoCategories[0]?.name}
-          </p>
-          <ul className='flex gap-10'>
+      <div
+        className="Catalog bg-white pt-8 px-12 pb-12 text-xl text-custom-black
+      font-semibold rounded-b-2xl"
+      >
+        <div className="mb-10">
+          <p className="text-base font-medium pb-2">{memoCategories[0]?.name}</p>
+          <ul className="flex gap-10">
             {memoSubCategories
               .filter((item) => item.category == 1)
               .map((item) => (
                 <li
                   key={item.id}
-                  className='cursor-pointer hover:underline focus:underline focus:outline-0'
+                  className="cursor-pointer hover:underline focus:underline focus:outline-0"
                   onClick={() => handleSubCategoryClick(item.id)}
-                  tabIndex='0'
+                  tabIndex="0"
                 >
                   {item.name}
                 </li>
               ))}
           </ul>
         </div>
-        <div className='flex justify-between items-baseline mb-8 gap-4'>
+        <div className="flex justify-between items-baseline mb-8 gap-4">
           <div>
-            <p className='text-base font-medium pb-2'>
-              {memoCategories[1]?.name}
-            </p>
-            <ul
-              className={`flex flex-col gap-5 separated-list ${globalStyle.separatedList}`}
-            >
+            <p className="text-base font-medium pb-2">{memoCategories[1]?.name}</p>
+            <ul className={`flex flex-col gap-5 separated-list ${globalStyle.separatedList}`}>
               {memoSubCategories
                 .filter((item) => item.category == 2)
                 .map((item) => (
                   <li
                     key={item.id}
-                    className='cursor-pointer hover:underline focus:underline focus:outline-0'
+                    className="cursor-pointer hover:underline focus:underline focus:outline-0"
                     onClick={() => handleSubCategoryClick(item.id)}
-                    tabIndex='0'
+                    tabIndex="0"
                   >
                     {item.name}
                   </li>
@@ -119,18 +116,16 @@ function Categories({ onClose }) {
             </ul>
           </div>
           <div>
-            <p className='text-base font-medium pb-2'>
-              {memoCategories[2]?.name}
-            </p>
-            <ul className='flex flex-col gap-5'>
+            <p className="text-base font-medium pb-2">{memoCategories[2]?.name}</p>
+            <ul className="flex flex-col gap-5">
               {memoSubCategories
                 .filter((item) => item.category == 3)
                 .map((item) => (
                   <li
                     key={item.id}
-                    className='cursor-pointer hover:underline focus:underline focus:outline-0'
+                    className="cursor-pointer hover:underline focus:underline focus:outline-0"
                     onClick={() => handleSubCategoryClick(item.id)}
-                    tabIndex='0'
+                    tabIndex="0"
                   >
                     {item.name}
                   </li>
