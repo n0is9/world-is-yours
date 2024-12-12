@@ -39,6 +39,7 @@ module.exports = {
   },
   rules: {
     // JS
+    'no-multiple-empty-lines': 'off',
     semi: 2,
     'prefer-const': 2,
     curly: [2, 'all'],
