@@ -73,7 +73,7 @@ export default function Pagination({ totalPages, page }) {
       );
     }
 
-    console.log(pages);
+    // console.log(pages);
 
     return pages;
   };

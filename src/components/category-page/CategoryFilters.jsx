@@ -1,26 +1,57 @@
 import { useState } from 'react';
 import { AnimatePresence, motion as m } from 'framer-motion';
 
-import ClothingSizePicker from '../product/ClothingSizePicker';
+import ClothingSizePicker from '@components/product/ClothingSizePicker.jsx';
 
 import CloseIcon from '@assets/icons/icon-close.svg';
+import { resetFilters } from '@redux/categoryParamsSlice.js';
+import { useDispatch } from 'react-redux';
 
-const CategoryFilters = () => {
+const CategoryFilters = ({ activeFilters, setActiveFilters }) => {
   const [openIndex, setOpenIndex] = useState(null);
-  const [activeButtons, setActiveButtons] = useState({});
+  const dispatch = useDispatch();
 
   const data = [
     {
       id: 1,
       title: 'Впорядкувати за',
-      btn: ['Акції', 'Кращі', 'Новинки', 'Ціна за зростанням', 'Ціна за спаданням'],
+      btn: [
+        { name: 'Акції', value: 'is_on_sale', exclusive: false },
+        { name: 'Новинки', value: 'created_at', exclusive: true },
+        { name: 'Ціна за зростанням', value: 'price', exclusive: true },
+        { name: 'Ціна за спаданням', value: '-price', exclusive: true },
+      ],
     },
-    { id: 2, title: 'Для кого', btn: ['Чоловіки', 'Жінки'] },
-    { id: 3, title: 'Розмір' },
+    {
+      id: 2,
+      title: 'Для кого',
+      btn: [
+        { name: 'Чоловіки', value: 'male', exclusive: false },
+        { name: 'Жінки', value: 'female', exclusive: false },
+      ],
+    },
+    {
+      id: 3,
+      title: 'Розмір',
+      btn: [
+        { name: 'XS', value: 'XS', exclusive: true },
+        { name: 'S', value: 'Small', exclusive: true },
+        { name: 'M', value: 'Medium', exclusive: true },
+        { name: 'L', value: 'Large', exclusive: true },
+        { name: 'XL', value: 'XL', exclusive: true },
+        { name: 'XXL', value: 'XXL', exclusive: true },
+      ],
+    },
+
     {
       id: 4,
       title: 'Ціна',
-      btn: ['До 500 грн', 'До 1000 грн', 'До 2000 грн', 'Від 2000 грн'],
+      btn: [
+        { name: 'До 500 грн', value: '12', exclusive: true },
+        { name: 'До 1000 грн', value: '25', exclusive: true },
+        { name: 'До 2000 грн', value: '50', exclusive: true },
+        // { name: 'Від 2000 грн', value: '200', exclusive: true },
+      ],
     },
   ];
 
@@ -28,11 +59,51 @@ const CategoryFilters = () => {
     setOpenIndex((prevId) => (prevId === id ? null : id));
   };
 
-  const toggleButton = (buttonId) => {
-    setActiveButtons((prevActiveButtons) => ({
-      ...prevActiveButtons,
-      [buttonId]: !prevActiveButtons[buttonId],
-    }));
+  const toggleButton = (buttonValue, itemId, exclusive) => {
+    setActiveFilters((prev) => {
+      const currentFilters = prev[itemId]?.active || [];
+      const isActive = currentFilters.includes(buttonValue);
+
+      const updatedFilters = { ...prev };
+
+      if (exclusive) {
+        const updateActive = isActive
+          ? currentFilters.filter((value) => value !== buttonValue)
+          : [
+              ...currentFilters.filter((value) => {
+                const isExclusiveFilter = data
+                  .find((section) => section.id === itemId)
+                  .btn.find((btn) => btn.value === value)?.exclusive;
+
+                return !isExclusiveFilter;
+              }),
+              buttonValue,
+            ];
+
+        updatedFilters[itemId] = {
+          active: updateActive,
+          count: updateActive.length,
+        };
+      } else {
+        const updatedActive = isActive
+          ? currentFilters.filter((value) => value !== buttonValue)
+          : [...currentFilters, buttonValue];
+
+        updatedFilters[itemId] = {
+          active: updatedActive,
+          count: updatedActive.length,
+        };
+      }
+
+      const totalCount = Object.values(updatedFilters).reduce(
+        (acc, section) => acc + (section.count || 0),
+        0,
+      );
+
+      totalCount === 0 && dispatch(resetFilters());
+
+      return { ...updatedFilters, totalCount };
+    });
   };
 
   return (
@@ -44,7 +115,16 @@ const CategoryFilters = () => {
             transition-colors duration-300 ease-in-out"
             onClick={() => toggleAccordion(item.id)}
           >
-            <p className="text-base">{item.title}</p>
+            <div className="relative ">
+              <p className="text-base">{item.title}</p>
+              {activeFilters[item.id].count > 0 && (
+                // eslint-disable-next-line max-len
+                <p className="absolute top-1/2 right-[-35px] -translate-y-1/2 w-[24px] rounded-full bg-blue text-white text-center text-[14px] p-[4px] leading-4">
+                  {activeFilters[item.id].count}
+                </p>
+              )}
+            </div>
+
             <img
               src={CloseIcon}
               alt="close icon"
@@ -64,7 +144,11 @@ const CategoryFilters = () => {
                 }}
                 transition={{ duration: 0.3 }}
               >
-                <ClothingSizePicker />
+                <ClothingSizePicker
+                  clothingSizes={item.btn}
+                  activeFilters={activeFilters}
+                  toggleButton={toggleButton}
+                />
               </m.div>
             )}
           </AnimatePresence>
@@ -81,14 +165,14 @@ const CategoryFilters = () => {
                 }}
                 transition={{ duration: 0.3 }}
               >
-                {item.btn.map((btnText, id) => (
+                {item.btn.map((btn, value) => (
                   <button
-                    key={id}
+                    key={btn.value}
                     className={`px-4 py-1 font-medium font-Raleway text-base border border-gray rounded-lg mr-2 mb-2 duration-300
-                  ${activeButtons[btnText] ? 'bg-black text-white' : ''}`}
-                    onClick={() => toggleButton(btnText)}
+                  ${activeFilters[item.id].active.includes(btn.value) ? 'bg-grayDark text-white border-grayDark ' : ''}`}
+                    onClick={() => toggleButton(btn.value, item.id, btn.exclusive)}
                   >
-                    {btnText}
+                    {btn.name}
                   </button>
                 ))}
               </m.div>

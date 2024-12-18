@@ -14,7 +14,7 @@ const store = configureStore({
     user: userReducer,
     wishlist: wishlistReducer,
     cart: cartReducer,
-    categryFilter: filtersReducer,
+    categoryFilter: filtersReducer,
     // тут можна додати інші reducers за необхідності
   },
 });

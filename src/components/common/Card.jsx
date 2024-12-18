@@ -28,7 +28,7 @@ const Card = ({ data }) => {
 
   const cart = useSelector((state) => state.cart.items);
 
-  console.log('cart', cart);
+  // console.log('cart', cart);
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 
   // const isCart = cart.find((item) => item.product === data.id);

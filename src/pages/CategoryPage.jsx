@@ -23,7 +23,10 @@ const categoryList = [
 
 const CategoryPage = () => {
   // const [categoryId, setCategoryId] = useState(null);
-  const filters = useSelector((state) => state.categryFilter);
+  const filters = useSelector((state) => state.categoryFilter);
+
+  console.log(filters);
+
   const [arrivals, setArrivals] = useState([]);
   // const [next, setNext] = useState('true');
   const [totalItems, setTotalItems] = useState(0);
@@ -42,7 +45,7 @@ const CategoryPage = () => {
   };
 
   // fetch product
-  const fetchData = async (page_size, page, categoryId) => {
+  const fetchData = async (page_size, page, categoryId, filters) => {
     try {
       // if (filters.category) {
       //   query.category = '&category=' + filters.category;
@@ -58,29 +61,59 @@ const CategoryPage = () => {
       //   delete query.category;
       // }
 
+      if (filters.is_on_sale) {
+        query.is_on_sale = '&is_on_sale=true';
+      }
+
+      if (filters.ordering) {
+        query.ordering = `&ordering=${filters.ordering}`;
+      }
+
+      if (filters.price) {
+        query.price = `&price=${filters.price}`;
+      }
+
+      if (filters.spec) {
+        const spec = filters.spec;
+        let specQuery = '';
+
+        for (const key in spec) {
+          specQuery += `&spec=${key}:${spec[key]}`;
+        }
+
+        query.spec = specQuery;
+      }
+
       const queryString = Object.values(query).join('');
-      // console.log(queryString);
+
+      console.log(queryString);
+      // const specs = await $api.get('/api/products/8/specs/');
+
+      // console.log(specs);
 
       const response = await $api.get(
         `/api/products/?page_size=${page_size}&page=${page}${queryString}`,
+        // {
+        //   headers: {
+        //     'Accept-Language': 'en',
+        //   },
+        // },
       );
 
-      console.log(response.data.results);
+      // console.log(response.data.results);
 
       setArrivals(response.data.results);
       setTotalItems(response.data.count);
       // setNext(response.data.next);
 
       // setArrivals((currentArrivals) => [...currentArrivals, ...response.data.results]);
-      console.log(arrivals, 'arrivals');
-      console.log(response.data, 'data');
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    fetchData(perPage, page, categoryId);
+    fetchData(perPage, page, categoryId, filters);
   }, [page, filters, categoryId, searchParams]);
 
   // Pagination

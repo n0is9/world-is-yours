@@ -28,7 +28,7 @@ const CategoryList = ({ setPage }) => {
 
       setCategories(response.data);
       setSelectedFilter(response.data[0].id);
-      console.log(response.data);
+      // console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -39,7 +39,7 @@ const CategoryList = ({ setPage }) => {
     const filteredProducts = response.data.filter((item) => item.category === selectedFilter);
 
     setSubCategories(filteredProducts);
-    console.log(response.data);
+    // console.log(response.data);
   };
 
   useEffect(() => {
@@ -68,14 +68,14 @@ const CategoryList = ({ setPage }) => {
     setIsPopupOpen(!isPopupOpen);
   };
 
-  console.log(categories);
+  // console.log(categories);
   const changeCategory = (category) => {
     navigate(`?category=${category}&page=1`);
     // setPage(1);
   };
 
   return (
-    <div className="flex flex-col m-10 w-full">
+    <div className="flex flex-col m-10">
       <h1 className="text-blue text-2xl mb-4 font-semibold">Категорії</h1>
       <div className="flex flex-row justify-between items-end">
         <div className="flex flex-row gap-6 font-medium items-center">
