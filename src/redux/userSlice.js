@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   isAuthenticated: false,
@@ -9,6 +9,14 @@ const initialState = {
     last_name: null,
     email: null,
     phone: null,
+    address: {
+      id: null,
+      address_line: null,
+      city: null,
+      country: null,
+      zip_code: null,
+    },
+    date_of_birth: null,
     is_verified_email: false,
     image: null,
     is_superuser: false,
@@ -16,7 +24,7 @@ const initialState = {
 };
 
 export const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {
     login: (state) => {
@@ -27,6 +35,7 @@ export const userSlice = createSlice({
     },
     updateUser: (state, action) => {
       state.user = { ...state.user, ...action.payload };
+      state.isAuthenticated = true;
     },
   },
 });

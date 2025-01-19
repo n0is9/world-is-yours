@@ -1,14 +1,6 @@
-import React from "react";
-import Input from "../common/Input";
+import Input from '@common/Input';
 
-const FormSection = ({
-  label,
-  value,
-  onChange,
-  error,
-  placeholder,
-  type = "text",
-}) => {
+const FormSection = ({ label, value, onChange, error, placeholder, type = 'text' }) => {
   return (
     <div className="flex flex-col">
       <label
@@ -18,7 +10,8 @@ const FormSection = ({
         {label}
       </label>
       <Input
-        classNameInput="font-light text-base text-gray border rounded-xl p-3 border-black font-raleway"
+        classNameInput="font-light text-base text-gray border
+        rounded-xl p-3 border-black font-raleway"
         typeInput={type}
         placeholderInput={placeholder}
         value={value}

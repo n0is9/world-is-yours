@@ -1,15 +1,15 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
 export const headerSlice = createSlice({
   name: 'hader',
   initialState: {
-    isCategoriesOpen: false, 
+    isCategoriesOpen: false,
   },
   reducers: {
     setIsCategoriesOpen: (state, action) => {
       state.isCategoriesOpen = action.payload.isCategoriesOpen;
     },
-
   },
 });
 

@@ -1,0 +1,10 @@
+@media screen and (max-width: 770px) {
+  .mailing-list,
+  .social-media-block {
+    width: 280px;
+  }
+  .mailing-list {
+    width: 270px;
+    margin-right: 0;
+  }
+}

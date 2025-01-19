@@ -1,144 +1,174 @@
-import React from "react";
-import order from "../../assets/temporary-img/tent.png";
-import ArrowDown from "../../assets/icons/arrow-up.svg";
-import { useState } from "react";
-import DeleteIcon from "../../assets/icons/icon-trash.svg";
+import { Fragment, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-const products = [
-  {
-    id: 1,
-    name: "Палатка",
-    price: '100 грн',
-    image: { order },
-    size: "M",
-    color: "Red",
-    quantity: 5,
-  },
-  {
-    id: 2,
-    name: "Футболка",
-    price: '200 грн',
-    image: { order },
-    size: "M",
-    color: "White",
-    quantity: 3,
-  },
-  {
-    id: 3,
-    name: "Термос",
-    price: '225 грн',
-    image: { order },
-    size: "none",
-    color: "Grey",
-    quantity: 2,
-  },
-  {
-    id: 4,
-    name: "Кавоварка",
-    price: '415 грн',
-    image: { order },
-    size: "none",
-    color: "Yellow",
-    quantity: 1,
-  },
-];
+import { removeItemCart, updateQuantityCart } from '@redux/cartSlice';
+import { $api } from '@api/api';
+
+import ArrowDown from '@assets/icons/arrow-up.svg';
+import DeleteIcon from '@assets/icons/icon-trash.svg';
 
 const UserOrder = () => {
-  const [cart, setCart] = useState(products);
+  const cartItems = useSelector((state) => state.cart.items);
+  const dispatch = useDispatch();
 
-  const handleQuantityChange = (id, operation) => {
-    const updatedCart = cart.map((product) => {
-      if (product.id === id) {
-        let quantity = product.quantity;
-        if (operation === "increment" && quantity < 100) {
-          quantity++;
-        } else if (operation === "decrement" && quantity > 1) {
-          quantity--;
-        }
-        return { ...product, quantity };
-      }
-      return product;
-    });
+  const [cart, setCart] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [upd, setUpd] = useState(0);
+  const [basket, setBasket] = useState(0);
 
-    setCart(updatedCart);
+  const fetchBasket = async () => {
+    try {
+      const basketResponse = await $api.get(`/api/baskets/`);
+      const basketItems = basketResponse.data;
+
+      setBasket(basketItems);
+
+      let newTotal = 0;
+
+      const productRequests = basketItems.map((item) =>
+        $api.get(`/api/products/${item.product.id}/`).then((response) => {
+          const productData = {
+            ...response.data,
+            quantity: item.quantity,
+            basketId: item.id,
+          };
+
+          newTotal += productData.price * item.quantity;
+
+          return productData;
+        }),
+      );
+
+      const products = await Promise.all(productRequests);
+
+      setCart(products);
+      setTotal(newTotal.toFixed(2));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleRemoveProduct = (id) => {
-    const updatedCart = cart.filter(product => product.id !== id);
-    setCart(updatedCart);
+  useEffect(() => {
+    fetchBasket();
+  }, [upd]);
+
+  const updBasket = async (productId, newQuantity) => {
+    try {
+      await $api.put(`/api/baskets/${productId}/`, { quantity: newQuantity });
+      setUpd((prev) => prev + 1); // Trigger re-fetch
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleQuantityChange = (productId, action) => {
+    const product = cart.find((item) => item.basketId === productId);
+
+    if (!product) {
+      return;
+    }
+
+    const newQuantity = action === 'increment' ? product.quantity + 1 : product.quantity - 1;
+
+    if (newQuantity > 0) {
+      updBasket(productId, newQuantity);
+    }
+
+    console.log('product', product);
+    dispatch(updateQuantityCart({ product: productId, quantity: newQuantity }));
+  };
+
+  const handleRemoveItem = async (id) => {
+    try {
+      await $api.delete(`/api/baskets/${id}/`);
+      dispatch(removeItemCart(id)); // Видаляємо елемент із Redux
+      setUpd((prev) => prev + 1); // Оновлюємо стан для перерендеру
+      console.log('cartItems', cartItems);
+      setUpd(Math.floor(Math.random() * 100) + 1);
+    } catch (error) {
+      console.log(error);
+      setUpd(Math.floor(Math.random() * 100) + 1);
+    }
   };
 
   const calculateTotalPrice = () => {
-    const subtotal = cart.reduce((total, product) => {
-      return total + parseInt(product.price) * product.quantity;
-    }, 0);
+    const subtotal = cart
+      .reduce((total, product) => {
+        return total + product.price * product.quantity;
+      }, 0)
+      .toFixed(2);
 
-    const discount = subtotal * 0.05; // 5% знижка
+    //const discount = subtotal * 0.05; // 5% знижка
+    const discount = 0;
     const delivery = 0; // Доставка
 
     const totalPrice = subtotal - discount + delivery;
+
     return totalPrice;
   };
 
   return (
-    <div className="border text-blue rounded-xl p-7 h-screen">
+    <div className="border text-blue rounded-xl p-7 max-h-[90vh]">
       <div className="mt-2">
         <div className="flex flex-row justify-between text-custom-black">
           <h1 className="font-raleway font-semibold text-20px">Ваше замовлення</h1>
-          <p className="font-raleway font-semibold text-20px text-blue">{calculateTotalPrice()} грн</p>
+          <p className="font-raleway font-semibold text-20px text-blue">
+            {calculateTotalPrice()} грн
+          </p>
         </div>
         <hr className="mt-6 mb-6 text-blue" />
         <div className="scrolnan overflow-auto max-h-80 pr-4">
           {cart.length === 0 ? (
-            <p className="text-custom-black text-lg mx-8 my-10 ">Нажаль, ви ще нічого не замовили :(</p>
+            <p className="text-custom-black text-lg mx-8 my-10 ">
+              Нажаль, ви ще нічого не замовили :(
+            </p>
           ) : (
             <>
               {cart.map((product) => (
-                <React.Fragment key={product.id}>
+                <Fragment key={product.id}>
                   <div className="flex flex-row justify-between text-custom-black">
                     <div className="flex flex-row mr-20">
                       <img
-                        src={product.image.order}
-                        alt="user order"
-                        className="w-32 h-32 rounded-lg"
+                        src={product.image_1}
+                        alt={product.name}
+                        className="w-32 h-32 rounded-lg object-cover"
                       />
                       <div className="flex flex-col ml-4 justify-center gap-8">
                         <p className="font-medium text-lg">{product.name}</p>
                         <div className="text-gray gap-2">
-                          <p className="text-grey font-light text-base">Розмір: {product.size}</p>
+                          <p className="text-grey font-light text-base">
+                            Розмір:
+                            {product.size}
+                          </p>
                           <p className="text-grey font-light text-base">Колір: {product.color}</p>
                           <p className="flex flex-row text-gray font-light text-base">
-                            Кількість:{" "}
+                            Кількість:
                             <img
                               className="w-3 mr-2 rotate-180 ml-4 mr-4 cursor-pointer"
                               src={ArrowDown}
                               alt="arrow down"
-                              onClick={() => handleQuantityChange(product.id, "decrement")}
-                            />{" "}
-                            {product.quantity}{" "}
+                              onClick={() => handleQuantityChange(product.basketId, 'decrement')}
+                            />
+                            {product.quantity}
                             <img
                               className="w-3 mr-2 rotate-0 ml-4 cursor-pointer"
                               src={ArrowDown}
                               alt="arrow up"
-                              onClick={() => handleQuantityChange(product.id, "increment")}
-                            />{" "}
+                              onClick={() => handleQuantityChange(product.basketId, 'increment')}
+                            />
                           </p>
                         </div>
                       </div>
                     </div>
                     <div className="flex flex-col justify-between items-end">
-                      <p className="text-gray text-lg">{product.price} </p>
-                      <button onClick={() => handleRemoveProduct(product.id)}>
-                        <img
-                          className="w-5 h-5 cursor-pointer"
-                          src={DeleteIcon}
-                          alt="delete"
-                        />
+                      <p className="text-gray text-lg">{product.price * product.quantity} </p>
+                      <button onClick={() => handleRemoveItem(product.basketId)}>
+                        <img className="w-5 h-5 cursor-pointer" src={DeleteIcon} alt="delete" />
                       </button>
                     </div>
                   </div>
-                  <hr className="text-gray mt-3 mb-3"/>
-                </React.Fragment>
+                  <hr className="text-gray mt-3 mb-3" />
+                </Fragment>
               ))}
             </>
           )}
@@ -152,7 +182,7 @@ const UserOrder = () => {
           </div>
           <div className="flex flex-col text-right">
             <p className="text-gray mb-3">{calculateTotalPrice()} грн</p>
-            <p className="text-gray mb-3">40 грн</p>
+            <p className="text-gray mb-3">0 грн</p>
             <p className="text-gray mb-3">0 грн</p>
           </div>
         </div>

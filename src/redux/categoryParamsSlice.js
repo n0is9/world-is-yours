@@ -1,20 +1,24 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 // Початковий стан фільтрів
 const initialState = {
   price: null,
+  ordering: false,
   category: null,
   subcategory: null,
   is_on_sale: false,
-  spec: "",
+  spec: null,
 };
 
 export const filtersSlice = createSlice({
-  name: "filters",
+  name: 'filters',
   initialState,
   reducers: {
     setPrice: (state, action) => {
       state.price = action.payload;
+    },
+    setOrdering: (state, action) => {
+      state.ordering = action.payload;
     },
     setCategory: (state, action) => {
       state.category = action.payload;
@@ -26,15 +30,22 @@ export const filtersSlice = createSlice({
       state.is_on_sale = action.payload;
     },
     setSpec: (state, action) => {
-      state.spec = action.payload;
+      const key = Object.keys(action.payload)[0];
+      const value = action.payload[key];
+
+      if (value === null || value === undefined) {
+        delete state.spec[key];
+      } else {
+        state.spec = { ...state.spec, ...action.payload };
+      }
     },
     resetFilters: () => initialState,
   },
 });
 
-// Action creators are generated for each case reducer function
 export const {
   setPrice,
+  setOrdering,
   setCategory,
   setSubcategory,
   setIsOnSale,

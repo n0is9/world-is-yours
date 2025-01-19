@@ -1,17 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
+/* eslint-disable no-param-reassign */
+
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   items: [], // Масив товарів у корзині
 };
 
 export const cartSlice = createSlice({
-  name: "cart",
+  name: 'cart',
   initialState,
   reducers: {
     // Додавання одного товару в корзину
     addItemCart: (state, action) => {
       const existingIndex = state.items.findIndex(
-        (item) => item.product === action.payload.product
+        (item) => item.product === action.payload.product,
       );
 
       if (existingIndex >= 0) {
@@ -24,6 +26,7 @@ export const cartSlice = createSlice({
     addItemsCart: (state, action) => {
       action.payload.forEach((newItem) => {
         const existingItem = state.items.find((item) => item.product === newItem.product);
+
         if (existingItem) {
           existingItem.quantity += newItem.quantity || 1;
         } else {
@@ -33,12 +36,13 @@ export const cartSlice = createSlice({
     },
     // Remove an item from the basket
     removeItemCart: (state, action) => {
-      state.items = state.items.filter((item) => item.product !== action.payload);
+      state.items = state.items.filter((item) => item.id !== action.payload);
     },
     // Update the quantity of goods in the basket
     updateQuantityCart: (state, action) => {
       const { product, quantity } = action.payload;
       const existingItem = state.items.find((item) => item.product === product);
+
       if (existingItem) {
         existingItem.quantity = quantity;
       }

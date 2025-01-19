@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 const PostOfficeDropdown = ({ selectedCity, selectedDeliveryType, onSelectPostOffice }) => {
   const [postOffices, setPostOffices] = useState([]);
@@ -10,25 +10,27 @@ const PostOfficeDropdown = ({ selectedCity, selectedDeliveryType, onSelectPostOf
           const response = await fetch(
             `https://api.novapost.pl/v1_0/divisions?cityRef=${selectedCity}&serviceType=${selectedDeliveryType}`,
             {
-              method: "GET",
+              method: 'GET',
               headers: {
-                "Content-Type": "application/json",
-                "Api-Key": "cefb4e266c9494d64124cfccfd03c109",
+                'Content-Type': 'application/json',
+                'Api-Key': 'cefb4e266c9494d64124cfccfd03c109',
               },
-            }
+            },
           );
 
           if (!response.ok) {
-            console.error("Error fetching post offices:", response.statusText);
+            console.error('Error fetching post offices:', response.statusText);
             setPostOffices([]);
+
             return;
           }
 
           const data = await response.json();
-          setPostOffices(data.data); 
+
+          setPostOffices(data.data);
         }
       } catch (error) {
-        console.error("Error fetching post offices:", error);
+        console.error('Error fetching post offices:', error);
         setPostOffices([]);
       }
     };

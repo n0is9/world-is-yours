@@ -13,7 +13,6 @@
 
 .popup {
   margin-top: 2%;
-  padding: 2%;
   background-color: rgb(255, 255, 255);
   padding: 40px 50px;
   border-radius: 15px;
@@ -127,6 +126,25 @@
   text-align: center;
   gap: 40px;
 }
+.btnUnfill {
+  color: #135cfb;
+  box-sizing: border-box;
+  border: 1px solid #135cfb;
+  border-radius: 10px;
+  padding: 10px 30px;
+  background-color: #fff;
+  font-size: 20px;
+  text-align: center;
+  font-family: Raleway;
+  font-weight: 700;
+  margin: 1.25rem 0 0;
+  transition: all 0.3s ease;
+}
+.btnUnfill:hover,
+.btnUnfill:focus {
+  background-color: #135cfb;
+  color: #fff;
+}
 
 .textarea {
   resize: none;
@@ -137,81 +155,4 @@
   color: black;
   padding-left: 3%;
   padding-top: 3%;
-}
-
-/* slider */
-
-.slider {
-  border-radius: 15px;
-  margin: 4% 3%;
-}
-
-.backImgFirst,
-.backImgSecond,
-.backImgThird {
-  padding: 5% 20%;
-  background-size: cover;
-  background-position: center;
-  border-radius: 15px;
-}
-
-.backImgFirst {
-  background-image: url('../../assets/img/slider-first.png');
-}
-
-.backImgSecond {
-  background-image: url('../../assets/img/slider-second.png');
-  text-align: center;
-}
-
-.backImgThird {
-  background-image: url('../../assets/img/slider-third.png');
-}
-
-.cardS,
-.cardSCenter {
-  max-width: fit-content;
-  padding: 4px;
-  background-color: white;
-  color: rgb(0, 0, 0);
-  border: none;
-  border-radius: 8px;
-}
-
-.cardSCenter {
-  margin: auto;
-}
-
-.titleS,
-.subtitleS,
-.titleSBlack,
-.subtitleSBlack,
-.titleSCenter {
-  max-width: fit-content;
-  font-size: 60px;
-  font-weight: 500;
-  font-family: 'Raleway';
-  color: white;
-}
-
-.titleSCenter {
-  line-height: 1.37em;
-}
-
-.titleSBlack,
-.subtitleSBlack {
-  color: black;
-}
-.subtitleSBlack {
-  font-size: 25px;
-}
-
-.subtitleS {
-  font-size: 25px;
-}
-
-.contactUsWrap {
-  display: flex;
-  flex-direction: column;
-  width: 26%;
 }

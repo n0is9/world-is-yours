@@ -1,11 +1,8 @@
-import React from "react";
-
 const DeliveryOptions = ({ handleOptionChange, deliveryOptionError }) => {
   return (
     <div className="flex flex-col ml-2">
-      <label className="text-textLight font-medium font-raleway text-sm mb-2 ">
-        Тип доставки
-      </label>
+      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+      <label className="text-textLight font-medium font-raleway text-sm mb-2 ">Тип доставки</label>
       <form className="flex flex-col gap-2">
         <div className="flex items-center gap-2">
           <input
@@ -14,7 +11,7 @@ const DeliveryOptions = ({ handleOptionChange, deliveryOptionError }) => {
             name="opt1"
             value="opt1"
             className="h-4 w-4"
-            onChange={() => handleOptionChange("opt1")}
+            onChange={() => handleOptionChange('opt1')}
           />
           <label htmlFor="opt1" className="text-base">
             Самовивіз з магазину
@@ -27,7 +24,7 @@ const DeliveryOptions = ({ handleOptionChange, deliveryOptionError }) => {
             name="opt1"
             value="opt2"
             className="h-4 w-4"
-            onChange={() => handleOptionChange("opt2")}
+            onChange={() => handleOptionChange('opt2')}
           />
           <label htmlFor="opt2" className="text-base">
             Кур’єром (адресна)
@@ -40,7 +37,7 @@ const DeliveryOptions = ({ handleOptionChange, deliveryOptionError }) => {
             name="opt1"
             value="opt3"
             className="h-4 w-4"
-            onChange={() => handleOptionChange("opt3")}
+            onChange={() => handleOptionChange('opt3')}
           />
           <label htmlFor="opt3" className="text-base">
             У відділення Нової Пошти
@@ -53,7 +50,7 @@ const DeliveryOptions = ({ handleOptionChange, deliveryOptionError }) => {
             name="opt1"
             value="opt4"
             className="h-4 w-4"
-            onChange={() => handleOptionChange("opt4")}
+            onChange={() => handleOptionChange('opt4')}
           />
           <label htmlFor="opt4" className="text-base">
             У відділення Укрпошти

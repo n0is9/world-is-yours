@@ -1,6 +1,3 @@
-import React, { useEffect } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './scrolling.css';
 
 import { motion as m } from 'framer-motion';
@@ -44,10 +41,17 @@ function ScrollingText() {
   // }, []);
 
   return (
-    <m.div className='changing-wrap' initial={{ y: 50, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ duration: 1 }} viewport={{ once: true }}>
-      <p className='reveal-type font-raleway font-600' data-bg-color='gray' data-fg-color='#000'>
+    <m.div
+      className="changing-wrap"
+      initial={{ y: 50, opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      transition={{ duration: 1 }}
+      viewport={{ once: true }}
+    >
+      <p className="reveal-type font-raleway font-600" data-bg-color="gray" data-fg-color="#000">
         Забудьте про незручності в дорозі! <br />
-        Тут є великий вибір товарів для автобудинку, які роблять кожну подорож комфортною та приємною.
+        Тут є великий вибір товарів для автобудинку, які роблять кожну подорож комфортною та
+        приємною.
       </p>
     </m.div>
   );

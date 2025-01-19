@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+
+import Input from '@common/Input';
+import Button from '@common/Button';
+
+import closeIcon from '@assets/icons/icon-close.svg';
+import attentionIcon from '@assets/icons/icon-attention.svg';
+
 import styles from './main.module.css';
-import Input from '../common/Input';
-import closeIcon from '../../assets/icons/icon-close.svg';
-import Button from '../common/Button';
-import attentionIcon from '../../assets/icons/icon-attention.svg';
 
 const ChatPopup = ({ onClose }) => {
   const [name, setName] = useState('');
@@ -24,6 +27,7 @@ const ChatPopup = ({ onClose }) => {
 
   const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     return regex.test(email);
   };
 
@@ -34,7 +38,9 @@ const ChatPopup = ({ onClose }) => {
     if (!value.trim()) {
       setNameError('Name and surname cannot be empty');
     } else if (!nameSurnameRegex.test(value)) {
-      setNameError('Name and surname should be 3-16 characters long and should not contain numbers');
+      setNameError(
+        'Name and surname should be 3-16 characters long and should not contain numbers',
+      );
     } else {
       setNameError('');
     }
@@ -75,22 +81,28 @@ const ChatPopup = ({ onClose }) => {
     resetErrors();
 
     if (!nameSurnameRegex.test(name)) {
-      setNameError('Name and surname should be 3-16 characters long and should not contain numbers');
+      setNameError(
+        'Name and surname should be 3-16 characters long and should not contain numbers',
+      );
+
       return false;
     }
 
     if (!validateEmail(email)) {
       setEmailError('Invalid email address');
+
       return false;
     }
 
     if (!themeRegex.test(theme)) {
       setThemeError('Theme should be 6-20 characters long and should not contain numbers');
+
       return false;
     }
 
     if (textArea.length < 10) {
       setTextAreaError('Text should be at least 10 characters long');
+
       return false;
     }
 
@@ -103,20 +115,25 @@ const ChatPopup = ({ onClose }) => {
         <div className={`${styles.popup}`} onClick={(e) => e.stopPropagation()}>
           <div className={styles.titleWrap}>
             <h2 className={styles.title}>Зв’яжіться з нами!</h2>
-            <img className={styles.closeIcon} src={closeIcon} alt='close icon' onClick={onClose} />
+            <img className={styles.closeIcon} src={closeIcon} alt="close icon" onClick={onClose} />
           </div>
           <form className={styles.form} onSubmit={validateSignUpForm}>
-            <label htmlFor='name' className='mb-1 ml-1 text-textLight font-medium font-raleway text-sm'>
-              Ім'я та прізвище
+            <label
+              htmlFor="name"
+              className="mb-1 ml-1 text-textLight font-medium font-raleway text-sm"
+            >
+              Ім&#39;я та прізвище
             </label>
             <div className={styles.inputContainer}>
-              {nameError && <img className={styles.attention} src={attentionIcon} alt='attention' />}
+              {nameError && (
+                <img className={styles.attention} src={attentionIcon} alt="attention" />
+              )}
               {nameError && <div className={styles.error}>{nameError}</div>}
               <Input
                 classNameInput={styles.input}
-                typeInput='text'
-                id='name'
-                nameInput='name'
+                typeInput="text"
+                id="name"
+                nameInput="name"
                 valueInput={name}
                 placeholderInput="Введіть свої ім'я та прізвище"
                 onChangeInput={(e) => {
@@ -126,19 +143,24 @@ const ChatPopup = ({ onClose }) => {
                 required
               />
             </div>
-            <label htmlFor='email' className='mb-1 ml-1 text-textLight font-medium font-raleway text-sm'>
+            <label
+              htmlFor="email"
+              className="mb-1 ml-1 text-textLight font-medium font-raleway text-sm"
+            >
               Електронна пошта
             </label>
             <div className={styles.inputContainer}>
-              {emailError && <img className={styles.attention} src={attentionIcon} alt='attention' />}
+              {emailError && (
+                <img className={styles.attention} src={attentionIcon} alt="attention" />
+              )}
               {emailError && <div className={styles.error}>{emailError}</div>}
               <Input
                 classNameInput={styles.input}
-                typeInput='email'
-                id='email'
-                nameInput='email'
+                typeInput="email"
+                id="email"
+                nameInput="email"
                 value={email}
-                placeholderInput='Введіть свою електронну пошту'
+                placeholderInput="Введіть свою електронну пошту"
                 onChangeInput={(e) => {
                   setEmail(e.target.value);
                   validateEmailOnChange(e.target.value);
@@ -146,19 +168,24 @@ const ChatPopup = ({ onClose }) => {
                 required
               />
             </div>
-            <label htmlFor='theme' className='mb-1 ml-1 text-textLight font-medium font-raleway text-sm'>
+            <label
+              htmlFor="theme"
+              className="mb-1 ml-1 text-textLight font-medium font-raleway text-sm"
+            >
               Тема повідомлення
             </label>
             <div className={styles.inputContainer}>
-              {themeError && <img className={styles.attention} src={attentionIcon} alt='attention' />}
+              {themeError && (
+                <img className={styles.attention} src={attentionIcon} alt="attention" />
+              )}
               {themeError && <div className={styles.error}>{themeError}</div>}
               <Input
                 classNameInput={styles.input}
-                typeInput='text'
-                id='theme'
-                nameInput='theme'
+                typeInput="text"
+                id="theme"
+                nameInput="theme"
                 valueInput={theme}
-                placeholderInput='Введіть тему повідомлення'
+                placeholderInput="Введіть тему повідомлення"
                 onChangeInput={(e) => {
                   setTheme(e.target.value);
                   validateTheme(e.target.value);
@@ -166,24 +193,30 @@ const ChatPopup = ({ onClose }) => {
                 required
               />
             </div>
-            <label htmlFor='textArea' className='mb-1 ml-1 text-textLight font-medium font-raleway text-sm'>
+            <label
+              htmlFor="textArea"
+              className="mb-1 ml-1 text-textLight font-medium font-raleway text-sm"
+            >
               Текст повідомлення
             </label>
             <div className={styles.inputContainer}>
-              {textAreaError && <img className={styles.attention} src={attentionIcon} alt='attention' />}
+              {textAreaError && (
+                <img className={styles.attention} src={attentionIcon} alt="attention" />
+              )}
               {textAreaError && <div className={styles.error}>{textAreaError}</div>}
               <textarea
                 className={styles.textarea}
                 maxLength={100}
-                placeholder='Опишіть проблему, з якою звертаєтесь'
+                placeholder="Опишіть проблему, з якою звертаєтесь"
                 value={textArea}
                 onChange={(e) => {
                   setTextArea(e.target.value);
                   validateTextArea(e.target.value);
                 }}
-                required></textarea>
+                required
+              ></textarea>
             </div>
-            <Button classNameBtn={styles.btn} type='submit'>
+            <Button classNameBtn={styles.btn} type="submit">
               Відправити
             </Button>
           </form>

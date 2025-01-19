@@ -1,18 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
-import ArrowDown from '../../assets/icons/arrow-up.svg';
 
 const CountryDropdown = ({ onSelectCountry }) => {
+  const user = useSelector((state) => state.user.user);
+
   const [countries, setCountries] = useState([]);
+  const [filteredCountries, setFilteredCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState('');
   const [isOpen, setIsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
+  // Фетчимо країни при завантаженні компонента
   useEffect(() => {
     const fetchCountries = async () => {
       try {
         const response = await axios.get('https://countriesnow.space/api/v0.1/countries');
         const countriesData = response.data.data.map((country) => country.country);
+
         setCountries(countriesData.sort());
+        setFilteredCountries(countriesData.sort());
       } catch (error) {
         console.error('Error fetching countries:', error);
       }
@@ -21,10 +28,27 @@ const CountryDropdown = ({ onSelectCountry }) => {
     fetchCountries();
   }, []);
 
+  // Фільтрація країн на основі введеного тексту
+  const handleSearchChange = (e) => {
+    const query = e.target.value;
+
+    setSearchQuery(query);
+    if (query.length > 0) {
+      const filtered = countries.filter((country) =>
+        country.toLowerCase().includes(query.toLowerCase()),
+      );
+
+      setFilteredCountries(filtered);
+    } else {
+      setFilteredCountries(countries);
+    }
+  };
+
   const handleCountryChange = (country) => {
     setSelectedCountry(country);
     onSelectCountry(country);
     setIsOpen(false);
+    setSearchQuery(country); // заповнюємо інпут обраною країною
   };
 
   const toggleSelect = () => {
@@ -33,23 +57,46 @@ const CountryDropdown = ({ onSelectCountry }) => {
 
   return (
     <>
-      <label htmlFor='text' className='mb-1 ml-1 text-textLight font-medium font-raleway text-sm'>
+      <label
+        htmlFor="country"
+        className="mb-1 ml-1 text-textLight font-medium font-raleway text-sm"
+      >
         Країна
       </label>
-      <div className={`select ${isOpen ? 'active' : ''} font-light border rounded-xl max-w-md p-3 border-black mb-4`}>
-        <div className='select-styled font-light flex items-center justify-between max-w-md' onClick={toggleSelect}>
-          {selectedCountry ? selectedCountry : 'Select Country'}
-          <img src={ArrowDown} alt='arrow down' className={`font-light w-4 ml-2 transform cursor-pointer ${isOpen ? 'rotate-0' : 'rotate-180'} transition-transform`} />
-        </div>
-        <ul className='select-options font-light z-50 mt-4 bg-white max-h-48 overflow-y-auto' style={{ display: isOpen ? 'block' : 'none' }}>
-          {countries
-            .filter((country) => country !== selectedCountry)
-            .map((country, index) => (
-              <li key={`${country}-${index}`} onClick={() => handleCountryChange(country)} className={`border p-2 rounded-xl mt-2 border-black cursor-pointer duration-100 hover:bg-black hover:text-white ${selectedCountry === country ? 'is-selected' : ''}`}>
-                {country}
-              </li>
-            ))}
-        </ul>
+      <div className="relative max-w-md">
+        {/* Поле для введення тексту */}
+        <input
+          type="text"
+          placeholder={user.address.country ? user.address.country : 'Оберіть країну'}
+          value={searchQuery}
+          onChange={handleSearchChange}
+          onClick={toggleSelect}
+          className="font-light border rounded-xl w-full p-3 border-black mb-2"
+        />
+
+        {/* Випадаючий список */}
+        {isOpen && (
+          <ul
+            className="absolute z-50 bg-white w-full max-h-48 overflow-y-auto
+          border rounded-xl shadow-md"
+          >
+            {filteredCountries.length > 0 ? (
+              filteredCountries.map((country, index) => (
+                <li
+                  key={`${country}-${index}`}
+                  onClick={() => handleCountryChange(country)}
+                  className={`p-2 cursor-pointer hover:bg-black hover:text-white ${
+                    selectedCountry === country ? 'bg-gray-200' : ''
+                  }`}
+                >
+                  {country}
+                </li>
+              ))
+            ) : (
+              <li className="p-2 text-gray-500">Нічого не знайдено</li>
+            )}
+          </ul>
+        )}
       </div>
     </>
   );

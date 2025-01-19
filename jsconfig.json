@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@components/*": ["./src/components/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@config/*": ["./src/config/*"],
+      "@locale/*": ["./src/locale/*"],
+      "@redux/*": ["./src/redux/*"],
+      "@common/*": ["./src/components/common/*"],
+      "@api/*": ["./src/api/*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}
